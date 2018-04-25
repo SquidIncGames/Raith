@@ -1,0 +1,197 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "fd8a80214ef6393bf1ded3299ebf2f2f",
+    "packages": [
+        {
+            "name": "krutush/database",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/krutush/database.git",
+                "reference": "54fd0bd6ff88ce94823018db814b13cbd95ac843"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/krutush/database/zipball/54fd0bd6ff88ce94823018db814b13cbd95ac843",
+                "reference": "54fd0bd6ff88ce94823018db814b13cbd95ac843",
+                "shasum": ""
+            },
+            "require": {
+                "krutush/krutush": "dev-develop",
+                "sheychen/inutils": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Krutush\\Database\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "sheychen",
+                    "email": "contact@clementbois.fr"
+                }
+            ],
+            "time": "2018-04-25T17:12:44+00:00"
+        },
+        {
+            "name": "krutush/form",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/krutush/form.git",
+                "reference": "45c12ac1890b22f1be8cd36bd4039f11445bacd2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/krutush/form/zipball/45c12ac1890b22f1be8cd36bd4039f11445bacd2",
+                "reference": "45c12ac1890b22f1be8cd36bd4039f11445bacd2",
+                "shasum": ""
+            },
+            "require": {
+                "krutush/template": "dev-develop"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Krutush\\Form\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "sheychen",
+                    "email": "contact@clementbois.fr"
+                }
+            ],
+            "time": "2018-04-25T17:18:26+00:00"
+        },
+        {
+            "name": "krutush/krutush",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/krutush/krutush.git",
+                "reference": "9b5983a35fb10dc44abd1f14192f3bffb20cc1bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/krutush/krutush/zipball/9b5983a35fb10dc44abd1f14192f3bffb20cc1bc",
+                "reference": "9b5983a35fb10dc44abd1f14192f3bffb20cc1bc",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Krutush\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "sheychen",
+                    "email": "contact@clementbois.fr"
+                }
+            ],
+            "time": "2017-09-10T18:14:22+00:00"
+        },
+        {
+            "name": "krutush/template",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/krutush/template.git",
+                "reference": "7bb3b0b3dade1ffa56d1e047e0127c6e02c898f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/krutush/template/zipball/7bb3b0b3dade1ffa56d1e047e0127c6e02c898f0",
+                "reference": "7bb3b0b3dade1ffa56d1e047e0127c6e02c898f0",
+                "shasum": ""
+            },
+            "suggest": {
+                "krutush/krutush": "Hello"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Krutush\\Template\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "sheychen",
+                    "email": "contact@clementbois.fr"
+                }
+            ],
+            "time": "2018-04-25T17:08:00+00:00"
+        },
+        {
+            "name": "sheychen/inutils",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sheychen290/inutils.git",
+                "reference": "84fde78868dbf483364b6e03f0d924ead7ab6afe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sheychen290/inutils/zipball/84fde78868dbf483364b6e03f0d924ead7ab6afe",
+                "reference": "84fde78868dbf483364b6e03f0d924ead7ab6afe",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Inutils\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "sheychen",
+                    "email": "contact@clementbois.fr"
+                }
+            ],
+            "description": "Common Usefull Classes",
+            "time": "2017-05-28T09:24:55+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "krutush/krutush": 20,
+        "krutush/template": 20,
+        "krutush/form": 20,
+        "krutush/database": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
