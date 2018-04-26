@@ -5,6 +5,8 @@ namespace Raith;
 use Krutush\App;
 use Krutush\HttpException;
 use Krutush\Template\Html;
+use Krutush\Path;
+use Krutush\Database\Connection;
 
 class MyApp extends App{
     public function __construct(array $data = array()){
@@ -13,8 +15,8 @@ class MyApp extends App{
         if(!isset($data['app']['namespace']))
             $data['app']['namespace'] = __NAMESPACE__.'\\Controller\\';
 
-        //TODO: Add database
-
         parent::__construct($data);
+
+        (new Connection(Path::get('config').'/Databases.php'))->connect();
     }
 }

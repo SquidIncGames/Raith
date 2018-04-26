@@ -3,10 +3,10 @@
         'driver' => 'mysql',
         'host' => 'localhost',
     //  'port' => '3306',
-        'schema' => 'mydatabase',
-        'charset' => 'uft8',
-        'username' => 'webuser',
-        'password' => 'xxxxxxxxx',
+        'schema' => 'raith',
+        'charset' => 'utf8',
+        'username' => 'root',
+        'password' => '',
         'options' => array(
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //Exceptions pour les erreurs sql
             PDO::ATTR_PERSISTENT => true, //Connection persistente
