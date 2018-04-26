@@ -1,0 +1,8 @@
+<?php $t->_layout('Main')
+    ->set('Title', 'Action')
+    ->set('Description', "Reussite d'une action")
+    ->_section('body') ?>
+<h2>Action</h2>
+<p>Status: <?= $t->_p('state') ?></p>
+<p>Valeur: <?= $t->_p('value') ?></p>
+<?php $t->_endsection() ?>

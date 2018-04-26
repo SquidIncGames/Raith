@@ -115,12 +115,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/krutush/template.git",
-                "reference": "7bb3b0b3dade1ffa56d1e047e0127c6e02c898f0"
+                "reference": "9a5348cf3525b5b4a9a71b82c160a1a8f784c419"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/krutush/template/zipball/7bb3b0b3dade1ffa56d1e047e0127c6e02c898f0",
-                "reference": "7bb3b0b3dade1ffa56d1e047e0127c6e02c898f0",
+                "url": "https://api.github.com/repos/krutush/template/zipball/9a5348cf3525b5b4a9a71b82c160a1a8f784c419",
+                "reference": "9a5348cf3525b5b4a9a71b82c160a1a8f784c419",
                 "shasum": ""
             },
             "suggest": {
@@ -142,7 +142,7 @@
                     "email": "contact@clementbois.fr"
                 }
             ],
-            "time": "2018-04-25T17:08:00+00:00"
+            "time": "2018-04-25T17:47:06+00:00"
         },
         {
             "name": "sheychen/inutils",
