@@ -2,11 +2,11 @@
 
 namespace Raith\Controller;
 
-use Krutush\Controller;
+use Raith\MyController;
 use Krutush\Template\Html;
 use Raith\Model\RandomModel;
 
-class RandomController extends Controller{
+class RandomController extends MyController{
     public function menu(){
         echo "dice";
     }

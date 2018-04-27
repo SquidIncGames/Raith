@@ -1,6 +1,10 @@
 <?php
 $r->add('/', 'Home#index');
 
+//Login
+$r->add('/login', 'Home#login');
+$r->add('/logout', 'Home#logout');
+
 //Random
 $r->add('/random/:min/:max', 'Random#random')
     ->with('min', '\d+')

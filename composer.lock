@@ -48,12 +48,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/krutush/form.git",
-                "reference": "45c12ac1890b22f1be8cd36bd4039f11445bacd2"
+                "reference": "f003704009e51f88cb6adce58da120044f47d0ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/krutush/form/zipball/45c12ac1890b22f1be8cd36bd4039f11445bacd2",
-                "reference": "45c12ac1890b22f1be8cd36bd4039f11445bacd2",
+                "url": "https://api.github.com/repos/krutush/form/zipball/f003704009e51f88cb6adce58da120044f47d0ef",
+                "reference": "f003704009e51f88cb6adce58da120044f47d0ef",
                 "shasum": ""
             },
             "require": {
@@ -75,7 +75,7 @@
                     "email": "contact@clementbois.fr"
                 }
             ],
-            "time": "2018-04-25T17:18:26+00:00"
+            "time": "2018-04-27T11:46:50+00:00"
         },
         {
             "name": "krutush/krutush",
@@ -146,16 +146,16 @@
         },
         {
             "name": "sheychen/inutils",
-            "version": "1.1",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sheychen290/inutils.git",
-                "reference": "84fde78868dbf483364b6e03f0d924ead7ab6afe"
+                "reference": "43cae2967faa1df57ec9bbf9596b45c0762081a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sheychen290/inutils/zipball/84fde78868dbf483364b6e03f0d924ead7ab6afe",
-                "reference": "84fde78868dbf483364b6e03f0d924ead7ab6afe",
+                "url": "https://api.github.com/repos/sheychen290/inutils/zipball/43cae2967faa1df57ec9bbf9596b45c0762081a6",
+                "reference": "43cae2967faa1df57ec9bbf9596b45c0762081a6",
                 "shasum": ""
             },
             "require": {
@@ -178,7 +178,7 @@
                 }
             ],
             "description": "Common Usefull Classes",
-            "time": "2017-05-28T09:24:55+00:00"
+            "time": "2018-04-26T18:06:04+00:00"
         }
     ],
     "packages-dev": [],
