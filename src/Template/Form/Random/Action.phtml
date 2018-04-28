@@ -1,31 +1,25 @@
 <?php $f = $t->_('action_form') ?>
 <?= $f->_start() ?>
 <?= $f->_errors() ?>
-<p>
-    <label for="statistique">Statistique</label>
-    <?php /* load stats from db */ ?>
-    <?= $f->_select('statistique')->options(['Force', 'Dext', 'Int', 'Sag', 'Cha', 'Const'])->required()->html() ?>
-</p>
-<?php /*
-<p>
+<?php //TODO: load stats from db ?>
+<p><?= $f->_select('statistique')->label('Statistique')
+    ->options(['Force', 'Dext', 'Int', 'Sag', 'Cha', 'Const'])
+    ->required()->html() ?></p>
+<?php /* <p>
     <label for="bonus">Bonus</label>
     <?= $f->_input('bonus')->number()->min(0)->max(100)->html() ?>
-</p>
-*/ ?>
-<p>
-    <?php /* checkbox lances multiples => nb lancés */ ?>
-    <label for="count">Nb de lancés</label>
-    <?= $f->_input('count')->number()->value(1)->min(1)->max(100)->required()->html() ?>
-</p>
-<?php /*
-<p>
+</p> */ ?>
+<?php /* checkbox lances multiples => nb lancés */ ?>
+<p><?= $f->_input('count')->label('Nb de lancés')
+    ->number()->value(1)->min(1)->max(100)
+    ->required()->html() ?></p>
+<?php /* <p>
     <label for="compte">Compter le jet</label>
     <?= $f->_input('compte')->checkbox()->html() ?>
 </p>
 <p>
     <label for="description">Desciption</label><br>
     <?= $f->_textarea('description')->required()->html() ?>
-</p>
-*/ ?>
+</p> */ ?>
 <p><?= $f->_submit('Lancer') ?></p>
 <?= $f->_end() ?>

@@ -5,7 +5,7 @@ namespace Raith\Model;
 use Krutush\Database\Model;
 use Krutush\Database\Connection;
 
-class UtilisateurModel extends Model{
+class UserModel extends Model{
     protected static $TABLE = 'utilisateur';
     protected static $FIELDS = [
         'id' => 'idutilisateur',

@@ -1,13 +1,11 @@
 <?php $f = $t->_('login_form') ?>
 <?= $f->_start() ?>
 <?= $f->_errors() ?>
-<p>
-    <label for="username">Pseudo</label>
-    <?= $f->_input('username')->alphanum()->required()->minlength(4)->maxlength(32)->html() ?>
-</p>
-<p>
-    <label for="password">Mot de passe</label>
-    <?= $f->_input('password')->password()->required()->minlength(8)->html() ?>
-</p>
+<p><?= $f->_input('username')->label('Pseudo')
+    ->alphanum()->required()
+    ->minlength(4)->maxlength(32)->html() ?></p>
+<p><?= $f->_input('password')->label('Mot de passe')
+    ->password()->required()
+    ->minlength(8)->html() ?></p>
 <p><?= $f->_submit('Se connecter') ?></p>
 <?= $f->_end() ?>

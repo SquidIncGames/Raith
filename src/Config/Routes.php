@@ -1,9 +1,10 @@
 <?php
 $r->add('/', 'Home#index');
 
-//Login
-$r->add('/login', 'Home#login');
-$r->add('/logout', 'Home#logout');
+//User
+$r->add('/login', 'User#login');
+$r->add('/logout', 'User#logout');
+$r->add('/characters', 'User#characters');
 
 //Random
 $r->add('/random', 'Random#index');

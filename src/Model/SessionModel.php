@@ -7,7 +7,7 @@ class SessionModel{
 
     public static function isLogged(): bool{
         //FIXME: Add IP Check
-        session_start();
+        if(session_status() == PHP_SESSION_NONE) session_start();
         return isset($_SESSION[static::$user]) && is_int($_SESSION[static::$user]);
     }
 
