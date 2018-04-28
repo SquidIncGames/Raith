@@ -48,12 +48,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/krutush/form.git",
-                "reference": "f003704009e51f88cb6adce58da120044f47d0ef"
+                "reference": "ead22b395aa709ad08a8d09c257100094b229e34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/krutush/form/zipball/f003704009e51f88cb6adce58da120044f47d0ef",
-                "reference": "f003704009e51f88cb6adce58da120044f47d0ef",
+                "url": "https://api.github.com/repos/krutush/form/zipball/ead22b395aa709ad08a8d09c257100094b229e34",
+                "reference": "ead22b395aa709ad08a8d09c257100094b229e34",
                 "shasum": ""
             },
             "require": {
@@ -75,7 +75,7 @@
                     "email": "contact@clementbois.fr"
                 }
             ],
-            "time": "2018-04-27T11:46:50+00:00"
+            "time": "2018-04-28T10:12:08+00:00"
         },
         {
             "name": "krutush/krutush",

@@ -1,8 +1,25 @@
 <?php $t->_layout('Main')
     ->set('Title', 'Action')
-    ->set('Description', "Reussite d'une action")
+    ->set('Description', "Comme rendre la vie moins monotone")
     ->_section('body') ?>
 <h2>Action</h2>
-<p>Status: <?= $t->_p('state') ?></p>
-<p>Valeur: <?= $t->_p('value') ?></p>
+<?php $t->_load("Form/Random/Action") ?>
+<?php if($t->_xs(['statistique_name', 'statistique_value'])): ?>
+<div class="result">
+    <p><?= $t->_p('statistique_name').': '.$t->_p('statistique_value') ?></p>
+    <?= $t->_p('value', '<p>Valeur: {?}</p>') ?>
+    <?= $t->_p('result', '<p>Resultat: {?}</p>') ?>
+    <?php if($t->_x('values')):
+        $total = 0 ?>
+    <table>
+        <tr><th>Valeur</th><th>Resultat</th></tr>
+        <?php foreach ($t->_('values') as $value):
+            $total += $value['value'] ?>
+        <tr><td><?= $value['value'] ?></td><td><?= $value['result'] ?></td></tr>
+        <?php endforeach ?>
+        <tr><th><?= $total ?></th><th>Total</th></tr>
+    </table>
+    <?php endif ?>
+</div>
+<?php endif ?>
 <?php $t->_endsection() ?>

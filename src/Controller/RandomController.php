@@ -4,28 +4,118 @@ namespace Raith\Controller;
 
 use Raith\MyController;
 use Krutush\Template\Html;
+use Raith\Template\Json;
+use Krutush\Form\Form;
 use Raith\Model\RandomModel;
 
 class RandomController extends MyController{
-    public function menu(){
-        echo "dice";
+    public function index(){
+        (new Html('Random/Index'))->run();
     }
 
-    public function random($min, $max){
-        (new Html('Random/Random'))
-            ->set('rand_min', $min)
-            ->set('rand_max', $max)
-            ->set('rand_value', RandomModel::random($min, $max))
-            ->run();
+    public function action(){
+        $html = new Html('Random/Action');
+        $form = new Form('action_form', 'Form/Random/Action');
+        $html->set('action_form', $form);
+
+        if(!empty($_POST) && $form->valid($_POST)){
+            $values = $form->values();
+            $statistique = [
+                'Force' => 49,
+                'Dext' => 30,
+                'Int' => 6,
+                'Sag' => 10,
+                'Cha' => 12,
+                'Const' => 40
+            ][$values['statistique']];
+            $html->set('statistique_name', $values['statistique'])
+                ->set('statistique_value', $statistique);
+
+            $count = intval($values['count']);
+            if($count == 1){
+                $html->sets(RandomModel::action($statistique));
+            }else{
+                $values = [];
+                for($i = 0; $i < $count; $i++){
+                    $values[] = RandomModel::action($statistique);
+                }
+                $html->set('values', $values);
+            }
+        }
+
+        $html->run();
     }
 
-    public function dice($max){
-        $this->random(1, $max);
+
+    //API
+    public function api_random(int $min, int $max){
+        if($min > $max){
+            Json::error('min must be less than max');
+        }else{
+            Json::run('random', [
+                'min' => $min,
+                'max' => $max,
+                'value' => RandomModel::random($min, $max)
+            ]);
+        }
     }
 
-    public function action($statistique){
-        (new Html('Random/Action'))
-            ->sets(RandomModel::action($statistique))
-            ->run();
+    public function api_randoms(int $count, int $min, int $max){
+        if($count <= 0){
+            Json::error('count must be positive');
+        }else if($min > $max){
+            Json::error('min must be less than max');
+        }else{
+            $values = array();
+            for($i = 0; $i < $count; $i++)
+                $values[$i] = RandomModel::random($min, $max);
+            Json::run('randoms', [
+                'count' => $count,
+                'min' => $min,
+                'max' => $max,
+                'values' => $values
+            ]);
+        }
+    }
+
+    public function api_dice(int $max){
+        Json::run('dice', [
+            'max' => $max,
+            'value' => RandomModel::random(1, $max)
+        ]);
+    }
+
+    public function api_dices(int $count, int $max){
+        if($count <= 0){
+            Json::error('count must be positive');
+        }else{
+            $values = array();
+            for($i = 0; $i < $count; $i++)
+                $values[$i] = RandomModel::random(1, $max);
+            Json::run('dices', [
+                'count' => $count,
+                'max' => $max,
+                'values' => $values
+            ]);
+        }
+    }
+
+    public function api_action(int $statistique){
+        Json::run('action', ['statistique' => $statistique] + RandomModel::action($statistique));
+    }
+
+    public function api_actions(int $count, int $statistique){
+        if($count <= 0){
+            Json::error('count must be positive');
+        }else{
+            $values = array();
+            for($i = 0; $i < $count; $i++)
+                $values[$i] = RandomModel::action($statistique);
+            Json::run('actions', [
+                'count' => $count,
+                'statistique' => $statistique,
+                'values' => $values
+            ]);
+        }
     }
 }

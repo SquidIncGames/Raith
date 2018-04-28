@@ -4,6 +4,7 @@ namespace Raith\Controller;
 
 use Raith\MyController;
 use Krutush\Template\Html;
+use Raith\Template\Json;
 use Krutush\Form\Form;
 use Krutush\Database\Connection;
 
@@ -40,5 +41,9 @@ class HomeController extends MyController{
         (new Html('Logout'))
             ->set('logout', SessionModel::logout() ? 'unlogged' : 'not logged')
             ->run();
+    }
+
+    public function notfound($url){
+        Json::error('not_found', 404);
     }
 }

@@ -1,8 +1,0 @@
-<?php $t->_layout('Main')
-    ->set('Title', 'Random')
-    ->set('Description', "yolo")
-    ->_section('body') ?>
-<h2>Dice</h2>
-<p>Valeur: <?= $t->_('rand_value') ?></p>
-<p>Type: <?= $t->_('rand_min') == 1 ? 'd' : $t->_p('rand_min').'-' ?><?= $t->_p('rand_max') ?></p>
-<?php $t->_endsection() ?>

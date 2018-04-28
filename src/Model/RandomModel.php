@@ -15,7 +15,7 @@ class RandomModel{
         $value = static::dice(100);
         return [
             'value' => $value,
-            'state' => $value  <= 5 ? 'réussite critique !!' : (
+            'result' => $value  <= 5 ? 'réussite critique !!' : (
                 $value  > 95 ? 'échec critique !!' : (
                     $value < $statistique ? 'réussite' : 'echec'
                 )
