@@ -19,7 +19,7 @@ class CharacterModel extends Model{
     ];
     protected static $ID = 'id';
 
-    public static function byOwner(int $id): ?array{
+    public static function findByOwner(int $id): ?array{
         return static::all([$id], static::getField('owner').' = ?');
     }
 }

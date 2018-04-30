@@ -4,6 +4,7 @@ namespace Raith\Model;
 
 class SessionModel{
     private static $user = 'user_id';
+    private static $character = 'character_id';
 
     public static function isLogged(): bool{
         //FIXME: Add IP Check
@@ -28,6 +29,22 @@ class SessionModel{
             return false;
 
         unset($_SESSION[static::$user]);
+        return true;
+    }
+
+    public static function haveCharacterId(): bool{
+        return isset($_SESSION[static::$character]) && is_int($_SESSION[static::$character]);
+    }
+
+    public static function getCharacterId(): ?int{
+        return static::haveCharacterId() ? $_SESSION[static::$character] : null;
+    }
+
+    public static function setCharacterId(int $character_id): bool{
+        if(!static::isLogged())
+            return false;
+
+        $_SESSION[static::$character] = $character_id;
         return true;
     }
 }

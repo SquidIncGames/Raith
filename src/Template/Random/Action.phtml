@@ -15,7 +15,7 @@
         <tr><th>Valeur</th><th>Resultat</th></tr>
         <?php foreach ($t->_('values') as $value):
             $total += $value['value'] ?>
-        <tr><td><?= $value['value'] ?></td><td><?= $value['result'] ?></td></tr>
+        <tr><td><?= $value['value'] ?></td><td><?= $value['text'] ?></td></tr>
         <?php endforeach ?>
         <tr><th><?= $total ?></th><th>Total</th></tr>
     </table>

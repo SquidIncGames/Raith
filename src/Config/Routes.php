@@ -1,15 +1,16 @@
 <?php
 $r->add('/', 'Home#index');
 
+//TODO: must be logged group
+
 //User
-$r->add('/login', 'User#login');
+$r->add('/login', 'User#login')->name('login');
 $r->add('/logout', 'User#logout');
-$r->add('/characters', 'User#characters');
+$r->add('/characters', 'User#characters')->name('characters');
 
 //Random
 $r->add('/random', 'Random#index');
 $r->add('/random/action', 'Random#action');
-
 
 //API
 //Random

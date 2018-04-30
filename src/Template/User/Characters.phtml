@@ -1,0 +1,19 @@
+<?php $t->_layout('Main')
+    ->set('Title', 'Characters')
+    ->set('Description', "Vos personnages")
+    ->_section('body') ?>
+<h2>Personnages</h2>
+<table>
+    <tr><th>Nom</th><th>Prénom</th></tr>
+    <?php foreach ($t->_('characters') as $character): ?>
+    <tr>
+        <td><?= $t->_e($character->surname) ?></td>
+        <td><?= $t->_e($character->firstname) ?></td>
+        <td><?php if ($character->id != $t->_('current_character')): ?><form method="post">
+            <input type="hidden" name="character_id" value="<?= $t->_e($character->id) ?>">
+            <input type="submit" value="Séléctionner">
+        </form><?php else: ?>Séléctionné<?php endif ?></td>
+    </tr>
+    <?php endforeach ?>
+</table>
+<?php $t->_endsection() ?>

@@ -11,13 +11,12 @@ use Raith\Model\CharacterModel;
 use Raith\Model\SessionModel;
 
 class UserController extends MyController{
-    public static function checkLogged(): int{
+    public static function checkLogged($app): int{
         if(SessionModel::isLogged())
             return SessionModel::getUserId();
         
-        http_response_code(403);
-        echo 'Must be logged'; //TODO: redirect to login ?
-        exit();
+        $router = $app->getRouter(); //TODO: redirect link page
+        $router->redirect($router->get('login')->getUrl());
     }
 
     public function login(){
@@ -28,12 +27,13 @@ class UserController extends MyController{
                 if($id == null){
                     $form->error('Les champs nom et mot de passe ne correspondent pas');
                 }else{
-                    SessionModel::login($id); //TODO: success ?
+                    SessionModel::login($id);
                 }
             }
         }
         if(SessionModel::isLogged()){
-            echo 'Allready logged as '.SessionModel::getUserId(); //TODO: redirect to profil ?
+            $router = $this->app->getRouter();
+            $router->redirect($router->get('characters')->getUrl()); //MAYBE: or next_page if 403
         }else{
             (new Html('User/Login'))
                 ->set('login_form', $form)
@@ -48,13 +48,25 @@ class UserController extends MyController{
     }
 
     public function characters(){
-        $id = UserController::checkLogged();
+        $id = UserController::checkLogged($this->app);
 
-        $characters = CharacterModel::byOwner($id);
+        $characters = CharacterModel::findByOwner($id);
         if($characters == null){
             echo 'Any character';
         }else{
-            var_dump($characters);
+            if(!empty($_POST) && isset($_POST['character_id']) && ctype_digit($_POST['character_id'])){
+                foreach ($characters as $character) {
+                    if($character->id == $_POST['character_id']){
+                        SessionModel::setCharacterId($character->id);
+                        break;
+                    }
+                }
+            }
+
+            (new Html('User/Characters'))
+                ->set('current_character', SessionModel::getCharacterId())
+                ->set('characters', $characters)
+                ->run();
         }
     }
 }
