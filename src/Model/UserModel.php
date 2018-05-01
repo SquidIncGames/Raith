@@ -6,41 +6,41 @@ use Krutush\Database\Model;
 use Krutush\Database\Connection;
 
 class UserModel extends Model{
-    public const TABLE = 'utilisateur';
+    public const TABLE = 'users';
     public const FIELDS = [
         'id' => [
-            'column' => 'idutilisateur',
+            'column' => 'iduser',
             'type' => 'int',
-            'not_null' => true,
             'primary' => true,
             'custom' => 'AUTO_INCREMENT'
         ],
         'name' => [
-            'column' => 'nom',
             'type' => 'varchar',
             'lenght' => 50,
-            'not_null' => true
+            'not_null' => true,
+            'unique' => true
         ],
         'mail' => [
             'type' => 'varchar',
             'lenght' => 50,
-            'not_null' => true
+            'not_null' => true,
+            'unique' => true
         ],
         'discord' => [
-            'type' => 'varchar', //MAYBE: int
-            'lenght' => 50,
-            'not_null' => true
+            'type' => 'varchar', //MAYBE: bigint
+            'lenght' => 20,
+            'not_null' => true,
+            'unique' => true
         ],
         'password' => [
-            'column' => 'motdepasse',
             'type' => 'varchar',
             'lenght' => 60,
             'not_null' => true
         ]
     ];
 
-    public static function connect($name, $password): ?int{
-        $user = static::first([$name], static::getColumn('name').' = ?');
+    public static function connect($mail, $password): ?int{
+        $user = static::first([$mail], static::getColumn('mail').' = ?');
 
         if($user == null)
             return null;

@@ -5,7 +5,8 @@ $r->add('/', 'Home#index');
 
 //User
 $r->add('/login', 'User#login')->name('login');
-$r->add('/logout', 'User#logout');
+$r->add('/logout', 'User#logout')->name('logout');
+$r->add('/register', 'User#register')->name('register');
 $r->add('/characters', 'User#characters')->name('characters');
 
 //Random

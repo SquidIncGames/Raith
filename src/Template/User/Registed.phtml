@@ -1,0 +1,9 @@
+<?php $t->_layout('Main')
+    ->set('Title', 'Inscription réussie')
+    ->set('Description', "Bravo pour votre inscription")
+    ->_section('body') ?>
+<h2>Inscription réussie</h2>
+<h3>Bravo pour votre inscription</h3>
+<p>Vous pouvez maintenant pour connecter</p>
+<p><a href="<?= $t->_('login_url') ?>"><button>Se connecter</button></a></p>
+<?php $t->_endsection() ?>

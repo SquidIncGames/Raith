@@ -1,7 +1,8 @@
 <?php $t->_layout('Main')
-    ->set('Title', 'Login')
+    ->set('Title', 'Connexion')
     ->set('Description', "Connexion au site")
     ->_section('body') ?>
 <h2>Login</h2>
-<?php $t->_load('Form/Login')
-    ->_endsection() ?>
+<?php $t->_load('Form/User/Login') ?>
+<p>Pas de compte ? <a href="<?= $t->_('register_url') ?>"><button>S'inscrire</button></a></p>
+<?php $t->_endsection() ?>

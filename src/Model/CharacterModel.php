@@ -6,23 +6,20 @@ use Krutush\Database\Model;
 use Krutush\Database\Connection;
 
 class CharacterModel extends Model{
-    public const TABLE = 'personnage';
+    public const TABLE = 'characters';
     public const FIELDS = [
         'id' => [
-            'column' => 'idpersonnage',
+            'column' => 'idcharacter',
             'type' => 'int',
-            'not_null' => true,
             'primary' => true,
             'custom' => 'AUTO_INCREMENT'
         ],
         'surname' => [
-            'column' => 'nom',
             'type' => 'varchar',
             'lenght' => 50,
             'not_null' => true
         ],
         'firstname' => [
-            'column' => 'prenom',
             'type' => 'varchar',
             'lenght' => 50
         ],
@@ -31,19 +28,16 @@ class CharacterModel extends Model{
             'lenght' => 10
         ],
         'alignment' => [
-            'column' => 'alignement',
             'type' => 'varchar', //MAYBE: Alignment Table
             'lenght' => 20
         ],
         'history' => [
-            'column' => 'histoire',
             'type' => 'text'
         ],
         'description' => [
             'type' => 'text'
         ],
         'owner' => [
-            'column' => 'proprietaire',
             'type' => 'int', //TODO: OneToOne User
             'not_null' => true
         ]
