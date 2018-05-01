@@ -6,20 +6,50 @@ use Krutush\Database\Model;
 use Krutush\Database\Connection;
 
 class CharacterModel extends Model{
-    protected static $TABLE = 'personnage';
-    protected static $FIELDS = [
-        'id' => 'idpersonnage',
-        'surname' => 'nom',
-        'firstname' => 'prenom',
-        'race',
-        'alignment' => 'alignement',
-        'history' => 'histoire',
-        'description',
-        'owner' => 'proprietaire'
+    public const TABLE = 'personnage';
+    public const FIELDS = [
+        'id' => [
+            'column' => 'idpersonnage',
+            'type' => 'int',
+            'not_null' => true,
+            'primary' => true,
+            'custom' => 'AUTO_INCREMENT'
+        ],
+        'surname' => [
+            'column' => 'nom',
+            'type' => 'varchar',
+            'lenght' => 50,
+            'not_null' => true
+        ],
+        'firstname' => [
+            'column' => 'prenom',
+            'type' => 'varchar',
+            'lenght' => 50
+        ],
+        'race' => [
+            'type' => 'varchar', //MAYBE: Race Table
+            'lenght' => 10
+        ],
+        'alignment' => [
+            'column' => 'alignement',
+            'type' => 'varchar', //MAYBE: Alignment Table
+            'lenght' => 20
+        ],
+        'history' => [
+            'column' => 'histoire',
+            'type' => 'text'
+        ],
+        'description' => [
+            'type' => 'text'
+        ],
+        'owner' => [
+            'column' => 'proprietaire',
+            'type' => 'int', //TODO: OneToOne User
+            'not_null' => true
+        ]
     ];
-    protected static $ID = 'id';
 
-    public static function findByOwner(int $id): ?array{
-        return static::all([$id], static::getField('owner').' = ?');
+    public static function allByOwner(int $userId): array{
+        return static::all([$userId], static::getColumn('owner').' = ?');
     }
 }

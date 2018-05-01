@@ -12,17 +12,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/krutush/database.git",
-                "reference": "54fd0bd6ff88ce94823018db814b13cbd95ac843"
+                "reference": "acd024998b3c589be689bf46c3721c510d0839ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/krutush/database/zipball/54fd0bd6ff88ce94823018db814b13cbd95ac843",
-                "reference": "54fd0bd6ff88ce94823018db814b13cbd95ac843",
+                "url": "https://api.github.com/repos/krutush/database/zipball/acd024998b3c589be689bf46c3721c510d0839ee",
+                "reference": "acd024998b3c589be689bf46c3721c510d0839ee",
                 "shasum": ""
             },
             "require": {
-                "krutush/krutush": "dev-develop",
-                "sheychen/inutils": "^1.1"
+                "krutush/krutush": "dev-develop"
             },
             "type": "library",
             "autoload": {
@@ -40,7 +39,7 @@
                     "email": "contact@clementbois.fr"
                 }
             ],
-            "time": "2018-04-25T17:12:44+00:00"
+            "time": "2018-05-01T12:48:27+00:00"
         },
         {
             "name": "krutush/form",
@@ -48,12 +47,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/krutush/form.git",
-                "reference": "bbe35fc8ca7d491f8a2c067024251fe09a0b899c"
+                "reference": "4b2927860ec871810c436f5ab04b9c130725c244"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/krutush/form/zipball/bbe35fc8ca7d491f8a2c067024251fe09a0b899c",
-                "reference": "bbe35fc8ca7d491f8a2c067024251fe09a0b899c",
+                "url": "https://api.github.com/repos/krutush/form/zipball/4b2927860ec871810c436f5ab04b9c130725c244",
+                "reference": "4b2927860ec871810c436f5ab04b9c130725c244",
                 "shasum": ""
             },
             "require": {
@@ -75,7 +74,7 @@
                     "email": "contact@clementbois.fr"
                 }
             ],
-            "time": "2018-04-28T14:19:06+00:00"
+            "time": "2018-04-28T14:32:54+00:00"
         },
         {
             "name": "krutush/krutush",
@@ -143,42 +142,6 @@
                 }
             ],
             "time": "2018-04-25T17:47:06+00:00"
-        },
-        {
-            "name": "sheychen/inutils",
-            "version": "1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sheychen290/inutils.git",
-                "reference": "43cae2967faa1df57ec9bbf9596b45c0762081a6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sheychen290/inutils/zipball/43cae2967faa1df57ec9bbf9596b45c0762081a6",
-                "reference": "43cae2967faa1df57ec9bbf9596b45c0762081a6",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6|^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Inutils\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "sheychen",
-                    "email": "contact@clementbois.fr"
-                }
-            ],
-            "description": "Common Usefull Classes",
-            "time": "2018-04-26T18:06:04+00:00"
         }
     ],
     "packages-dev": [],

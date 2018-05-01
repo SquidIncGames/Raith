@@ -50,7 +50,7 @@ class UserController extends MyController{
     public function characters(){
         $id = UserController::checkLogged($this->app);
 
-        $characters = CharacterModel::findByOwner($id);
+        $characters = CharacterModel::allByOwner($id);
         if($characters == null){
             echo 'Any character';
         }else{
