@@ -4,7 +4,7 @@ namespace Raith\Model;
 
 class DiscordModel{
     public const HISTORIQUE = 'https://discordapp.com/api/webhooks/440528543491948564/C2z5HN2keRL6eKuhxcv78vlO9QVRxooCgRE347wzArjOQYOdDvCNDlmawO1wLXA_jS64';
-    public const INSCRIPTION = 'https://discordapp.com/api/webhooks/440528543491948564/C2z5HN2keRL6eKuhxcv78vlO9QVRxooCgRE347wzArjOQYOdDvCNDlmawO1wLXA_jS64';
+    public const INSCRIPTION = 'https://discordapp.com/api/webhooks/441304863461343242/6JjW1cjOQfE69ERlCm2Dr6VEntAA65Q7JQIzdXEALD37qqv-RkAyGRgVe45lZGvMKeca';
 
     public static function send(string $webhook, string $message): bool{
         $post = json_encode([ 'content' => $message ]);
