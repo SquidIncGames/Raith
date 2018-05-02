@@ -1,0 +1,23 @@
+<?php $t->_layout('Main')
+    ->set('Title', 'Validation des utilisateurs')
+    ->_section('body') ?>
+<h2>Personnages</h2>
+<?php if($t->_x('visitors')): ?>
+<table>
+    <tr><th>Nom</th><th>Mail</th><th>Discord</th></tr>
+    <?php foreach ($t->_('visitors') as $visitor): ?>
+    <tr>
+        <td><?= $t->_e($visitor->name) ?></td>
+        <td><?= $t->_e($visitor->mail) ?></td>
+        <td><?= $t->_e($visitor->discord) ?></td>
+        <td><form method="post">
+            <input type="hidden" name="user_id" value="<?= $t->_e($visitor->id) ?>">
+            <input type="submit" value="Valider">
+        </form></td>
+    </tr>
+    <?php endforeach ?>
+</table>
+<?php else: ?>
+<p>Aucun utilisateur en attente</p>
+<?php endif ?>
+<?php $t->_endsection() ?>

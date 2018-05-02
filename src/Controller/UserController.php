@@ -12,9 +12,12 @@ use Raith\Model\SessionModel;
 use Raith\Model\DiscordModel;
 
 class UserController extends MyController{
-    public static function checkLogged($app): int{
-        if(SessionModel::isLogged())
-            return SessionModel::getUserId();
+    public static function checkLogged($app): UserModel{
+        if(SessionModel::isLogged()){
+            $user = UserModel::find(SessionModel::getUserId());
+            if($user != null)
+                return $user;
+        }
         
         $router = $app->getRouter(); //TODO: redirect link page
         $router->redirect($router->get('login')->getUrl());
@@ -24,11 +27,15 @@ class UserController extends MyController{
         if(!SessionModel::isLogged()){
             $form = new Form('login_form', 'Form/User/Login');
             if(!empty($_POST) && $form->valid($_POST)){
-                $id = UserModel::connect($form->get('mail')->get(), $form->get('password')->get());
-                if($id == null){
+                $user = UserModel::connect($form->get('mail')->get(), $form->get('password')->get());
+                if($user == null){
                     $form->error('Les champs mail et mot de passe ne correspondent pas');
                 }else{
-                    SessionModel::login($id);
+                    if(!$user->getRole()->canConnect){
+                        $form->error('Votre compte n\'est pas autorisé à se connecter');
+                    }else{
+                        SessionModel::login($user->id);
+                    }
                 }
             }
         }
@@ -73,10 +80,10 @@ class UserController extends MyController{
                     try { //TODO: ugly $newUser->checkUniqueFields()
                         try {
                             $newUser->runInsert();
+                            DiscordModel::inscription('<@!'.$newUser->discord.'> ('.$newUser->name.') s\'est inscrit sur le site !');
                             (new Html('User/Registed'))
                                 ->set('login_url', $login_url)
                                 ->run();
-                            DiscordModel::send('<@!'.$newUser->discord.'> s\'est inscrit sur le site !');
                             return;
                         } catch (\PDOException $e){
                             if($e->getCode() != '23000')
@@ -102,12 +109,12 @@ class UserController extends MyController{
     }
 
     public function characters(){
-        $id = UserController::checkLogged($this->app);
+        $user = static::checkLogged($this->app);
+        $characters = $user->getCharacters();
 
-        $characters = CharacterModel::allByOwner($id);
-        if($characters == null){
-            echo 'Any character';
-        }else{
+        $html = (new Html('User/Characters'));
+
+        if($characters != null){
             if(!empty($_POST) && isset($_POST['character_id']) && ctype_digit($_POST['character_id'])){
                 foreach ($characters as $character) {
                     if($character->id == $_POST['character_id']){
@@ -116,11 +123,11 @@ class UserController extends MyController{
                     }
                 }
             }
-
-            (new Html('User/Characters'))
+            $html
                 ->set('current_character', SessionModel::getCharacterId())
-                ->set('characters', $characters)
-                ->run();
+                ->set('characters', $characters);
         }
+        
+        $html->run();
     }
 }

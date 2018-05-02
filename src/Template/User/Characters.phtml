@@ -3,6 +3,7 @@
     ->set('Description', "Vos personnages")
     ->_section('body') ?>
 <h2>Personnages</h2>
+<?php if($t->_x('characters')): ?>
 <table>
     <tr><th>Nom</th><th>Prénom</th></tr>
     <?php foreach ($t->_('characters') as $character): ?>
@@ -16,4 +17,7 @@
     </tr>
     <?php endforeach ?>
 </table>
+<?php else: ?>
+<p>Vous n'avez aucun personnage</p>
+<?php endif ?>
 <?php $t->_endsection() ?>

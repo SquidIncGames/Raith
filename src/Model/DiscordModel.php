@@ -3,13 +3,14 @@
 namespace Raith\Model;
 
 class DiscordModel{
-    public const WEBHOOK = 'https://discordapp.com/api/webhooks/440528543491948564/C2z5HN2keRL6eKuhxcv78vlO9QVRxooCgRE347wzArjOQYOdDvCNDlmawO1wLXA_jS64';
+    public const HISTORIQUE = 'https://discordapp.com/api/webhooks/440528543491948564/C2z5HN2keRL6eKuhxcv78vlO9QVRxooCgRE347wzArjOQYOdDvCNDlmawO1wLXA_jS64';
+    public const INSCRIPTION = 'https://discordapp.com/api/webhooks/440528543491948564/C2z5HN2keRL6eKuhxcv78vlO9QVRxooCgRE347wzArjOQYOdDvCNDlmawO1wLXA_jS64';
 
-    public static function send(string $message): bool{
+    public static function send(string $webhook, string $message): bool{
         $post = json_encode([ 'content' => $message ]);
 
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, static::WEBHOOK);
+        curl_setopt($curl, CURLOPT_URL, $webhook);
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -22,5 +23,13 @@ class DiscordModel{
         }
         curl_close($curl);
         return true;
+    }
+
+    public static function historique(string $message): bool{
+        return static::send(static::HISTORIQUE, $message);
+    }
+
+    public static function inscription(string $message): bool{
+        return static::send(static::INSCRIPTION, $message);
     }
 }

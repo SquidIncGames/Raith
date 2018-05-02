@@ -9,6 +9,10 @@ $r->add('/logout', 'User#logout')->name('logout');
 $r->add('/register', 'User#register')->name('register');
 $r->add('/characters', 'User#characters')->name('characters');
 
+//Admin
+$r->add('/admin', 'Admin#index');
+$r->add('/admin/validate/users', 'Admin#validateUsers');
+
 //Random
 $r->add('/random', 'Random#index');
 $r->add('/random/action', 'Random#action');
