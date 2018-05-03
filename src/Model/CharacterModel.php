@@ -25,11 +25,15 @@ class CharacterModel extends Model{
         ],
         'race' => [
             'type' => 'varchar', //MAYBE: Race Table
-            'lenght' => 10
+            'lenght' => 10 //NOTE: Defaults in CharacterRaceModel::class
         ],
         'alignment' => [
-            'type' => 'varchar', //MAYBE: Alignment Table
-            'lenght' => 20
+            'type' => 'int',
+            'not_null' => true,
+            'foreign' => [
+                'model' => CharacterAlignmentModel::class,
+                'field' => 'id'
+            ] //TODO: ToOne
         ],
         'history' => [
             'type' => 'text'
@@ -38,12 +42,24 @@ class CharacterModel extends Model{
             'type' => 'text'
         ],
         'owner' => [
-            'type' => 'int', //TODO: OneToOne User
-            'not_null' => true
+            'type' => 'int',
+            'not_null' => true,
+            'foreign' => [
+                'model' => UserModel::class,
+                'field' => 'id'
+            ] //TODO: ToOne
         ]
     ];
 
     public static function allByOwner(int $userId): array{
         return static::all([$userId], static::getColumn('owner').' = ?');
+    }
+
+    protected $alignment;
+    public function getAlignment(bool $update = false): ?CharacterAlignmentModel{
+        if(!isset($alignment) || $update)
+            $alignment = CharacterAlignmentModel::find($this->alignment);
+
+        return $alignment;
     }
 }
