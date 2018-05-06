@@ -5,6 +5,7 @@
 		<!--[if lt IE 9]>
 		<script src='http://html5shiv.googlecode.com/svn/trunk/html5.js'></script>
 		<![endif]-->
+        <!--<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>-->
 		<meta property="og:locale" content="fr_FR" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="<?php echo "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>" />
@@ -17,16 +18,18 @@
     </head>
     <body>
         <header>
-            <h1><a href='/'>
-				Raith
-			</a></h1>
+            <h1><a href='/'>Raith</a></h1>
         </header>
         <nav>
-
+            <ul>
+                <li class="left"><a href="/#nani">Qu'est ce que Raith ?</a></li>
+                <li class="secleft"><a href="">Contacts</a></li>
+                <li class="connect"><a href="/login">Se connecter</a></li>
+            </ul>
         </nav>
-        <section>
+        <div class="body">
              <?= $t->_content('body') ?>
-        </section>
+        </div>
         <footer>
 		
         </footer>

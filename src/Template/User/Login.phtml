@@ -3,6 +3,10 @@
     ->set('Description', "Connexion au site")
     ->_section('body') ?>
 <h2>Login</h2>
-<?php $t->_load('Form/User/Login') ?>
-<p>Pas de compte ? <a href="<?= $t->_('register_url') ?>"><button>S'inscrire</button></a></p>
+<section>
+    <?php $t->_load('Form/User/Login') ?>
+</section>
+<section>
+    <p>Pas de compte ? <a href="<?= $t->_('register_url') ?>"><button>S'inscrire</button></a></p>
+</section>
 <?php $t->_endsection() ?>

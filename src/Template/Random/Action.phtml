@@ -3,9 +3,11 @@
     ->set('Description', "Comme rendre la vie moins monotone")
     ->_section('body') ?>
 <h2>Action</h2>
-<?php $t->_load("Form/Random/Action") ?>
+<section>
+    <?php $t->_load("Form/Random/Action") ?>
+</section>
 <?php if($t->_xs(['statistique_name', 'statistique_value'])): ?>
-<div class="result">
+<section class="result">
     <p><?= $t->_p('statistique_name').': '.$t->_p('statistique_value') ?></p>
     <?= $t->_p('value', '<p>Valeur: {?}</p>') ?>
     <?= $t->_p('result', '<p>Resultat: {?}</p>') ?>
@@ -20,6 +22,6 @@
         <tr><th><?= $total ?></th><th>Total</th></tr>
     </table>
     <?php endif ?>
-</div>
+</section>
 <?php endif ?>
 <?php $t->_endsection() ?>

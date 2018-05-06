@@ -3,6 +3,10 @@
     ->set('Description', "S'inscrire au site")
     ->_section('body') ?>
 <h2>Inscription</h2>
-<?php $t->_load('Form/User/Register') ?>
-<p>Déjà inscrit ? <a href="<?= $t->_('login_url') ?>"><button>Se connecter</button></a></p>
+<section>
+    <?php $t->_load('Form/User/Register') ?>
+</section>
+<section>
+    <p>Déjà inscrit ? <a href="<?= $t->_('login_url') ?>"><button>Se connecter</button></a></p>
+</section>
 <?php $t->_endsection() ?>
