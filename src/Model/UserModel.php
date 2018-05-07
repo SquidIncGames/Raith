@@ -68,19 +68,19 @@ class UserModel extends Model{
         return static::all([2], static::getColumn('role').' = ?'); //TODO: Nop
     }
 
-    protected $role;
+    protected $_role;
     public function getRole(bool $update = false): ?UserRoleModel{
-        if(!isset($role) || $update)
-            $role = UserRoleModel::find($this->id);
+        if(!isset($_role) || $update)
+            $_role = UserRoleModel::find($this->role);
 
-        return $role;
+        return $_role;
     }
 
-    protected $characters;
+    protected $_characters;
     public function getCharacters(bool $update = false): ?array{
-        if(!isset($role) || $update)
-            $role = CharacterModel::allByOwner($this->id);
+        if(!isset($_characters) || $update)
+            $_characters = CharacterModel::allByOwner($this->id);
 
-        return $role;
+        return $_characters;
     }
 }

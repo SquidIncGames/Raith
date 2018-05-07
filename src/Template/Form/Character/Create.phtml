@@ -1,0 +1,107 @@
+<?php $f = $t->_('character_form') ?>
+<?= $f->_start() ?>
+<?= $f->_errors() ?>
+<p><?= $f->_input('nom')->label('Nom : ') //TODO: add minlength et maxlength
+    ->alpha()->required()
+    ->html() ?></p>
+
+<p><?= $f->_input('prenom')->label('Prénom : ') //TODO: add minlength et maxlength
+    ->alpha()->required()
+    ->html() ?></p>
+
+<p><?= $f->_input('surnom')->label('Surnom : ')
+    ->alpha()
+    ->html() ?></p>
+
+<p><?= $f->_select('race')->label('Race : ')
+    ->options($t->_('character_races'))
+    ->other($f->_input('Autre', false)->alpha()->required(), 'Autre')
+    ->required()->html() ?></p>
+
+<p><?= $f->_input('dateNaissance')->label('Date de naissance : ') //TODO: ajouter une note
+    ->date()->required()
+    ->max('1240-01-01')
+    ->html() ?></p>
+
+<p><?= $f->_input('taille')->label('Taille : ') //TODO: add max (m ou cm)
+    ->number()->required()
+    ->min(0)->html() ?></p>
+
+<p><?= $f->_input('poids')->label('Poids : ') //TODO: add max (kg?)
+    ->number()->required()
+    ->min(0)->html() ?></p>
+
+<p><?= $f->_select('alignement')->label('Alignement : ')
+    ->options($t->_('character_alignments'))
+    ->required()->html() ?></p>
+
+<p><?= $f->_textarea('personnalite')->label('Personnalité : ')
+    ->required()->html() ?></p>
+
+<p><?= $f->_textarea('descPhysique')->label('Description physique : ')
+    ->required()->html() ?></p>
+
+<p><?= $f->_textarea('histoire')->id('histoire')->label('Histoire : ')
+    ->required()->html() ?></p>
+
+<div id='maitrises'>
+    <h3>Maitrises : </h3>
+    <?php //Je sais pas comment on va récupérer les données à terme, mais voici un jeu de test
+    $maitrises = [
+        [
+            "text" => "Épée",
+            "value" => "maitrise-epee",
+            "more" => ''
+        ],
+        [
+            "text" => "Arc",
+            "value" => "maitrise-arc",
+            "more" => ''
+        ],
+        [
+            "text" => "Dague",
+            "value" => "maitrise-dague",
+            "more" => ''
+        ],
+        [
+            "text" => "Magie élémentaire",
+            "value" => "maitrise-magie-elementaire",
+            "more" => ''
+        ]
+    ]; //TODO: from db
+    ?>
+	<p><?= $f->_select('', false)->id('select-maitrise')
+        ->options($maitrises)->html('class="hidden"'); ?></p>
+
+    <?php foreach ($maitrises as $maitrise): ?>
+    <p><?= $f->_input($maitrise['value'])->label($maitrise['text'])
+        ->number()->min(0)->max(30)->html("class='champ-maitrise'") ?></p>
+    <?php endforeach ?>
+</div>
+
+<div id='metiers'>
+    <h3>Métiers : </h3>
+    <?php //Je sais pas comment on va récupérer les données à terme, mais voici un jeu de test
+    $metiers = [
+        [
+            "text" => "Alchimiste",
+            "value" => "metier-alchimiste",
+            "more" => ''
+        ],
+        [
+            "text" => "Forgeron",
+            "value" => "metier-forgeron",
+            "more" => ''
+        ]
+    ]; //TODO: from db
+     ?>
+    <p><?= $f->_select('', false)->id('select-metier')
+        ->options($metiers)->html('class="hidden"'); ?></p>
+
+    <?php foreach ($metiers as $metier): ?>
+    <p><?= $f->_input($metier['value'])->label($metier['text'])
+        ->number()->min(0)->max(15)->html("class='champ-metier'") ?></p>
+    <?php endforeach ?>
+</div>
+<p><?= $f->_submit('Enregistrer') ?></p>
+<?= $f->_end() ?>

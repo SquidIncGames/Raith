@@ -6,6 +6,8 @@
     --main-bg-disable-color: #1e1e1e;
     --second-bg-color: rgb(255, 162, 0);
     --second-bg-hover-color: rgb(255, 136, 0);
+    --error-fg-color: #ea4646;
+    --error-bg-color: #ea464622;
 }
 
 
@@ -20,6 +22,23 @@
 a {
     color: white;
     text-decoration: none;
+}
+
+
+.hidden {
+    display: none;
+}
+
+.errors {
+    display: inline-block;
+    background-color: var(--error-bg-color);
+    border: var(--error-fg-color) 1px solid;
+    border-radius: .5em; 
+    color: var(--error-fg-color);
+}
+.errors p{
+    flex: 1;
+    display: inline-block !important;
 }
 
 
@@ -101,9 +120,25 @@ nav ul li:hover {
     background-color: var(--main-bg-hover-color);
     border: 2px solid var(--main-bg-disable-color);
 }
+.body form p {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 10%;
+}
+.body form p label {
+    text-align: right;
+    flex: 1;
+}
+.body form p input, .body form p select, .body form p textarea {
+    flex: 1;
+    margin-left: 5%; 
+}
 .body input[type="submit"], .body button {
+    flex: 0;
+    margin: auto;
     padding: .2em .5em;
 }
+
 
 .body table {
     text-align:center;
@@ -125,6 +160,8 @@ nav ul li:hover {
 /* Index */
 .index-menu-container {
     text-align: center;
+    max-width: 120vmin;
+    margin: auto;
 }
 
 .index-menu-container .menu {

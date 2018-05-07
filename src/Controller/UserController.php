@@ -7,7 +7,6 @@ use Krutush\Template\Html;
 use Krutush\Form\Form;
 
 use Raith\Model\UserModel;
-use Raith\Model\CharacterModel;
 use Raith\Model\SessionModel;
 use Raith\Model\DiscordModel;
 
@@ -106,28 +105,5 @@ class UserController extends MyController{
             ->set('register_form', $form)
             ->set('login_url', $login_url)
             ->run();
-    }
-
-    public function characters(){
-        $user = static::checkLogged($this->app);
-        $characters = $user->getCharacters();
-
-        $html = (new Html('User/Characters'));
-
-        if($characters != null){
-            if(!empty($_POST) && isset($_POST['character_id']) && ctype_digit($_POST['character_id'])){
-                foreach ($characters as $character) {
-                    if($character->id == $_POST['character_id']){
-                        SessionModel::setCharacterId($character->id);
-                        break;
-                    }
-                }
-            }
-            $html
-                ->set('current_character', SessionModel::getCharacterId())
-                ->set('characters', $characters);
-        }
-        
-        $html->run();
     }
 }

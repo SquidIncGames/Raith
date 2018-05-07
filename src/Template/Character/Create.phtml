@@ -1,0 +1,13 @@
+<?php $t->_layout('Main')
+    ->set('Title', 'Creation de personnage')
+    ->set('Description', "Creer votre personnage")
+    ->_section('head') ?>
+<script src="/js/characterCreateForm.js"></script>
+<?php $t->_endsection()
+    ->_section('body') ?>
+
+<h2>Création de personnage</h2>
+<section>
+    <?php $t->_load('Form/Character/Create') ?>
+</section>
+<?php $t->_endsection() ?>

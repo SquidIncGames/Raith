@@ -7,7 +7,10 @@ $r->add('/', 'Home#index');
 $r->add('/login', 'User#login')->name('login');
 $r->add('/logout', 'User#logout')->name('logout');
 $r->add('/register', 'User#register')->name('register');
-$r->add('/characters', 'User#characters')->name('characters');
+
+//Character
+$r->add('/characters', 'Character#index')->name('characters');
+$r->add('/character/create', 'Character#create');
 
 //Admin
 $r->add('/admin', 'Admin#index');

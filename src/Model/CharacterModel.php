@@ -55,11 +55,11 @@ class CharacterModel extends Model{
         return static::all([$userId], static::getColumn('owner').' = ?');
     }
 
-    protected $alignment;
+    protected $_alignment;
     public function getAlignment(bool $update = false): ?CharacterAlignmentModel{
-        if(!isset($alignment) || $update)
-            $alignment = CharacterAlignmentModel::find($this->alignment);
+        if(!isset($_alignment) || $update)
+            $_alignment = CharacterAlignmentModel::find($this->alignment);
 
-        return $alignment;
+        return $_alignment;
     }
 }
