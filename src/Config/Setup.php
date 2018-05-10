@@ -9,6 +9,8 @@ $models = [
     Raith\Model\UserRoleModel::class,
     Raith\Model\CharacterRaceModel::class,
     Raith\Model\CharacterAlignmentModel::class,
+    Raith\Model\JobModel::class,
+    Raith\Model\WeaponTypeModel::class,
     Raith\Model\UserModel::class,
     Raith\Model\CharacterModel::class
 ];
@@ -171,6 +173,39 @@ if(isset($options['i']) || isset($options['insert'])){
     ]));
     $alignment['chaotique_mauvais'] = $db->getLastInsertId();
     print_r($alignment);
+
+    //Metier
+    echo 'jobs'.PHP_EOL;
+    tryInsert(new Raith\Model\JobModel([
+        'name' => 'alchimiste'
+    ]));
+    $job['alchimiste'] = $db->getLastInsertId();
+    tryInsert(new Raith\Model\JobModel([
+        'name' => 'forgeron'
+    ]));
+    $job['forgeron'] = $db->getLastInsertId();
+    print_r($job);
+
+
+    //Type d'arme
+    echo 'weapon_types'.PHP_EOL;
+    tryInsert(new Raith\Model\WeaponTypeModel([
+        'name' => 'epée'
+    ]));
+    $weapon_type['epee'] = $db->getLastInsertId();
+    tryInsert(new Raith\Model\WeaponTypeModel([
+        'name' => 'arc'
+    ]));
+    $weapon_type['arc'] = $db->getLastInsertId();
+    tryInsert(new Raith\Model\WeaponTypeModel([
+        'name' => 'dague'
+    ]));
+    $weapon_type['dague'] = $db->getLastInsertId();
+    tryInsert(new Raith\Model\WeaponTypeModel([
+        'name' => 'magie élémentaire'
+    ]));
+    $weapon_type['magie_elementaire'] = $db->getLastInsertId();
+    print_r($weapon_type);
 
     //Users
     echo 'users'.PHP_EOL;

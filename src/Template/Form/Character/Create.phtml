@@ -46,62 +46,26 @@
 
 <div id='maitrises'>
     <h3>Maitrises : </h3>
-    <?php //Je sais pas comment on va récupérer les données à terme, mais voici un jeu de test
-    $maitrises = [
-        [
-            "text" => "Épée",
-            "value" => "maitrise-epee",
-            "more" => ''
-        ],
-        [
-            "text" => "Arc",
-            "value" => "maitrise-arc",
-            "more" => ''
-        ],
-        [
-            "text" => "Dague",
-            "value" => "maitrise-dague",
-            "more" => ''
-        ],
-        [
-            "text" => "Magie élémentaire",
-            "value" => "maitrise-magie-elementaire",
-            "more" => ''
-        ]
-    ]; //TODO: from db
-    ?>
-	<p><?= $f->_select('', false)->id('select-maitrise')
-        ->options($maitrises)->html('class="hidden"'); ?></p>
+    <div id='maitrises-armes'>
+        <h4>Armes : </h4>
+        <p><?= $f->_select('', false)->id('select-maitrises-arme')
+            ->options($t->_('weapon_types'))->html('class="hidden"'); ?></p>
 
-    <?php foreach ($maitrises as $maitrise): ?>
-    <p><?= $f->_input($maitrise['value'])->label($maitrise['text'])
-        ->number()->min(0)->max(30)->html("class='champ-maitrise'") ?></p>
-    <?php endforeach ?>
-</div>
+        <?php foreach ($t->_('weapon_types') as $arme): ?>
+        <p><?= $f->_input($arme['value'])->label($arme['text'].' :')
+            ->number()->min(0)->max(30)->html("class='champ-maitrises-arme'") ?></p>
+        <?php endforeach ?>
+    </div>
+    <div id='maitrises-metiers'>
+        <h4>Métiers : </h4>
+        <p><?= $f->_select('', false)->id('select-maitrises-metier')
+            ->options($t->_('jobs'))->html('class="hidden"'); ?></p>
 
-<div id='metiers'>
-    <h3>Métiers : </h3>
-    <?php //Je sais pas comment on va récupérer les données à terme, mais voici un jeu de test
-    $metiers = [
-        [
-            "text" => "Alchimiste",
-            "value" => "metier-alchimiste",
-            "more" => ''
-        ],
-        [
-            "text" => "Forgeron",
-            "value" => "metier-forgeron",
-            "more" => ''
-        ]
-    ]; //TODO: from db
-     ?>
-    <p><?= $f->_select('', false)->id('select-metier')
-        ->options($metiers)->html('class="hidden"'); ?></p>
-
-    <?php foreach ($metiers as $metier): ?>
-    <p><?= $f->_input($metier['value'])->label($metier['text'])
-        ->number()->min(0)->max(15)->html("class='champ-metier'") ?></p>
-    <?php endforeach ?>
+        <?php foreach ($t->_('jobs') as $metier): ?>
+        <p><?= $f->_input($metier['value'])->label($metier['text'].' :')
+            ->number()->min(0)->max(30)->html("class='champ-maitrises-metier'") ?></p>
+        <?php endforeach ?>
+    </div>
 </div>
 <p><?= $f->_submit('Enregistrer') ?></p>
 <?= $f->_end() ?>

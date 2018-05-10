@@ -1,25 +1,25 @@
+function renderPoint(label, points) {
+	$(label).html(points + " points restants");
+	if (points < 0)
+		$(label).addClass("errors");
+	else
+		$(label).removeClass("errors");
+}
+
+//Mise à jour d'un compteur
+function updatePoint(champ, label) {
+	var points = 30;
+	$(champ).each(function () {
+		points -= $(this).val();
+	});
+	renderPoint(label, points);
+	return 30 - points;
+}
 
 //Fonction de mise à jour des compteurs de points
-function updatePoints(selector, points){
-	var champ = false;
-
-	if (points == 30)
-		champ = "#ptsMaitrises";
-	else if (points == 15)
-		champ = "#ptsMetiers";
-	else
-		console.log("Erreur : usage invalide de la fonction updatePoints");
-
-	if (champ != false){
-		$(selector).each(function(){ points -= $(this).val(); });
-		$(champ).html(points + " points restants");
-
-		//Avertissement visuel en cas d'excès de points
-		if (points < 0)
-			$(champ).addClass("errors");
-		else
-			$(champ).removeClass("errors");
-	}
+function updatePoints() {
+	var points = 45 - updatePoint(".champ-maitrises-arme", "#pts-maitrises-armes") - updatePoint(".champ-maitrises-metier", "#pts-maitrises-metiers");
+	renderPoint("#pts-maitrises", points);
 };
 
 function showInput(selector, item){
@@ -32,42 +32,51 @@ function showInput(selector, item){
 $(document).ready(function() {
 
 	//Crée le label d'affichage dynamique des points de maitrises
+	points = 45;
+	$("#maitrises > h3").append("<label id='pts-maitrises'>" + points + " points restants</label>");
+	//Crée le label d'affichage dynamique des points d'armes
 	points = 30;
-	$("#maitrises > h3").append("<label id='ptsMaitrises'>" + points + " points restants</label>");
+	$("#maitrises-armes > h4").append("<label id='pts-maitrises-armes'>" + points + " points restants</label>");
 	//Crée le label d'affichage dynamique des points de métiers
-	points = 15;
-	$("#metiers > h3").append("<label id='ptsMetiers'>" + points + " points restants</label>");
+	points = 30;
+	$("#maitrises-metiers > h4").append("<label id='pts-maitrises-metiers'>" + points + " points restants</label>");
 
-	//Traitements relatifs aux sélections de maîtrises
-	$("#select-maitrise").on('change', function() {
+	//Traitements relatifs aux sélections d'armes
+	$("#select-maitrises-arme").on('change', function() { //FIXME: can't display last one
 		var item = $(this).val();
-		console.log(item);
-		showInput("#select-maitrise", item);
+		showInput("#select-maitrises-arme", item);
 	}).show();
-
 	//Traitements relatifs aux sélections de métiers
-	$("#select-metier").on('change', function() {
+	$("#select-maitrises-metier").on('change', function () { //FIXME: can't display last one
 		var item = $(this).val();
-		showInput("#select-metier", item);
+		showInput("#select-maitrises-metier", item);
 	}).show();
 
 	//Actualisation du compteur de points de maitrises restants
-	$(".champ-maitrise").on('change', function () {
-		updatePoints(".champ-maitrise", 30);
-	}).parent().hide();
+	$(".champ-maitrises-arme").on('change', function () {
+		updatePoints();
+	}).each(function () {
+		if ($(this).val() == 0)
+			$(this).parent().hide();
+		else
+			$("#select-maitrises-arme > option[value='" + this.id + "']").remove();
+	});
 	//Actualisation du compteur de points de métiers restants
-	$(".champ-metier").on('change', function () {
-		updatePoints(".champ-metier", 15);
-	}).parent().hide();
+	$(".champ-maitrises-metier").on('change', function () {
+		updatePoints();
+	}).each(function () {
+		if ($(this).val() == 0)
+			$(this).parent().hide();
+		else
+			$("#select-maitrises-metier > option[value='" + this.id + "']").remove();
+	});
+	
+	updatePoints();
 
 	//Désactive la validation s'il y a des erreurs
-	$("input, select, textarea").on('change', function(){
-
-		if ($(".warning").length > 0)
-			$("#submitCharForm").prop("disabled", true);
-		else
-			$("#submitCharForm").prop("disabled", false);
-
+	$("form").on('submit', function(){
+		if ($("#maitrises .errors").length > 0)
+			return false;
 	});
 
 });
