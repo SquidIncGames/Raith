@@ -6,7 +6,7 @@ use Krutush\Database\Model;
 
 use Raith\Model\User\UserModel;
 use Raith\Model\Character\CharacterModel;
-//TODO: use Raith\Model\PlaceModel;
+use Raith\Model\World\PlaceModel;
 
 class ActionModel extends Model{
     public const TABLE = 'actions';

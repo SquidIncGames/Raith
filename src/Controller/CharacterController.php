@@ -9,8 +9,8 @@ use Krutush\Form\Form;
 use Raith\Model\Character\CharacterModel;
 use Raith\Model\Character\CharacterRaceModel;
 use Raith\Model\Character\CharacterAlignmentModel;
-use Raith\Model\WeaponTypeModel;
-use Raith\Model\JobModel;
+use Raith\Model\World\WeaponTypeModel;
+use Raith\Model\World\JobModel;
 use Raith\Model\Custom\SessionModel;
 
 class CharacterController extends MyController{

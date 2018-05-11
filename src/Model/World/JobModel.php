@@ -1,6 +1,6 @@
 <?php
 
-namespace Raith\Model;
+namespace Raith\Model\World;
 
 use Krutush\Database\Model;
 

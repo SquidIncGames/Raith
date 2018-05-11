@@ -1,9 +1,8 @@
 <?php $f = $t->_('action_form') ?>
 <?= $f->_start() ?>
 <?= $f->_errors() ?>
-<?php //TODO: load stats from db ?>
 <p><?= $f->_select('statistique')->label('Statistique')
-    ->options(['Force', 'Dext', 'Int', 'Sag', 'Cha', 'Const'])
+    ->options($t->_('stats'))
     ->required()->html() ?></p>
 <?php /* <p>
     <label for="bonus">Bonus</label>

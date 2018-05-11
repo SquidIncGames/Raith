@@ -2,7 +2,7 @@
 
 namespace Raith\Model\Action;
 
-//TODO: use Raith\Model\WeaponModel;
+use Raith\Model\World\WeaponModel;
 
 class DamageRollModel extends RollModel{
     public const TABLE = 'damage_rolls';

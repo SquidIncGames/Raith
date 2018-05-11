@@ -2,7 +2,8 @@
 
 namespace Raith\Model\Action;
 
-//TODO: use Raith\Model\StatTypeModel; use Raith\Model\WeaponModel;
+use Raith\Model\World\StatModel;
+use Raith\Model\World\WeaponModel;
 
 class SuccessRollModel extends RollModel{
     public const TABLE = 'success_rolls';
@@ -20,7 +21,7 @@ class SuccessRollModel extends RollModel{
         'statType' => [
             'column' => 'stat_type',
             'type' => 'int',
-            'foreign' =>  StatTypeModel::class,
+            'foreign' =>  StatModel::class,
             'not_null' => true
         ],
         'statValue' => [

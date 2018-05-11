@@ -6,7 +6,9 @@ use Raith\MyController;
 use Krutush\Template\Html;
 use Raith\Template\Json;
 use Krutush\Form\Form;
+
 use Raith\Model\Custom\RandomModel;
+use Raith\Model\World\StatModel;
 
 class RandomController extends MyController{
     public function index(){
@@ -15,8 +17,16 @@ class RandomController extends MyController{
 
     public function action(){
         $html = new Html('Random/Action');
-        $form = new Form('action_form', 'Form/Random/Action');
-        $html->set('action_form', $form);
+
+        $random_data = [
+            'stats' => array_map(function($stat){
+                return ['value' => $stat->id, 'text' => ucfirst($stat->name), 'more' => ''];
+            }, StatModel::all())
+        ];
+
+        $form = new Form('action_form', 'Form/Random/Action', null, true, $random_data);
+        $html->set('action_form', $form)
+            ->sets($random_data);
 
         if(!empty($_POST) && $form->valid($_POST)){
             $values = $form->values();

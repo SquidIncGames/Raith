@@ -1,14 +1,14 @@
 <?php
 
-namespace Raith\Model;
+namespace Raith\Model\World;
 
 use Krutush\Database\Model;
 
-class WeaponTypeModel extends Model{
-    public const TABLE = 'weapon_types';
+class PlaceModel extends Model{
+    public const TABLE = 'places';
     public const FIELDS = [
         'id' => [
-            'column' => 'idweapon_type',
+            'column' => 'idplace',
             'type' => 'int',
             'primary' => true,
             'custom' => 'AUTO_INCREMENT'
@@ -16,6 +16,12 @@ class WeaponTypeModel extends Model{
         'name' => [
             'type' => 'varchar',
             'lenght' => 40,
+            'not_null' => true,
+            'unique' => true
+        ],
+        'discord' => [
+            'type' => 'varchar',
+            'lenght' => 20,
             'not_null' => true,
             'unique' => true
         ]

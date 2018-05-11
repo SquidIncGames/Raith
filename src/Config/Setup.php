@@ -5,14 +5,24 @@ require __DIR__.'/../../vendor/autoload.php';
 
 new Raith\MyApp();
 
-$models = [
+$models = [ //Order for create (foreign integrity)
     Raith\Model\User\UserRoleModel::class,
     Raith\Model\Character\CharacterRaceModel::class,
     Raith\Model\Character\CharacterAlignmentModel::class,
-    Raith\Model\JobModel::class,
-    Raith\Model\WeaponTypeModel::class,
+    Raith\Model\World\JobModel::class,
+    Raith\Model\World\PlaceModel::class,
+    Raith\Model\World\WeaponTypeModel::class,
+    Raith\Model\World\StatModel::class,
     Raith\Model\User\UserModel::class,
-    Raith\Model\Character\CharacterModel::class
+    Raith\Model\Character\CharacterModel::class,
+    Raith\Model\World\WeaponModel::class,
+    Raith\Model\Action\ActionModel::class,
+    Raith\Model\Action\MessageModel::class,
+    Raith\Model\Action\RollModel::class,
+    Raith\Model\Action\RollDiceModel::class,
+    Raith\Model\Action\CustomRollModel::class,
+    Raith\Model\Action\DamageRollModel::class,
+    Raith\Model\Action\SuccessRollModel::class   
 ];
 
 $options = getopt("dci", ["drop", "create", "insert"]);
@@ -35,10 +45,9 @@ function tryInsert($model){
 
 if(isset($options['d']) || isset($options['drop'])){
     echo "drop...".PHP_EOL;
-    foreach ($models as $model) {
+    foreach (array_reverse($models) as $model) {
         echo '  '.$model::TABLE.': '.tryRun($model::drop()).PHP_EOL;
     }
-    //TODO: foreigns
 }
 if(isset($options['c']) || isset($options['create'])){
     echo "create...".PHP_EOL;
@@ -176,36 +185,63 @@ if(isset($options['i']) || isset($options['insert'])){
 
     //Metier
     echo 'jobs'.PHP_EOL;
-    tryInsert(new Raith\Model\JobModel([
+    tryInsert(new Raith\Model\World\JobModel([
         'name' => 'alchimiste'
     ]));
     $job['alchimiste'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\JobModel([
+    tryInsert(new Raith\Model\World\JobModel([
         'name' => 'forgeron'
     ]));
     $job['forgeron'] = $db->getLastInsertId();
     print_r($job);
 
-
     //Type d'arme
     echo 'weapon_types'.PHP_EOL;
-    tryInsert(new Raith\Model\WeaponTypeModel([
+    tryInsert(new Raith\Model\World\WeaponTypeModel([
         'name' => 'epée'
     ]));
     $weapon_type['epee'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\WeaponTypeModel([
+    tryInsert(new Raith\Model\World\WeaponTypeModel([
         'name' => 'arc'
     ]));
     $weapon_type['arc'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\WeaponTypeModel([
+    tryInsert(new Raith\Model\World\WeaponTypeModel([
         'name' => 'dague'
     ]));
     $weapon_type['dague'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\WeaponTypeModel([
+    tryInsert(new Raith\Model\World\WeaponTypeModel([
         'name' => 'magie élémentaire'
     ]));
     $weapon_type['magie_elementaire'] = $db->getLastInsertId();
     print_r($weapon_type);
+
+    //Statistiques
+    echo 'stats'.PHP_EOL;
+    tryInsert(new Raith\Model\World\StatModel([
+        'name' => 'force'
+    ]));
+    $stat['force'] = $db->getLastInsertId();
+    tryInsert(new Raith\Model\World\StatModel([
+        'name' => 'dextérité'
+    ]));
+    $stat['dext'] = $db->getLastInsertId();
+    tryInsert(new Raith\Model\World\StatModel([
+        'name' => 'intelligence'
+    ]));
+    $stat['int'] = $db->getLastInsertId();
+    tryInsert(new Raith\Model\World\StatModel([
+        'name' => 'sagesse'
+    ]));
+    $stat['sag'] = $db->getLastInsertId();
+    tryInsert(new Raith\Model\World\StatModel([
+        'name' => 'charisme'
+    ]));
+    $stat['char'] = $db->getLastInsertId();
+    tryInsert(new Raith\Model\World\StatModel([
+        'name' => 'constitution'
+    ]));
+    $stat['const'] = $db->getLastInsertId();
+    print_r($stat);
 
     //Users
     echo 'users'.PHP_EOL;
