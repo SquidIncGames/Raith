@@ -123,7 +123,7 @@ nav ul li:hover {
 .body form p {
     display: flex;
     flex-wrap: wrap;
-    padding: 0 10%;
+    padding: 0 20%;
 }
 .body form p label {
     text-align: right;

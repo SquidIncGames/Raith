@@ -1,5 +1,6 @@
 <?php return array(
     'default' => array(
+        'debug' => true, //Remove that in prod
         'driver' => 'mysql',
         'host' => 'localhost',
     //  'port' => '3306',

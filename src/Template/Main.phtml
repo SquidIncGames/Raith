@@ -30,9 +30,17 @@
         </nav>
         <div class="body">
              <?= $t->_content('body') ?>
+             <?php if(!empty(Krutush\Database\Connection::get()->getRequests())): ?>
+             <table>
+                <tr><th>Request</th></tr>
+                <?php foreach(Krutush\Database\Connection::get()->getRequests() as $request): ?>
+                <tr><td><?= $request ?></td></tr>
+                <?php endforeach ?>
+            </table>
+            <?php endif ?>
         </div>
         <footer>
-		
+
         </footer>
     </body>
 </html>
