@@ -6,7 +6,7 @@ use Raith\MyController;
 use Krutush\Template\Html;
 use Raith\Template\Json;
 use Krutush\Form\Form;
-use Raith\Model\RandomModel;
+use Raith\Model\Custom\RandomModel;
 
 class RandomController extends MyController{
     public function index(){

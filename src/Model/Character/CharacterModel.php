@@ -1,9 +1,9 @@
 <?php
 
-namespace Raith\Model;
+namespace Raith\Model\Character;
 
 use Krutush\Database\Model;
-use Krutush\Database\Connection;
+use Raith\Model\User\UserModel;
 
 class CharacterModel extends Model{
     public const TABLE = 'characters';

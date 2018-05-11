@@ -3,7 +3,6 @@
 namespace Raith\Model;
 
 use Krutush\Database\Model;
-use Krutush\Database\Connection;
 
 class JobModel extends Model{
     public const TABLE = 'jobs';
@@ -21,8 +20,4 @@ class JobModel extends Model{
             'unique' => true
         ]
     ];
-
-    public static function find(int $id): ?self{
-        return static::first([$id], static::getColumn('id').' = ?');
-    }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Raith\Model;
+namespace Raith\Model\User;
 
 use Krutush\Database\Model;
-use Krutush\Database\Connection;
+use Raith\Model\Character\CharacterModel;
 
 class UserModel extends Model{
     public const TABLE = 'users';
@@ -48,10 +48,6 @@ class UserModel extends Model{
         ]
     ];
 
-    public static function find(int $id): ?self{
-        return static::first([$id], static::getColumn('id').' = ?');
-    }
-
     public static function connect($mail, $password): ?self{
         $user = static::first([$mail], static::getColumn('mail').' = ?');
 
@@ -68,7 +64,7 @@ class UserModel extends Model{
         return static::all([2], static::getColumn('role').' = ?'); //TODO: Nop
     }
 
-    protected $_role;
+    protected $_role; //TODO: include in model
     public function getRole(bool $update = false): ?UserRoleModel{
         if(!isset($_role) || $update)
             $_role = UserRoleModel::find($this->role);

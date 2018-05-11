@@ -6,9 +6,9 @@ use Raith\MyController;
 use Krutush\Template\Html;
 use Krutush\Form\Form;
 
-use Raith\Model\UserModel;
-use Raith\Model\SessionModel;
-use Raith\Model\DiscordModel;
+use Raith\Model\User\UserModel;
+use Raith\Model\Custom\SessionModel;
+use Raith\Model\Custom\DiscordModel;
 
 class UserController extends MyController{
     public static function checkLogged($app): UserModel{
@@ -105,5 +105,10 @@ class UserController extends MyController{
             ->set('register_form', $form)
             ->set('login_url', $login_url)
             ->run();
+    }
+
+    public function test(){
+        DiscordModel::inscription('yolo');
+        echo 'End';
     }
 }

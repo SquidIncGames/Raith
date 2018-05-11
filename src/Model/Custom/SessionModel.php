@@ -1,6 +1,6 @@
 <?php
 
-namespace Raith\Model;
+namespace Raith\Model\Custom;
 
 class SessionModel{
     private static $user = 'user_id';

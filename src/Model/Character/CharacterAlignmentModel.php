@@ -1,9 +1,8 @@
 <?php
 
-namespace Raith\Model;
+namespace Raith\Model\Character;
 
 use Krutush\Database\Model;
-use Krutush\Database\Connection;
 
 class CharacterAlignmentModel extends Model{
     public const TABLE = 'character_alignments';
@@ -25,8 +24,4 @@ class CharacterAlignmentModel extends Model{
             'not_null' => true
         ]
     ];
-
-    public static function find(int $id): ?self{
-        return static::first([$id], static::getColumn('id').' = ?');
-    }
 }

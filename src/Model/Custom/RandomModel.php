@@ -1,6 +1,6 @@
 <?php
 
-namespace Raith\Model;
+namespace Raith\Model\Custom;
 
 class RandomModel{
     public const CRITICAL_SUCCESS = 2;

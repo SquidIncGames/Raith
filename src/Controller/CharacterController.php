@@ -6,13 +6,12 @@ use Raith\MyController;
 use Krutush\Template\Html;
 use Krutush\Form\Form;
 
-use Raith\Model\CharacterModel;
-use Raith\Model\CharacterRaceModel;
-use Raith\Model\CharacterAlignmentModel;
+use Raith\Model\Character\CharacterModel;
+use Raith\Model\Character\CharacterRaceModel;
+use Raith\Model\Character\CharacterAlignmentModel;
 use Raith\Model\WeaponTypeModel;
 use Raith\Model\JobModel;
-use Raith\Model\SessionModel;
-use Raith\Model\DiscordModel;
+use Raith\Model\Custom\SessionModel;
 
 class CharacterController extends MyController{
     public function index(){

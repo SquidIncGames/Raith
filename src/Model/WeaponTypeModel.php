@@ -3,7 +3,6 @@
 namespace Raith\Model;
 
 use Krutush\Database\Model;
-use Krutush\Database\Connection;
 
 class WeaponTypeModel extends Model{
     public const TABLE = 'weapon_types';
@@ -21,8 +20,4 @@ class WeaponTypeModel extends Model{
             'unique' => true
         ]
     ];
-
-    public static function find(int $id): ?self{
-        return static::first([$id], static::getColumn('id').' = ?');
-    }
 }
