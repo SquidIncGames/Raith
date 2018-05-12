@@ -35,7 +35,24 @@ class ActionModel extends Model{
         'date' => [
             'type' => 'datetime',
             'not_null' => true
+        ],
+        'valid' => [
+            'type' => 'bit',
+            'default' => '0',
+            'not_null' => true
         ]
     ];
     //TODO: get message, roll, move, ...
+    public static function insertAction(int $user, int $character, int $place, \DateTime $date, bool $valid): self{
+        $action = new ActionModel(compact('user', 'character', 'place', 'date', 'valid'));
+        $action->runInsert();
+        return $action;
+    }
+
+    public function validate(){
+        if(!$this->valid){
+            $this->valid = true;
+            $this->runUpdate();
+        }
+    }
 }

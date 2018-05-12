@@ -9,12 +9,38 @@ class CustomRollModel extends RollModel{
             'column' => 'idcustom_roll',
             'type' => 'int',
             'primary' => true,
-            'foreign' =>  RollModel::class
+            'foreign' => [
+                'model' => RollModel::class,
+                'index' => false //Same as PRIMARY
+            ]
         ],
         'roll' => [
             'type' => 'int',
             'not_null' => true
         ]
     ];
-    //TODO: get roll
+    
+    //MAYBE: Add fixe
+
+    protected $_roll;
+    public function getRoll(bool $update = false): RollModel{
+        if(!isset($_roll) || $update)
+            $_roll = RollModel::find($this->id);
+
+        return $_roll;
+    }
+
+    public static function makeCustomRoll(int $user, int $character, int $place, string $description, int $roll, int $count): self{
+        $dices = [];
+        for($i = 0; $i < $count; $i++)
+            $dices[] = rand(1, $roll);
+        return static::insertCustomRoll($user, $character, $place, new \DateTime(), false, $description, $roll, $dices);
+    }
+
+    public static function insertCustomRoll(int $user, int $character, int $place, \DateTime $date, bool $valid, string $description, int $roll, array $dices): self{
+        $id = static::insertRoll($user, $character, $place, $date, $valid, $description, $dices)->id;
+        $damage = new CustomRollModel(compact('id', 'roll'));
+        $damage->runInsert(false);
+        return $damage;
+    }
 }

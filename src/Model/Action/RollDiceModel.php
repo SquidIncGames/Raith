@@ -10,7 +10,8 @@ class RollDiceModel extends Model{
         'id' => [
             'column' => 'idroll_dice',
             'type' => 'int',
-            'primary' => true
+            'primary' => true,
+            'custom' => 'AUTO_INCREMENT'
         ],
         'roll' => [
             'type' => 'int',

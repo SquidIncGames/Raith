@@ -4,6 +4,7 @@ namespace Raith\Model\Character;
 
 use Krutush\Database\Model;
 use Raith\Model\User\UserModel;
+use Raith\Model\World\PlaceModel;
 
 class CharacterModel extends Model{
     public const TABLE = 'characters';
@@ -40,6 +41,11 @@ class CharacterModel extends Model{
         ],
         'description' => [
             'type' => 'text'
+        ],
+        'place' => [
+            'type' => 'int',
+            'not_null' => true,
+            'foreign' => PlaceModel::class
         ],
         'owner' => [
             'type' => 'int',

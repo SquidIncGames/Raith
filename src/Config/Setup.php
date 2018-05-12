@@ -38,6 +38,7 @@ function tryRun($request){
 function tryInsert($model){
     try{
         $model->runInsert();
+        return $model->{$model::ID};
     }catch(\PDOException $e){
         echo $e->getMessage();
     }
@@ -57,34 +58,29 @@ if(isset($options['c']) || isset($options['create'])){
 }
 if(isset($options['i']) || isset($options['insert'])){
     echo "insert...".PHP_EOL;
-    $db = Krutush\Database\Connection::get();
 
     //Roles
     echo 'user roles'.PHP_EOL;
-    tryInsert(new Raith\Model\User\UserRoleModel([
+    $role['admin'] = tryInsert(new Raith\Model\User\UserRoleModel([
         'name' => 'Administrateur',
         'canConnect' => true,
         'isAdmin' => true
     ]));
-    $roles['admin'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\User\UserRoleModel([
+    $role['new'] = tryInsert(new Raith\Model\User\UserRoleModel([
         'name' => 'Nouveau',
         'canConnect' => false,
         'isAdmin' => false
     ]));
-    $roles['new'] = $db->getLastInsertId();
-    print_r($roles);
-    tryInsert(new Raith\Model\User\UserRoleModel([
+    $role['user'] = tryInsert(new Raith\Model\User\UserRoleModel([
         'name' => 'Utilisateur',
         'canConnect' => true,
         'isAdmin' => false
     ]));
-    $roles['user'] = $db->getLastInsertId();
-    print_r($roles);
+    print_r($role);
 
     //Races
     echo 'character races'.PHP_EOL;
-    tryInsert(new Raith\Model\Character\CharacterRaceModel([
+    $race['elfe'] = tryInsert(new Raith\Model\Character\CharacterRaceModel([
         'name' => 'elfe',
         'lifetime' => '500-800 (600)',
         'appearance' => 'Souvent grands, de forme assez fine, la peau claire sauf pour quelques familles, les oreilles pointues ; la plupart ont possèdent des yeux clairs en amande ; les cheveux en général longs, majoritairement de couleur claire (blanc, gris, blond…) ; leurs vêtements sont faits de matériaux issus de végétaux généralement, pratiquement seuls les soldats ont des armures en cuir, ce qui vaut aussi pour les chaussures.',
@@ -95,8 +91,7 @@ if(isset($options['i']) || isset($options['insert'])){
         'culture' => "Les Elfes n’ont pas d’école comme on en trouverait chez les Humains. L’éducation se fait entre les membres d’une même famille, qui échangent et se transmettent leur savoir-faire en même temps que leurs valeurs et leur culture. Si un Elfe tient vraiment à apprendre un ouvrage ou un art dont sa famille n’a pas la connaissance, il ira l’apprendre auprès d’une autre famille, en échange d’un service à la mesure de ce qu’il recherche.\nLes Elfes sont de grands artistes, et un nombre assez réduit d’individus s’intéressent à la science. Pour les Elfes, rien n’est immuable, et il serait futile d’essayer de comprendre les rouages inconstants du monde. Cela dit, un certain nombre d’Elfes plus expérimentés étudient la magie, principalement pour analyser ses perturbations afin de prévoir les catastrophes.",
         'magic' => "Les Elfes sont tous reliés aux flux magiques qui parcourent le monde. Ils ressentent tous ses variations, plus ou moins fortement suivant les individus. Lorsqu’une catastrophe importante se produit qui influe sur ces courants, tous les Elfes en sont alors affectés.\nPour utiliser la magie, les Elfes puisent simplement dans ces flux. Seulement, le lien entre la magie et les sorts qu’ils lancent se fait par eux-mêmes, ce qui consomment donc leur propre énergie en même temps que celle circulant dans les courants magiques. Cela dit, les plus grands mages elfes s’entraînent à réduire toujours plus l’énergie perdue par ce biais, ce qui fait des Elfes la race avec le plus fort potentiel magique."
     ]));
-    $races['elfe'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\Character\CharacterRaceModel([
+    $race['humain'] = tryInsert(new Raith\Model\Character\CharacterRaceModel([
         'name' => 'humain',
         'lifetime' => '40-80 (50, 65 pour les riches)',
         'appearance' => 'Les Humains sont la plus diversifiée des races de Raith. Petits, grands, gros, minces, de couleurs de cheveux et d’yeux variées. Les habitants les plus au Sud ont souvent la peau plus foncée. Bien que cela soit rare, il subsiste quelques familles dans certaines villes avec un teint asiatique, même si personne ne sait vraiment d’où vient cette couleur de peau. Leurs vêtements varient beaucoup suivant leur environnement et surtout leur classe sociale. Dans la plupart des villes, on peut deviner le métier d’un Humain à sa tenue.',
@@ -107,8 +102,7 @@ if(isset($options['i']) || isset($options['insert'])){
         'culture' => "Les Humains ne sont pas tous égaux devant l’éducation. En effet, seuls ceux qui ont la chance d’habiter en ville ont la chance de pouvoir aller à l’école tous les jours – et encore, seulement ceux dont la famille est assez riche pour cela. Bien sûr, de nombreux villages ont leur propre école, mais bien souvent, les enfants issus d’un milieu social défavorisé ont besoin d’assister leurs parents dans leur travail afin de ne pas être qu’une bouche de plus à nourrir. Cela est particulièrement vrai pour les paysans, surtout dans les régions où la culture est moins efficace (comme l’Ouest et ses terrains rocheux peu fertiles). Les enfants nobles, en revanche, vont rarement à l’école parce qu’ils ont pour la plupart des professeurs particuliers.\nPour ce qui est des enseignements prodigués, les Humains sont assez généralistes : pour eux, toute connaissance est bonne à avoir et est susceptible de servir. Cela dit, les plus pauvres se contenteront des basiques (lire, écrire, compter), tandis que les nobles iront jusqu’à apprendre l’art sous ses nombreuses formes. La poésie, la peinture, la pratique d’au moins un instrument de musique seront des activités nécessaires à un noble pour être bien vu en société. Les bourgeois, quant à eux, reconnaissent souvent l’importance des mathématiques, mais ne négligeront pas les arts, dans l’espoir d’être un jour acceptés à la cour, voire même anoblis, fait rare mais qui arrive parfois lorsqu’une famille a gagné les faveurs du Roi – ou graissé quelques pattes des instances gouvernementales.",
         'magic' => "Les Humains ne sont pas une race naturellement proche de la magie. Pourtant, certains individus ont des affinités particulières pour elle. Bien qu’ils ne soient pas reliés aux flux magiques comme le sont les Elfes, chaque individu humain peut, grâce à un entraînement strict et régulier (plus ou moins en fonction de ses talents naturels), parvenir à utiliser la magie. Cela dit, l’utilisation en est plus limitée que pour les Elfes, car leur énergie naturelle est moins importante. Pour devenir puissant, un mage humain doit donc s’entrainer afin de développer son lien à la magie et d’accroître son énergie spirituelle, mais aussi maintenir un mode de vie sain afin de ne pas réduire l’efficacité de celui-ci.\nC’est pourquoi la plupart des mages humains les plus talentueux sont déjà d’un âge avancé. Les privilèges naturels ne laissent pas toujours le temps nécessaire à leur surpassement."
     ]));
-    $races['humain'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\Character\CharacterRaceModel([
+    $race['nain'] = tryInsert(new Raith\Model\Character\CharacterRaceModel([
         'name' => 'nain',
         'lifetime' => '40-80 (50)',
         'appearance' => "Petits, trapus, les Nains sont des êtres à l’air bourru et renfrogné. Les hommes portent tous la barbe, trait qui fait la fierté et l’honneur d’un Nain, et la perdre serait un sort pire que la mort pour eux. Les femmes ont en général un visage joufflu, affublé souvent d’un sourire jovial.\nPetits – ils dépassent très rarement le mètre cinquante –, leurs cheveux sont en général bruns ou noirs, parfois roux, quasiment jamais blonds ou châtains. Il en est de même pour leur barbe.\nLes hommes nains portent souvent une tenue guerrière, sauf lorsque leur activité exige le contraire. Les vêtements des femmes sont au contraire plus variés et se rapprochent parfois de ce que pourraient porter les Humaines",
@@ -119,8 +113,7 @@ if(isset($options['i']) || isset($options['insert'])){
         'culture' => "Les Nains n’ont pas d’école. La plupart des Nains apprennent le métier d’un de leurs parents, souvent le père pour les garçons et la mère pour les filles, et ce, depuis leur plus jeune âge. Pour les connaissances de base – lire, écrire, compter – ils les apprennent avec leurs parents également. Si un enfant nain se montre intéressé par le travail exercé par un Nain d’une autre famille, et que ses parents lui donnent leur accord, il pourra demander au Nain concerné de lui apprendre son métier. Cette particularité est une des raisons pour laquelle le savoir-faire nain est réputé.\nLes formes d’art privilégiées par les Nains sont les peintures murales ainsi que la gravure et la sculpture, même si pour eux, la métallurgie est également un art. De nombreuses salles communes des Nains sont tapissées d’immenses fresques représentant les exploits de tel héros, et beaucoup de lieux publics sont décorés de statues bien plus grandes que raison.\nLes Nains exercent également des professions théoriques, et les scientifiques nains ont peu à envier aux Humains. Beaucoup de villes naines possèdent une énorme bibliothèque, bien qu’il existe assez peu de livres écrits pour le divertissement.",
         'magic' => "Bien qu’ils soient une race magique au même titre que les Elfes, les Nains sont inconscients de leur potentiel magique, et en sont au mieux effrayés. Les quelques Nains révélant des aptitudes magiques particulières au point de ne plus pouvoir les contenir ont souvent été rejetés par leurs pairs, même s’ils ne les laissent pas mourir ni ne les tuent."
     ]));
-    $races['nain'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\Character\CharacterRaceModel([
+    $race['hybride'] = tryInsert(new Raith\Model\Character\CharacterRaceModel([
         'name' => 'hybride',
         'lifetime' => '45-80 (60)',
         'appearance' => "De loin, une personne non avertie aurait presque pu dire qu’un Hybride était humain. « Presque » était le mot. Les Hybrides sont des êtres mi-humains, mi-animaux. En tout cas au niveau du physique, car en réalité, les différences sont bien plus profondes que cela.\nGénéralement, un Hybride ressemblera parfaitement à un Humain, excepté qu’il possédera une caractéristique d’un animal quelconque.  Cela peut aller du plus simple, une queue ou des oreilles, au plus complexe, comme un appareil respiratoire de poisson, faisant de l’Hybride le possédant un être amphibie.\nLeurs vêtements sont adaptés à la vie dans les pays chauds.",
@@ -131,156 +124,151 @@ if(isset($options['i']) || isset($options['insert'])){
         'culture' => "Les Hybrides, du fait de leur mode de vie plus simple en communauté plus réduite, souffrent beaucoup moins d’inégalités sociales que les Humains. De ce fait, tous les enfants des tribus vont à l’école quotidiennement, à l’exception des nomades du désert qui n’ont pas d’école et apprennent par l’expérience. Cela dit, leurs enseignements sont beaucoup moins théoriques. Les seuls sujets qui n’ont pas très à quelque chose de pratique et utile à la vie de tous les jours, sont artistiques.\nLa culture des Hybrides est beaucoup plus portée sur le corps que sur l’esprit, et leurs formes d’art favorites en sont ainsi tout ce qui peut être figuratif, du dessin à la sculpture, mais aussi, dans la plupart des tribus de l’archipel, la danse. Celle-ci peut être festive, et pratiquée par tous lors des évènements particuliers, ou même guerrière, dans les tribus les plus belliqueuses, où la force est synonyme de beauté.\nMais dans tous les cas, les Hybrides ont une culture du beau, connue même des autres races. Chez les Humains du Sud, on raconte que les femelles Hybrides sont des démones à la beauté enchanteresse.",
         'magic' => "Du fait des origines de leur race, les Hybrides sont plus proches de la magie que les Humains. Cela dit, ils n’en ont aucune conscience, et l’utilisent parfois sans même le savoir. C’est la raison pour laquelle les belles danseuses Hybrides sont aussi charmeuses, et les puissants guerriers Hybrides aussi furieusement enthousiastes. Les Hybrides utilisent tous la magie inconsciemment lorsqu’ils mettent du cœur à l’ouvrage, quel qu’il soit. C’est d’ailleurs un trait que l’on retrouve chez les Humains les plus doués.\nLeur énergie spirituelle est cependant beaucoup plus importante que celle des Humains, et même si elle n’est pas au niveau de celle des Elfes, elle a la particularité de se régénérer beaucoup plus rapidement au détriment de leur environnement – ce dont les Elfes sont également capables, mais en toute conscience, ce qui leur permet de contrôler ce phénomène (dans les faits, ils ne le font quasiment jamais)."
     ]));
-    $races['hybride'] = $db->getLastInsertId();
-    print_r($races);
+    print_r($race);
 
     //Alignement
     echo 'character alignments'.PHP_EOL;
-    tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
+    $alignment['loyal_bon'] = tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
         'name' => 'loyal bon',
         'description' => " Un personnage Loyal Bon se comporte comme on l’attend d’un défenseur de l’ordre et de la Loi. Déterminé à lutter contre le Mal, il est suffisamment discipliné pour ne jamais cesser le combat. Il dit toujours la vérité, reste fidèle à la parole donnée, aide ceux qui sont dans le besoin et se dresse contre l’injustice. Il déteste voir les coupables impunis et s’élève contre l’injustice.\nL’alignement Loyal Bon mêle honneur et compassion."
     ]));
-    $alignment['loyal_bon'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
+    $alignment['neutre_bon'] = tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
         'name' => 'neutre bon',
         'description' => " Un personnage Neutre Bon fait de son mieux pour faire le bien. Il fait son possible pour aider les autres. Il travaille main dans la main avec les rois et les juges mais il ne se sent pas tenu de leur obéir.\nÊtre Neutre Bon permet de faire le Bien sans être bloqué par le carcan de la Loi."
     ]));
-    $alignment['neutre_bon'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
+    $alignment['chaotique_bon'] = tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
         'name' => 'chaotique bon',
         'description' => "Un personnage Chaotique Bon agit selon sa conscience, sans se soucier de ce que les autres pensent de lui. Il se comporte comme il l’entend, mais cela ne l’empêche pas d’être gentil et bienveillant. Il croit à la bonté et au bon droit mais se moque des lois et des règles. Il déteste les gens qui intimident les autres et leur disent comment se comporter. Il suit sa propre morale qui, bien que bienveillante, ne s’accorde pas forcément avec celle de la société.\nL’alignement Chaotique Bon conjugue bonté et esprit libre."
     ]));
-    $alignment['chaotique_bon'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
+    $alignment['loyal_neutre'] = tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
         'name' => 'loyal neutre',
         'description' => "Un personnage Loyal Neutre agit selon la loi, la tradition ou son code de conduite personnel. L’ordre et l’organisation représentent tout pour lui. Il se peut qu’il croit en l’ordre individuel et vive selon un code ou une règle ou qu’il croit en l’ordre général et privilégie un gouvernement fort et organisé.\nUn individu Loyal Neutre est fiable et honorable sans pour autant être fanatique."
     ]));
-    $alignment['loyal_neutre'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
+    $alignment['neutre'] = tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
         'name' => 'neutre',
         'description' => "Un personnage neutre fait ce qui lui semble une bonne idée. Il n’a pas vraiment de préférence lorsqu’il s’agit de choisir entre le Bien et le Mal ou entre la Loi et le Chaos (c’est ainsi que le personnage Neutre est parfois qualifié de « Neutre absolu »). Dans la plupart des cas, la neutralité représente une absence de convictions plutôt qu’un véritable dévouement envers la neutralité. Le personnage aurait ainsi plutôt tendance à penser que le Bien vaut mieux que le Mal, car il préfère que ses voisins et ses dirigeants politiques se montrent bienveillants plutôt que malveillants. Cela étant, il ne se sent nullement obligé de défendre la cause du Bien, ni en pratique ni en théorie.\nEn revanche, chez certains, la neutralité est un choix philosophique. Pour eux, le Bien, le Mal, la Loi et le Chaos sont partiaux et représentent un danger, comme tous les extrêmes. Ils prônent donc l’équilibre, qui leur paraît être le meilleur choix à long terme.\nÊtre Neutre permet d’agir naturellement en toute situation, sans se laisser guider par ses préjugés ou ses obligations."
     ]));
-    $alignment['neutre'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
+    $alignment['chaotique_neutre'] = tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
         'name' => 'chaotique neutre',
         'description' => "Un personnage Chaotique Neutre agit comme bon lui semble. C’est avant tout un individualiste. Il accorde une immense valeur à sa liberté mais il ne cherche pas à protéger celle des autres. Il évite l’autorité, déteste les restrictions et remet toujours la tradition en question. Sa lutte contre la société organisée n’est pas motivée par un désir d’anarchie car cette volonté devrait s’accompagner d’idées nobles (libérer les opprimés du joug de l’autorité) ou mauvaises (faire souffrir ceux qui sont différents de lui). Le personnage est parfois imprévisible mais son comportement n’est pas complètement aléatoire. Il est nettement plus probable qu’il traverse un pont plutôt qu’il en saute.\nÊtre Chaotique Neutre permet de profiter de la véritable liberté, celle qui ne suit pas les restrictions imposées par la société, et n’oblige pas à faire le bien à tout prix."
     ]));
-    $alignment['chaotique_neutre'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
+    $alignment['loyal_mauvais'] = tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
         'name' => 'loyal mauvais',
         'description' => "Un individu Loyal Mauvais prend tout ce qu’il désire, dans les limites de son code de conduite sans se soucier de ceux à qui il peut faire du mal. Pour lui, les traditions, la loyauté et l’obéissance ont de l’importance, mais pas la liberté ni la dignité ou la vie. Il suit les règles existantes, mais ne montre ni pitié ni compassion. Il accepte la hiérarchie, et, même s’il préfère diriger, il est prêt à obéir. Il condamne les autres, non pas en fonction de leurs actes, mais en fonction de leur race, de leur religion, de leur nationalité ou de leur rang social. Il répugne à violer la Loi ou à trahir sa parole.\nCette répugnance lui vient en partie de sa nature et en partie de sa dépendance vis à vis l’ordre établi pour se protéger de ceux qui s’opposent à lui sur des questions d’ordre moral. Certains Loyaux Mauvais se fixent eux-mêmes des limites, telles que ne jamais tuer de sang-froid (ils chargent leurs sbires de le faire à leur place) ou ne pas maltraiter les enfants (sauf lorsqu’il est impossible de faire autrement). Ils pensent que ces règles de conduite les placent au-dessus des scélérats sans scrupules.\nIl arrive que des individus ou des créatures se dévouent au mal avec le même zèle que les croisés des forces du Bien. En plus de nuire aux autres par intérêt, ils prennent plaisir à promouvoir la cause du Mal. Il arrive qu’ils fassent le mal pour servir leur dieu ou leur maître.\nL’alignement Loyal Mauvais représente un Mal méthodique, intentionnel et organisé."
     ]));
-    $alignment['loyal_mauvais'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
+    $alignment['neutre_mauvais'] = tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
         'name' => 'neutre mauvais',
         'description' => "Un individu Neutre Mauvais fait tout ce qu’il veut tant qu’il peut s’en tirer. Il ne pense tout simplement qu’à lui. Il se moque de tuer des gens par profit, pour le plaisir, ou parce que cela l’arrange. Il n’apprécie pas particulièrement l’ordre et pense que le respect de la Loi, d’un code de conduite ou des traditions ne le rendra pas meilleur ou plus noble. Il ne montre pas une nature agitée et n'est pas pour la recherche de conflits caractéristique des êtres Chaotiques Mauvais.\nCertains individus Neutres Mauvais érigent le Mal en idéal et s’y dévouent corps et âme. La plupart du temps, ils se consacrent à un dieu ou à une société secrète maléfique.\nL’alignement Neutre Mauvais représente le Mal à l’état brut, sans honneur ni nuance."
     ]));
-    $alignment['neutre_mauvais'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
+    $alignment['chaotique_mauvais'] = tryInsert(new Raith\Model\Character\CharacterAlignmentModel([
         'name' => 'chaotique mauvais',
         'description' => "Un individu Chaotique Mauvais suit sa cupidité, sa haine et sa soif de destruction. Il s’énerve facilement, il est sadique, violent et complètement imprévisible. S’il veut quelque chose pour lui, il se montre simplement brutal et impitoyable mais s’il s’est donné pour objectif de répandre le Mal et le Chaos, c’est encore pire. Fort heureusement, ses plans sont désorganisés et les groupes qu’il constitue ou auxquels il se joint sont très mal structurés. La plupart du temps, les êtres Chaotiques Mauvais ne coopèrent que sous la menace et leur chef reste place uniquement tant qu’il survit aux tentatives visant à le renverser ou l’assassiner.\nLes êtres Chaotiques Mauvais représentent la destruction, non seulement de la beauté et de la vie, mais aussi de l’ordre sur lequel cette beauté et cette vie s’appuient."
     ]));
-    $alignment['chaotique_mauvais'] = $db->getLastInsertId();
     print_r($alignment);
 
     //Metier
     echo 'jobs'.PHP_EOL;
-    tryInsert(new Raith\Model\World\JobModel([
+    $job['alchimiste'] = tryInsert(new Raith\Model\World\JobModel([
         'name' => 'alchimiste'
     ]));
-    $job['alchimiste'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\World\JobModel([
+    $job['forgeron'] = tryInsert(new Raith\Model\World\JobModel([
         'name' => 'forgeron'
     ]));
-    $job['forgeron'] = $db->getLastInsertId();
     print_r($job);
+
+    //Emplacements
+    echo 'places'.PHP_EOL;
+    $place['place'] = tryInsert(new Raith\Model\World\PlaceModel([
+        'name' => 'la place',
+        'discord' => '1234567890'
+    ]));
+    print_r($place);
 
     //Type d'arme
     echo 'weapon_types'.PHP_EOL;
-    tryInsert(new Raith\Model\World\WeaponTypeModel([
+    $weapon_type['epee'] = tryInsert(new Raith\Model\World\WeaponTypeModel([
         'name' => 'epée'
     ]));
-    $weapon_type['epee'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\World\WeaponTypeModel([
+    $weapon_type['arc'] = tryInsert(new Raith\Model\World\WeaponTypeModel([
         'name' => 'arc'
     ]));
-    $weapon_type['arc'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\World\WeaponTypeModel([
+    $weapon_type['dague'] = tryInsert(new Raith\Model\World\WeaponTypeModel([
         'name' => 'dague'
     ]));
-    $weapon_type['dague'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\World\WeaponTypeModel([
+    $weapon_type['magie_elementaire'] = tryInsert(new Raith\Model\World\WeaponTypeModel([
         'name' => 'magie élémentaire'
     ]));
-    $weapon_type['magie_elementaire'] = $db->getLastInsertId();
     print_r($weapon_type);
 
     //Statistiques
     echo 'stats'.PHP_EOL;
-    tryInsert(new Raith\Model\World\StatModel([
+    $stat['force'] = tryInsert(new Raith\Model\World\StatModel([
         'name' => 'force'
     ]));
-    $stat['force'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\World\StatModel([
+    $stat['dext'] = tryInsert(new Raith\Model\World\StatModel([
         'name' => 'dextérité'
     ]));
-    $stat['dext'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\World\StatModel([
+    $stat['int'] = tryInsert(new Raith\Model\World\StatModel([
         'name' => 'intelligence'
     ]));
-    $stat['int'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\World\StatModel([
+    $stat['sag'] = tryInsert(new Raith\Model\World\StatModel([
         'name' => 'sagesse'
     ]));
-    $stat['sag'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\World\StatModel([
+    $stat['char'] = tryInsert(new Raith\Model\World\StatModel([
         'name' => 'charisme'
     ]));
-    $stat['char'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\World\StatModel([
+    $stat['const'] = tryInsert(new Raith\Model\World\StatModel([
         'name' => 'constitution'
     ]));
-    $stat['const'] = $db->getLastInsertId();
     print_r($stat);
 
     //Users
     echo 'users'.PHP_EOL;
-    tryInsert(new Raith\Model\User\UserModel([
+    $user['admin'] = tryInsert(new Raith\Model\User\UserModel([
         'name' => 'Admin',
         'password' =>  password_hash('P@ssw0rd', PASSWORD_DEFAULT),
         'mail' => 'root@test.fr',
         'discord'=> '195607134858248192',
-        'role' => $roles['admin']
+        'role' => $role['admin']
     ]));
-    $users['admin'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\User\UserModel([
+    $user['user1'] = tryInsert(new Raith\Model\User\UserModel([
         'name' => 'User1',
         'password' =>  password_hash('P@ssw0rd1', PASSWORD_DEFAULT),
         'mail' => 'user1@test.fr',
         'discord'=> '172029861370527744',
-        'role' => $roles['user']
+        'role' => $role['user']
     ]));
-    $users['user1'] = $db->getLastInsertId();
-    tryInsert(new Raith\Model\User\UserModel([
+    $user['user2'] = tryInsert(new Raith\Model\User\UserModel([
         'name' => 'User2',
         'password' =>  password_hash('P@ssw0rd2', PASSWORD_DEFAULT),
         'mail' => 'user2@test.fr',
         'discord'=> '194393853938106368',
-        'role' => $roles['new']
+        'role' => $role['new']
     ]));
-    $users['user2'] = $db->getLastInsertId();
-    print_r($users);
+    print_r($user);
 
     //Characters
-    tryInsert(new Raith\Model\Character\CharacterModel([
+    $charater['pierre'] = tryInsert(new Raith\Model\Character\CharacterModel([
         'firstname' => 'Pierre',
         'surname' => 'Caillou',
         'race' => 'Rock',
         'alignment' => $alignment['loyal_bon'],
         'history' => 'Avant il était. Maintenant il sera.',
         'description' => 'Il est rond et mignon.',
-        'owner' => $users['user1']
+        'place' => $place['place'],
+        'owner' => $user['user1']
     ]));
+    print_r($charater);
+
+    //FIXME: Temporary model
+    $weapon['excalibur'] = tryInsert(new Raith\Model\World\WeaponModel([
+        'type' => $weapon_type['epee']
+    ]));
+
+    //Actions NOTE: WIP
+    Raith\Model\Action\CustomRollModel::makeCustomRoll($user['user1'], $charater['pierre'], $place['place'], 'jet personalisé d\'exemple', 42, 5)->validate();
+    Raith\Model\Action\SuccessRollModel::makeSuccessRoll($user['user1'], $charater['pierre'], $place['place'], 'jet de reussite d\'exemple', true, $stat['force'], 50, 5, null, 1);
+    Raith\Model\Action\DamageRollModel::makeDamageRoll($user['user1'], $charater['pierre'], $place['place'], 'jet de degat d\'exemple', true, 6, 2, $weapon['excalibur'], 2);
 }
 echo 'end'.PHP_EOL;
 ?>

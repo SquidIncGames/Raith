@@ -11,11 +11,26 @@ class MessageModel extends Model{
             'column' => 'idmessage',
             'type' => 'int',
             'primary' => true,
-            'foreign' =>  ActionModel::class
+            'foreign' => [
+                'model' => ActionModel::class,
+                'index' => false //Same as PRIMARY
+            ]
         ],
         'message' => [
             'type' => 'text',
             'not_null' => true
         ]
     ];
+
+    protected $_action;
+    public function getAction(bool $update = false): ActionModel{
+        if(!isset($_action) || $update)
+            $_action = ActionModel::find($this->id);
+
+        return $_action;
+    }
+
+    public function validate(){
+        $this->getAction(true)->validate();
+    }
 }
