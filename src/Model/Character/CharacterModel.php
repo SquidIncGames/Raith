@@ -8,7 +8,7 @@ use Raith\Model\World\PlaceModel;
 
 class CharacterModel extends Model{
     public const TABLE = 'characters';
-    public const FIELDS = [
+    public const FIELDS = [ //MAYBE: Unique firstname+surname
         'id' => [
             'column' => 'idcharacter',
             'type' => 'int',
@@ -22,11 +22,29 @@ class CharacterModel extends Model{
         ],
         'firstname' => [
             'type' => 'varchar',
+            'lenght' => 50,
+            'not_null' => true
+        ],
+        'nickname' => [
+            'type' => 'varchar',
             'lenght' => 50
         ],
         'race' => [
-            'type' => 'varchar', //MAYBE: Race Table
-            'lenght' => 10 //NOTE: Defaults in CharacterRaceModel::class
+            'type' => 'varchar',
+            'lenght' => 10, //NOTE: Defaults in CharacterRaceModel::class
+            'not_null' => true
+        ],
+        'birthday' => [
+            'type' => 'date',
+            'not_null' => true
+        ],
+        'size' => [
+            'type' => 'int',
+            'not_null' => true
+        ],
+        'weight' => [
+            'type' => 'int',
+            'not_null' => true
         ],
         'alignment' => [
             'type' => 'int',
@@ -36,14 +54,21 @@ class CharacterModel extends Model{
                 'field' => 'id'
             ] //TODO: ToOne
         ],
-        'history' => [
-            'type' => 'text'
+        'personality' => [
+            'type' => 'text',
+            'not_null' => true
         ],
         'description' => [
-            'type' => 'text'
+            'type' => 'text',
+            'not_null' => true
+        ],
+        'history' => [
+            'type' => 'text',
+            'not_null' => true
         ],
         'place' => [
             'type' => 'int',
+            'default' => 1, //FIXME: get default for config
             'not_null' => true,
             'foreign' => PlaceModel::class
         ],
@@ -54,6 +79,11 @@ class CharacterModel extends Model{
                 'model' => UserModel::class,
                 'field' => 'id'
             ] //TODO: ToOne
+        ],
+        'valid' => [
+            'type' => 'bit',
+            'default' => '0',
+            'not_null' => true
         ]
     ];
 

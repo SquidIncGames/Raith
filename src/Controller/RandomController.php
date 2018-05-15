@@ -8,7 +8,7 @@ use Raith\Template\Json;
 use Krutush\Form\Form;
 
 use Raith\Model\Custom\RandomModel;
-use Raith\Model\World\StatModel;
+use Raith\Model\World\ElementModel;
 
 class RandomController extends MyController{
     public function index(){
@@ -19,9 +19,9 @@ class RandomController extends MyController{
         $html = new Html('Random/Action');
 
         $random_data = [
-            'stats' => array_map(function($stat){
-                return ['value' => $stat->id, 'text' => ucfirst($stat->name), 'more' => ''];
-            }, StatModel::all())
+            'stats' => array_map(function($element){
+                return ['value' => $element->id, 'text' => ucfirst($element->getStat()->name), 'more' => '']; //TODO: Too many queries (preload stat)
+            }, ElementModel::all())
         ];
 
         $form = new Form('action_form', 'Form/Random/Action', null, true, $random_data);
@@ -30,13 +30,13 @@ class RandomController extends MyController{
 
         if(!empty($_POST) && $form->valid($_POST)){
             $values = $form->values();
-            $statistique = [
-                'Force' => 49,
-                'Dext' => 30,
-                'Int' => 6,
-                'Sag' => 10,
-                'Cha' => 12,
-                'Const' => 40
+            $statistique = [ //TODO: load from db
+                7 => 49, //force
+                8 => 30, //dext
+                9 => 6, //int
+                10 => 10, //sag
+                11 => 12, //cha
+                12 => 40 //const
             ][$values['statistique']];
             $html->set('statistique_name', $values['statistique'])
                 ->set('statistique_value', $statistique);

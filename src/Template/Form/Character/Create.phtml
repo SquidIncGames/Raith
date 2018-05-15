@@ -1,15 +1,15 @@
 <?php $f = $t->_('character_form') ?>
 <?= $f->_start() ?>
 <?= $f->_errors() ?>
-<p><?= $f->_input('nom')->label('Nom : ') //TODO: add minlength et maxlength
+<p><?= $f->_input('nom')->label('Nom : ') //TODO: add minlength et maxlength (50 in db)
+    ->alpha()->required() //MAYBE: allow spaces ?
+    ->html() ?></p>
+
+<p><?= $f->_input('prenom')->label('Prénom : ') //TODO: add minlength et maxlength (50 in db)
     ->alpha()->required()
     ->html() ?></p>
 
-<p><?= $f->_input('prenom')->label('Prénom : ') //TODO: add minlength et maxlength
-    ->alpha()->required()
-    ->html() ?></p>
-
-<p><?= $f->_input('surnom')->label('Surnom : ')
+<p><?= $f->_input('surnom')->label('Surnom : ') //TODO: add minlength et maxlength (50 in db)
     ->alpha()
     ->html() ?></p>
 
@@ -36,7 +36,7 @@
     ->required()->html() ?></p>
 
 <p><?= $f->_textarea('personnalite')->label('Personnalité : ')
-    ->required()->html() ?></p>
+    ->required()->html() ?></p
 
 <p><?= $f->_textarea('descPhysique')->label('Description physique : ')
     ->required()->html() ?></p>

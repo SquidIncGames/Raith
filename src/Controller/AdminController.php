@@ -5,6 +5,7 @@ namespace Raith\Controller;
 use Raith\MyController;
 use Krutush\Template\Html;
 use Krutush\Form\Form;
+use Krutush\HttpException;
 
 use Raith\Model\User\UserModel;
 use Raith\Model\Character\CharacterModel;
@@ -21,9 +22,7 @@ class AdminController extends MyController{
             }
         }
         
-        http_response_code(401);
-        echo "Nop";
-        exit;
+        throw new HttpException(401, "Restricted Acces");
     }
 
     public function index(){

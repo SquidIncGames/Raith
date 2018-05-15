@@ -40,7 +40,7 @@ class UserModel extends Model{
         'role' => [
             'type' => 'int',
             'not_null' => true,
-            'default' => 2, //TODO: Nop
+            'default' => 2, //FIXME: get default for config
             'foreign' => [
                 'model' => UserRoleModel::class,
                 'field' => 'id'

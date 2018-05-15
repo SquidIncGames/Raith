@@ -4,7 +4,7 @@ namespace Raith\Model\Action;
 
 use Krutush\Database\Model;
 
-class RollModel extends ActionModel{
+class RollModel extends Model{
     public const TABLE = 'rolls';
     public const FIELDS = [
         'id' => [
@@ -49,7 +49,7 @@ class RollModel extends ActionModel{
     }
 
     public static function insertRoll(int $user, int $character, int $place, \DateTime $date, bool $valid, string $description, array $dices): self{
-        $id = static::insertAction($user, $character, $place, $date, $valid)->id;
+        $id = ActionModel::insertAction($user, $character, $place, $date, $valid)->id;
         $roll = new RollModel(['id' => $id, 'description' => $description]);
         $roll->runInsert(false);
         foreach($dices as $dice){

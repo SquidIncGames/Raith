@@ -6,6 +6,7 @@ use Raith\MyController;
 use Krutush\Template\Html;
 use Krutush\Form\Form;
 
+use Raith\Model\Action\StatModificationModel;
 use Raith\Model\Character\CharacterModel;
 use Raith\Model\Character\CharacterRaceModel;
 use Raith\Model\Character\CharacterAlignmentModel;
@@ -40,6 +41,12 @@ class CharacterController extends MyController{
     public function create(){
         $user = UserController::checkLogged($this->app);
 
+        //NOTE: Current limit at 1 character / user
+        if(!empty($user->getCharacters())){
+            $router = $this->app->getRouter();
+            $router->redirect($router->get('characters')->getUrl());
+        }
+
         $character_data = [
             'character_races' => array_map(function($race){
                 return ['value' => $race->name, 'text' => ucfirst($race->name), 'more' => ''];
@@ -48,10 +55,10 @@ class CharacterController extends MyController{
                 return ['value' => $alignment->id, 'text' => ucfirst($alignment->name), 'more' => ''];
             }, CharacterAlignmentModel::all()),
             'weapon_types' => array_map(function($weapon){
-                return ['value' => 'weapon-'.$weapon->id, 'text' => ucfirst($weapon->name), 'more' => ''];
+                return ['id' => $weapon->id, 'value' => 'weapon-'.$weapon->id, 'text' => ucfirst($weapon->getStat()->name), 'more' => '']; //TODO: Too many queries (preload stat)
             }, WeaponTypeModel::all()),
             'jobs' => array_map(function($job){
-                return ['value' => 'job-'.$job->id, 'text' => ucfirst($job->name), 'more' => ''];
+                return ['id' => $job->id, 'value' => 'job-'.$job->id, 'text' => ucfirst($job->getStat()->name), 'more' => ''];
             }, JobModel::all())
         ];
 
@@ -60,16 +67,23 @@ class CharacterController extends MyController{
 
         if(!empty($_POST) && $form->valid($_POST)){
             $values = $form->values();
+            $maitrises = [];
             $weaponPoints = 0;
             foreach($character_data['weapon_types'] as $weapon){
-                $weaponPoints += intval($values[$weapon['value']]);
+                $value = intval($values[$weapon['value']]);
+                $weaponPoints += $value;
+                if($value > 0)
+                    $maitrises[$weapon['id']] = $value;
             }
             if($weaponPoints > 30){ //MAYBE: const ?
                 $form->error('Pas assez de points de maitrise d\'arme');
             }else{
                 $jobPoints = 0;
                 foreach($character_data['jobs'] as $job){
-                    $jobPoints += intval($values[$job['value']]);
+                    $value = intval($values[$job['value']]);
+                    $jobPoints += $value;
+                    if($value > 0)
+                        $maitrises[$job['id']] = $value;
                 }
                 if($jobPoints > 30){
                     $form->error('Pas assez de points de maitrise de metier');
@@ -77,8 +91,31 @@ class CharacterController extends MyController{
                     if($weaponPoints + $jobPoints > 45){
                         $form->error('Pas assez de points de maitrise');
                     }else{
-                        //TODO: Insert
-                        var_dump($values);
+                        $newCharacter = new CharacterModel([
+                            'surname' => $values['nom'],
+                            'firstname' => $values['prenom'],
+                            'nickname' => $values['surnom'],
+                            'race' => strtolower($values['race']),
+                            'birthday' => $values['dateNaissance'],
+                            'size' => $values['taille'],
+                            'weight' => $values['poids'],
+                            'alignment' => $values['alignement'],
+                            'personality' => $values['personnalite'],
+                            'description' => $values['descPhysique'],
+                            'history' => $values['histoire'],
+                            'owner' => $user->id
+                        ]);
+
+                        try {
+                            $newCharacter->runInsert();
+                            StatModificationModel::insertModification($user->id, $newCharacter->id, $newCharacter->place, new \DateTime(), false, 'création des maitrises', $maitrises);
+                            //MAYBE: discord ?
+                            (new Html('Character/Created'))->run();
+                            return;
+                            echo 'redirect';
+                        } catch (\Exception $e) {
+                            $form->error('Erreur inconnue durant la création');
+                        }
                     }
                 }
             }

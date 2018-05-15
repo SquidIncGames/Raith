@@ -1,0 +1,8 @@
+<?php $t->_layout('Main')
+    ->set('Title', 'Error')
+    ->set('Description', 'Sadly we failed')
+    ->_section('body') ?>
+<section>
+    <h2><?= $t->_p('code') ?><?= $t->_p('message', ' - {?}') ?></h2>
+</section>
+<?php $t->_endsection() ?>

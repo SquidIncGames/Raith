@@ -9,10 +9,11 @@ $models = [ //Order for create (foreign integrity)
     Raith\Model\User\UserRoleModel::class,
     Raith\Model\Character\CharacterRaceModel::class,
     Raith\Model\Character\CharacterAlignmentModel::class,
+    Raith\Model\World\StatModel::class,
     Raith\Model\World\JobModel::class,
     Raith\Model\World\PlaceModel::class,
     Raith\Model\World\WeaponTypeModel::class,
-    Raith\Model\World\StatModel::class,
+    Raith\Model\World\ElementModel::class,
     Raith\Model\User\UserModel::class,
     Raith\Model\Character\CharacterModel::class,
     Raith\Model\World\WeaponModel::class,
@@ -22,7 +23,9 @@ $models = [ //Order for create (foreign integrity)
     Raith\Model\Action\RollDiceModel::class,
     Raith\Model\Action\CustomRollModel::class,
     Raith\Model\Action\DamageRollModel::class,
-    Raith\Model\Action\SuccessRollModel::class   
+    Raith\Model\Action\SuccessRollModel::class,
+    Raith\Model\Action\StatModificationModel::class,
+    Raith\Model\Action\StatModificationLineModel::class
 ];
 
 $options = getopt("dci", ["drop", "create", "insert"]);
@@ -168,12 +171,8 @@ if(isset($options['i']) || isset($options['insert'])){
 
     //Metier
     echo 'jobs'.PHP_EOL;
-    $job['alchimiste'] = tryInsert(new Raith\Model\World\JobModel([
-        'name' => 'alchimiste'
-    ]));
-    $job['forgeron'] = tryInsert(new Raith\Model\World\JobModel([
-        'name' => 'forgeron'
-    ]));
+    $job['alchimiste'] = Raith\Model\World\JobModel::insertJob('alchimiste')->id;
+    $job['forgeron'] = Raith\Model\World\JobModel::insertJob('forgeron')->id;
     print_r($job);
 
     //Emplacements
@@ -186,41 +185,21 @@ if(isset($options['i']) || isset($options['insert'])){
 
     //Type d'arme
     echo 'weapon_types'.PHP_EOL;
-    $weapon_type['epee'] = tryInsert(new Raith\Model\World\WeaponTypeModel([
-        'name' => 'epée'
-    ]));
-    $weapon_type['arc'] = tryInsert(new Raith\Model\World\WeaponTypeModel([
-        'name' => 'arc'
-    ]));
-    $weapon_type['dague'] = tryInsert(new Raith\Model\World\WeaponTypeModel([
-        'name' => 'dague'
-    ]));
-    $weapon_type['magie_elementaire'] = tryInsert(new Raith\Model\World\WeaponTypeModel([
-        'name' => 'magie élémentaire'
-    ]));
+    $weapon_type['epee'] = Raith\Model\World\WeaponTypeModel::insertWeaponType('epée')->id;
+    $weapon_type['arc'] = Raith\Model\World\WeaponTypeModel::insertWeaponType('arc')->id;
+    $weapon_type['dague'] = Raith\Model\World\WeaponTypeModel::insertWeaponType('dague')->id;
+    $weapon_type['magie_elementaire'] = Raith\Model\World\WeaponTypeModel::insertWeaponType('magie élémentaire')->id;
     print_r($weapon_type);
 
     //Statistiques
-    echo 'stats'.PHP_EOL;
-    $stat['force'] = tryInsert(new Raith\Model\World\StatModel([
-        'name' => 'force'
-    ]));
-    $stat['dext'] = tryInsert(new Raith\Model\World\StatModel([
-        'name' => 'dextérité'
-    ]));
-    $stat['int'] = tryInsert(new Raith\Model\World\StatModel([
-        'name' => 'intelligence'
-    ]));
-    $stat['sag'] = tryInsert(new Raith\Model\World\StatModel([
-        'name' => 'sagesse'
-    ]));
-    $stat['char'] = tryInsert(new Raith\Model\World\StatModel([
-        'name' => 'charisme'
-    ]));
-    $stat['const'] = tryInsert(new Raith\Model\World\StatModel([
-        'name' => 'constitution'
-    ]));
-    print_r($stat);
+    echo 'elements'.PHP_EOL;
+    $element['force'] = Raith\Model\World\ElementModel::insertElement('force')->id;
+    $element['dext'] = Raith\Model\World\ElementModel::insertElement('dextérité')->id;
+    $element['int'] = Raith\Model\World\ElementModel::insertElement('intelligence')->id;
+    $element['sag'] = Raith\Model\World\ElementModel::insertElement('sagesse')->id;
+    $element['char'] = Raith\Model\World\ElementModel::insertElement('charisme')->id;
+    $element['const'] = Raith\Model\World\ElementModel::insertElement('constitution')->id;
+    print_r($element);
 
     //Users
     echo 'users'.PHP_EOL;
@@ -252,13 +231,35 @@ if(isset($options['i']) || isset($options['insert'])){
         'firstname' => 'Pierre',
         'surname' => 'Caillou',
         'race' => 'Rock',
+        'size' => '20',
+        'weight' => '2',
+        'birthday' => '1001-01-02',
         'alignment' => $alignment['loyal_bon'],
+        'personality' => 'hyperactif ... vraiment',
         'history' => 'Avant il était. Maintenant il sera.',
         'description' => 'Il est rond et mignon.',
         'place' => $place['place'],
-        'owner' => $user['user1']
+        'owner' => $user['user1'],
+        'valid' => true
     ]));
+    //TODO: add valid => false character
     print_r($charater);
+
+    //StatModification NOTE: WIP
+    Raith\Model\Action\StatModificationModel::insertModification($user['user1'], $charater['pierre'], $place['place'], new \DateTime(), true, "création des maitrises", [
+        $weapon_type['epee'] => 24,
+        $weapon_type['magie_elementaire'] => 6,
+        $job['forgeron'] => 15
+    ]);
+    Raith\Model\Action\StatModificationModel::insertModification($user['admin'], $charater['pierre'], $place['place'], new \DateTime(), true, "création des stats", [
+        $element['force'] => 54,
+        $element['dext'] => 12,
+        $element['int'] => 5,
+        $element['sag'] => 42,
+        $element['char'] => 23,
+        $element['const'] => 67
+    ]);
+
 
     //FIXME: Temporary model
     $weapon['excalibur'] = tryInsert(new Raith\Model\World\WeaponModel([
@@ -267,7 +268,7 @@ if(isset($options['i']) || isset($options['insert'])){
 
     //Actions NOTE: WIP
     Raith\Model\Action\CustomRollModel::makeCustomRoll($user['user1'], $charater['pierre'], $place['place'], 'jet personalisé d\'exemple', 42, 5)->validate();
-    Raith\Model\Action\SuccessRollModel::makeSuccessRoll($user['user1'], $charater['pierre'], $place['place'], 'jet de reussite d\'exemple', true, $stat['force'], 50, 5, null, 1);
+    Raith\Model\Action\SuccessRollModel::makeSuccessRoll($user['user1'], $charater['pierre'], $place['place'], 'jet de reussite d\'exemple', true, $element['force'], 50, 5, null, 1);
     Raith\Model\Action\DamageRollModel::makeDamageRoll($user['user1'], $charater['pierre'], $place['place'], 'jet de degat d\'exemple', true, 6, 2, $weapon['excalibur'], 2);
 }
 echo 'end'.PHP_EOL;

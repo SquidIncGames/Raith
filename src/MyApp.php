@@ -19,4 +19,13 @@ class MyApp extends App{
 
         (new Connection(Path::get('config').'/Databases.php'))->connect();
     }
+
+    public function error(HttpException $e){
+        http_response_code($e->getHttpCode());
+        (new Html('Error'))
+            ->set('code', $e->getHttpCode())
+            ->set('message', $e->getMessage())
+            ->run();
+		exit;
+	}
 }

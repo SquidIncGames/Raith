@@ -4,11 +4,11 @@ namespace Raith\Model\World;
 
 use Krutush\Database\Model;
 
-class JobModel extends Model{
-    public const TABLE = 'jobs';
+class ElementModel extends Model{
+    public const TABLE = 'elements';
     public const FIELDS = [
         'id' => [
-            'column' => 'idjob',
+            'column' => 'idstat',
             'type' => 'int',
             'primary' => true,
             'foreign' => [
@@ -26,10 +26,10 @@ class JobModel extends Model{
         return $_stat;
     }
 
-    public static function insertJob(string $name): self{
+    public static function insertElement(string $name): self{
         $id = StatModel::insertStat($name)->id;
-        $job = new JobModel(['id' => $id]);
-        $job->runInsert(false);
-        return $job;
+        $element = new ElementModel(['id' => $id]);
+        $element->runInsert(false);
+        return $element;
     }
 }

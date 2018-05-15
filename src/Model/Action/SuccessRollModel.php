@@ -2,7 +2,7 @@
 
 namespace Raith\Model\Action;
 
-use Raith\Model\World\StatModel;
+use Raith\Model\World\ElementModel;
 use Raith\Model\World\WeaponModel;
 
 class SuccessRollModel extends RollModel{
@@ -21,14 +21,14 @@ class SuccessRollModel extends RollModel{
             'type' => 'bit',
             'not_null' => true
         ],
-        'statType' => [
-            'column' => 'stat_type',
+        'elementType' => [
+            'column' => 'element_type',
             'type' => 'int',
-            'foreign' =>  StatModel::class,
+            'foreign' =>  ElementModel::class,
             'not_null' => true
         ],
-        'statValue' => [
-            'column' => 'stat_value',
+        'elementValue' => [
+            'column' => 'element_value',
             'type' => 'int',
             'not_null' => true
         ],
@@ -55,16 +55,16 @@ class SuccessRollModel extends RollModel{
         return $_roll;
     }
 
-    public static function makeSuccessRoll(int $user, int $character, int $place, string $description, bool $considered, int $statType, int $statValue, int $bonus, ?int $weapon, int $count): self{
+    public static function makeSuccessRoll(int $user, int $character, int $place, string $description, bool $considered, int $elementType, int $elementValue, int $bonus, ?int $weapon, int $count): self{
         $dices = [];
         for($i = 0; $i < $count; $i++)
             $dices[] = rand(1, 100);
-        return static::insertSuccessRoll($user, $character, $place, new \DateTime(), false, $description, $considered, $statType, $statValue, $bonus, $weapon, $dices);
+        return static::insertSuccessRoll($user, $character, $place, new \DateTime(), false, $description, $considered, $elementType, $elementValue, $bonus, $weapon, $dices);
     }
 
-    public static function insertSuccessRoll(int $user, int $character, int $place, \DateTime $date, bool $valid, string $description, bool $considered, int $statType, int $statValue, int $bonus, ?int $weapon, array $dices): self{
+    public static function insertSuccessRoll(int $user, int $character, int $place, \DateTime $date, bool $valid, string $description, bool $considered, int $elementType, int $elementValue, int $bonus, ?int $weapon, array $dices): self{
         $id = static::insertRoll($user, $character, $place, $date, $valid, $description, $dices)->id;
-        $success = new SuccessRollModel(compact('id', 'considered', 'statType', 'statValue', 'bonus', 'weapon'));
+        $success = new SuccessRollModel(compact('id', 'considered', 'elementType', 'elementValue', 'bonus', 'weapon'));
         $success->runInsert(false);
         return $success;
     }
@@ -76,7 +76,7 @@ class SuccessRollModel extends RollModel{
     }
 
     public function getSuccessLimit(): int{
-        return $this->statValue + $this->bonus;
+        return $this->elementValue + $this->bonus;
     }
 
     public function getResults(): array{

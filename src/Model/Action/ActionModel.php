@@ -49,6 +49,10 @@ class ActionModel extends Model{
         return $action;
     }
 
+    public static function allByCharacter(int $characterId, bool $valid = true): array{
+        return static::all([$characterId], static::getColumn('character').' = ?'.($valid ? ' AND '.static::getColumn('valid').' = 1' : ''));
+    }
+
     public function validate(){
         if(!$this->valid){
             $this->valid = true;

@@ -20,4 +20,10 @@ class StatModel extends Model{
             'unique' => true
         ]
     ];
+
+    public static function insertStat(string $name): self{
+        $stat = new StatModel(['name' => $name]);
+        $stat->runInsert();
+        return $stat;
+    }
 }
