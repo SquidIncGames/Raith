@@ -1,0 +1,26 @@
+<?php $t->_layout('Main')
+    ->set('Title', 'Liste des lieux')
+    ->set('Description', "Liste des lieux de l'univers par zone")
+    ->_section('body') ?>
+<h2>Régions et Lieux</h2>
+<section>
+    <?php if($t->_x('regions')): ?>
+    <?php foreach ($t->_('regions') as $region): ?>
+    <article>
+        <h3><?= $t->_e($region->name) ?></h3>
+        <?php if(!isset($region->_places)): ?>
+        <ul>
+            <?php foreach ($region->_places as $place): ?>
+            <li><?= $t->_e($place->name) ?></li>
+            <?php endforeach ?>
+        </ul>
+        <?php else: ?>
+        <p>La région est vide</p>
+        <?php endif ?>
+    <article>
+    <?php endforeach ?>
+    <?php else: ?>
+    <p>Vous n'avez aucun lieu</p>
+    <?php endif ?>
+</section>
+<?php $t->_endsection() ?>

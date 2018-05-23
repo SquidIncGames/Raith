@@ -22,14 +22,6 @@ class CustomRollModel extends RollModel{
     
     //MAYBE: Add fixe
 
-    protected $_roll;
-    public function getRoll(bool $update = false): RollModel{
-        if(!isset($_roll) || $update)
-            $_roll = RollModel::find($this->id);
-
-        return $_roll;
-    }
-
     public static function makeCustomRoll(int $user, int $character, int $place, string $description, int $roll, int $count): self{
         $dices = [];
         for($i = 0; $i < $count; $i++)

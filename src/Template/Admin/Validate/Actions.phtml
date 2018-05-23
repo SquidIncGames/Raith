@@ -1,0 +1,25 @@
+<?php $t->_layout('Main')
+    ->set('Title', 'Validation des actions')
+    ->_section('body') ?>
+<h2>Actions</h2>
+<section>
+    <?php if($t->_x('actions')): ?>
+    <table>
+        <tr><th>Nom</th><th>Prenom</th><th>Createur</th></tr>
+        <?php foreach ($t->_('actions') as $action): ?>
+        <tr>
+            <td><?= $t->_e($action->id) ?></td>
+            <?php /*<td><?= $t->_e($action->surname) ?></td>
+            <td><?= $t->_e($action->get('owner', true)->name) ?></td> */ ?>
+            <td><form method="post">
+                <input type="hidden" name="action_id" value="<?= $t->_e($action->id) ?>">
+                <input type="submit" value="Valider">
+            </form></td>
+        </tr>
+        <?php endforeach ?>
+    </table>
+    <?php else: ?>
+    <p>Aucun personnage en attente</p>
+    <?php endif ?>
+</section>
+<?php $t->_endsection() ?>

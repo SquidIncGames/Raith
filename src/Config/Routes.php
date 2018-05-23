@@ -1,6 +1,11 @@
 <?php
 $r->add('/', 'Home#index');
 
+//World
+$r->add('/world', 'World#index')->name('world');
+$r->add('/world/list', 'World#list');
+$r->add('/world/weather', 'World#weather');
+
 //TODO: must be logged group
 
 //User
@@ -15,6 +20,8 @@ $r->add('/character/create', 'Character#create');
 //Admin
 $r->add('/admin', 'Admin#index');
 $r->add('/admin/validate/users', 'Admin#validateUsers');
+$r->add('/admin/validate/characters', 'Admin#validateCharacters');
+$r->add('/admin/validate/actions', 'Admin#validateActions');
 
 //Random
 $r->add('/random', 'Random#index');

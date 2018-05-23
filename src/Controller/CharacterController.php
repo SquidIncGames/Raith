@@ -55,11 +55,11 @@ class CharacterController extends MyController{
                 return ['value' => $alignment->id, 'text' => ucfirst($alignment->name), 'more' => ''];
             }, CharacterAlignmentModel::all()),
             'weapon_types' => array_map(function($weapon){
-                return ['id' => $weapon->id, 'value' => 'weapon-'.$weapon->id, 'text' => ucfirst($weapon->getStat()->name), 'more' => '']; //TODO: Too many queries (preload stat)
-            }, WeaponTypeModel::all()),
+                return ['id' => $weapon->id, 'value' => 'weapon-'.$weapon->id, 'text' => ucfirst($weapon->_id->name), 'more' => '']; //TODO: Too many queries (preload stat)
+            }, WeaponTypeModel::load(WeaponTypeModel::all(), 'id')),
             'jobs' => array_map(function($job){
-                return ['id' => $job->id, 'value' => 'job-'.$job->id, 'text' => ucfirst($job->getStat()->name), 'more' => ''];
-            }, JobModel::all())
+                return ['id' => $job->id, 'value' => 'job-'.$job->id, 'text' => ucfirst($job->_id->name), 'more' => ''];
+            }, JobModel::load(JobModel::all(), 'id'))
         ];
 
         $html = new Html('Character/Create');

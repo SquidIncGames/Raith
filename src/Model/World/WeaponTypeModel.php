@@ -18,14 +18,6 @@ class WeaponTypeModel extends Model{
         ]
     ];
 
-    protected $_stat;
-    public function getStat(bool $update = false): StatModel{
-        if(!isset($_stat) || $update)
-            $_stat = StatModel::find($this->id);
-
-        return $_stat;
-    }
-
     public static function insertWeaponType(string $name): self{
         $id = StatModel::insertStat($name)->id;
         $weaponType = new WeaponTypeModel(['id' => $id]);

@@ -34,14 +34,6 @@ class DamageRollModel extends RollModel{
             'not_null' => true
         ]
     ];
-    
-    protected $_roll;
-    public function getRoll(bool $update = false): RollModel{
-        if(!isset($_roll) || $update)
-            $_roll = RollModel::find($this->id);
-
-        return $_roll;
-    }
 
     public static function makeDamageRoll(int $user, int $character, int $place, string $description, bool $considered, int $roll, int $fixe, int $weapon, int $count): self{
         $dices = [];

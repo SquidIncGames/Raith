@@ -24,6 +24,11 @@ class PlaceModel extends Model{
             'lenght' => 20,
             'not_null' => true,
             'unique' => true
+        ],
+        'region' => [
+            'type' => 'int',
+            'not_null' => true,
+            'foreign' => RegionModel::class
         ]
     ];
 }

@@ -64,16 +64,8 @@ class UserModel extends Model{
         return static::all([2], static::getColumn('role').' = ?'); //TODO: Nop
     }
 
-    protected $_role; //TODO: include in model
-    public function getRole(bool $update = false): ?UserRoleModel{
-        if(!isset($_role) || $update)
-            $_role = UserRoleModel::find($this->role);
-
-        return $_role;
-    }
-
     protected $_characters;
-    public function getCharacters(bool $update = false): ?array{
+    public function getCharacters(bool $update = false): ?array{ //TODO: OneToMany
         if(!isset($_characters) || $update)
             $_characters = CharacterModel::allByOwner($this->id);
 

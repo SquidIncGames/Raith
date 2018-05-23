@@ -42,6 +42,25 @@ class ActionModel extends Model{
             'not_null' => true
         ]
     ];
+
+    public const FOREIGNS = [
+        'roll' => [
+            'model' => RollModel::class,
+            'for' => 'id',
+            'nullable' => true
+        ],
+        'message' => [
+            'model' => MessageModel::class,
+            'for' => 'id',
+            'nullable' => true
+        ],
+        'stat_modification' => [
+            'model' => StatModificationModel::class,
+            'for' => 'id',
+            'nullable' => true
+        ]
+    ];
+
     //TODO: get message, roll, move, ...
     public static function insertAction(int $user, int $character, int $place, \DateTime $date, bool $valid): self{
         $action = new ActionModel(compact('user', 'character', 'place', 'date', 'valid'));
@@ -51,6 +70,10 @@ class ActionModel extends Model{
 
     public static function allByCharacter(int $characterId, bool $valid = true): array{
         return static::all([$characterId], static::getColumn('character').' = ?'.($valid ? ' AND '.static::getColumn('valid').' = 1' : ''));
+    }
+
+    public static function allByValidity(bool $valid): array{
+        return static::all([], static::getColumn('valid').' = '.intval($valid));
     }
 
     public function validate(){

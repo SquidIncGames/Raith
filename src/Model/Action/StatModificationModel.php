@@ -22,20 +22,12 @@ class StatModificationModel extends Model{
         ]
     ];
 
-    protected $_action;
-    public function getAction(bool $update = false): ActionModel{
-        if(!isset($_action) || $update)
-            $_action = ActionModel::find($this->id);
-
-        return $_action;
-    }
-
     public function validate(){
-        $this->getAction(true)->validate();
+        $this->_id->validate();
     }
 
     protected $_lines;
-    public function getLines(bool $update = false): array{
+    public function getLines(bool $update = false): array{ //TODO: OneToMany
         if(!isset($_lines) || $update)
             $_lines = StatModificationLineModel::all([$this->id], StatModificationLineModel::getColumn('modification').' = ?');
 

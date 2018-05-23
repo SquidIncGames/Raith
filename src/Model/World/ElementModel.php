@@ -18,14 +18,6 @@ class ElementModel extends Model{
         ]
     ];
 
-    protected $_stat;
-    public function getStat(bool $update = false): StatModel{
-        if(!isset($_stat) || $update)
-            $_stat = StatModel::find($this->id);
-
-        return $_stat;
-    }
-
     public static function insertElement(string $name): self{
         $id = StatModel::insertStat($name)->id;
         $element = new ElementModel(['id' => $id]);

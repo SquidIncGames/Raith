@@ -9,6 +9,7 @@ use Krutush\HttpException;
 
 use Raith\Model\User\UserModel;
 use Raith\Model\Character\CharacterModel;
+use Raith\Model\Action\ActionModel;
 use Raith\Model\Custom\SessionModel;
 use Raith\Model\Custom\DiscordModel;
 
@@ -17,7 +18,7 @@ class AdminController extends MyController{
         if(SessionModel::isLogged()){
             $user = UserModel::find(SessionModel::getUserId());
             if($user != null){
-                if($user->getRole()->isAdmin)
+                if($user->_role->isAdmin)
                     return $user;
             }
         }
@@ -38,17 +39,71 @@ class AdminController extends MyController{
 
         if($visitors != null){
             if(!empty($_POST) && isset($_POST['user_id']) && ctype_digit($_POST['user_id'])){
-                foreach ($visitors as $visitor) {
+                foreach ($visitors as $key => $visitor) {
                     if($visitor->id == $_POST['user_id']){
                         $visitor->role = 3; //TODO: Nop
                         $visitor->runUpdate();
                         DiscordModel::historique('<@!'.$visitor->discord.'> ('.$visitor->name.') a été accepté sur le site !');
+                        unset($visitors[$key]);
                         break;
                     }
                 }
             }
-            $visitors = UserModel::allVisitors();
             if($visitors != null) $html->set('visitors', $visitors);
+        }
+        
+        $html->run();
+    }
+
+    public function validateCharacters(){
+        static::checkAdmin();
+        
+        $characters = CharacterModel::load(CharacterModel::allByValidity(false), 'owner');
+        $html = (new Html('Admin/Validate/Characters'));
+
+        if($characters != null){
+            if(!empty($_POST) && isset($_POST['character_id']) && ctype_digit($_POST['character_id'])){
+                foreach ($characters as $key => $character) {
+                    if($character->id == $_POST['character_id']){
+                        $character->valid = true;
+                        //TODO: Set caracterisitics
+                        //$character->runUpdate();
+                        unset($characters[$key]);
+                        break;
+                    }
+                }
+            }
+            if($characters != null) $html->set('characters', $characters);
+        }
+        
+        $html->run();
+    }
+
+    public function validateActions(){
+        static::checkAdmin();
+        
+        $actions = ActionModel::loads(ActionModel::allByValidity(false), ['message', 'roll', 'stat_modification']);
+        foreach($actions as $action){
+            var_dump($action->id);
+            var_dump($action->tryGet('message'));
+            var_dump($action->tryGet('roll'));
+            var_dump($action->tryGet('stat_modification'));
+        }
+
+        $html = (new Html('Admin/Validate/Actions'));
+
+        if($actions != null){
+            if(!empty($_POST) && isset($_POST['action_id']) && ctype_digit($_POST['action_id'])){
+                foreach ($actions as $key => $action) {
+                    if($action->id == $_POST['action_id']){
+                        $action->valid = true;
+                        $action->runUpdate();
+                        unset($actions[$key]);
+                        break;
+                    }
+                }
+            }
+            if($actions != null) $html->set('actions', $actions);
         }
         
         $html->run();

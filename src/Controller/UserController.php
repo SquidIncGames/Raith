@@ -30,7 +30,7 @@ class UserController extends MyController{
                 if($user == null){
                     $form->error('Les champs mail et mot de passe ne correspondent pas');
                 }else{
-                    if(!$user->getRole()->canConnect){
+                    if(!$user->_role->canConnect){
                         $form->error('Votre compte n\'est pas autorisé à se connecter');
                     }else{
                         SessionModel::login($user->id);

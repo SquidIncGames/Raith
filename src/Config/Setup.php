@@ -11,6 +11,9 @@ $models = [ //Order for create (foreign integrity)
     Raith\Model\Character\CharacterAlignmentModel::class,
     Raith\Model\World\StatModel::class,
     Raith\Model\World\JobModel::class,
+    Raith\Model\World\WeatherTypeModel::class,
+    Raith\Model\World\WeatherChangeModel::class,
+    Raith\Model\World\RegionModel::class,
     Raith\Model\World\PlaceModel::class,
     Raith\Model\World\WeaponTypeModel::class,
     Raith\Model\World\ElementModel::class,
@@ -41,7 +44,8 @@ function tryRun($request){
 function tryInsert($model){
     try{
         $model->runInsert();
-        return $model->{$model::ID};
+        if($model::ID != null)
+            return $model->{$model::ID};
     }catch(\PDOException $e){
         echo $e->getMessage();
     }
@@ -175,11 +179,49 @@ if(isset($options['i']) || isset($options['insert'])){
     $job['forgeron'] = Raith\Model\World\JobModel::insertJob('forgeron')->id;
     print_r($job);
 
-    //Emplacements
+    //Meteo
+    echo 'weather_types'.PHP_EOL;
+    $weather['sunny'] = tryInsert(new Raith\Model\World\WeatherTypeModel(['name' => 'ensoleillé']));
+    $weather['cloudy'] = tryInsert(new Raith\Model\World\WeatherTypeModel(['name' => 'nuageux']));
+    $weather['raining'] = tryInsert(new Raith\Model\World\WeatherTypeModel(['name' => 'pluvieux']));
+    $weather['storm'] = tryInsert(new Raith\Model\World\WeatherTypeModel(['name' => 'tempête']));
+    print_r($weather);
+
+    //Changement de meteo NOTE:WIP
+    tryInsert(new Raith\Model\World\WeatherChangeModel(['current' => $weather['sunny'], 'to' => $weather['sunny'], 'probability' => 3]));
+    tryInsert(new Raith\Model\World\WeatherChangeModel(['current' => $weather['sunny'], 'to' => $weather['cloudy'], 'probability' => 1]));
+
+    tryInsert(new Raith\Model\World\WeatherChangeModel(['current' => $weather['cloudy'], 'to' => $weather['sunny'], 'probability' => 2]));
+    tryInsert(new Raith\Model\World\WeatherChangeModel(['current' => $weather['cloudy'], 'to' => $weather['cloudy'], 'probability' => 1]));
+    tryInsert(new Raith\Model\World\WeatherChangeModel(['current' => $weather['cloudy'], 'to' => $weather['raining'], 'probability' => 1]));
+
+    tryInsert(new Raith\Model\World\WeatherChangeModel(['current' => $weather['raining'], 'to' => $weather['cloudy'], 'probability' => 11]));
+    tryInsert(new Raith\Model\World\WeatherChangeModel(['current' => $weather['raining'], 'to' => $weather['raining'], 'probability' => 9]));
+    tryInsert(new Raith\Model\World\WeatherChangeModel(['current' => $weather['raining'], 'to' => $weather['storm'], 'probability' => 1]));
+
+    tryInsert(new Raith\Model\World\WeatherChangeModel(['current' => $weather['storm'], 'to' => $weather['storm'], 'probability' => 3]));
+    tryInsert(new Raith\Model\World\WeatherChangeModel(['current' => $weather['storm'], 'to' => $weather['raining'], 'probability' => 1]));
+
+    //Regions
+    echo 'regions'.PHP_EOL;
+    $region['region'] = tryInsert(new Raith\Model\World\RegionModel([
+        'name' => 'la region',
+        'weather' => $weather['sunny'],
+        'weather_update' => new DateTime() 
+    ]));
+    print_r($region);
+
+    //Emplacements NOTE: Temporaire
     echo 'places'.PHP_EOL;
     $place['place'] = tryInsert(new Raith\Model\World\PlaceModel([
         'name' => 'la place',
-        'discord' => '1234567890'
+        'discord' => '1234567890',
+        'region' => $region['region']
+    ]));
+    $place['lac'] = tryInsert(new Raith\Model\World\PlaceModel([
+        'name' => 'le lac',
+        'discord' => '0987654321',
+        'region' => $region['region']
     ]));
     print_r($place);
 

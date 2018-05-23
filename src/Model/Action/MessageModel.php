@@ -22,15 +22,7 @@ class MessageModel extends Model{
         ]
     ];
 
-    protected $_action;
-    public function getAction(bool $update = false): ActionModel{
-        if(!isset($_action) || $update)
-            $_action = ActionModel::find($this->id);
-
-        return $_action;
-    }
-
     public function validate(){
-        $this->getAction(true)->validate();
+        $this->_id->validate();
     }
 }

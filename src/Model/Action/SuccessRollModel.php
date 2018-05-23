@@ -47,14 +47,6 @@ class SuccessRollModel extends RollModel{
     public const FAILURE = 0;
     public const CRITICAL_FAILURE = -1;
 
-    protected $_roll;
-    public function getRoll(bool $update = false): RollModel{
-        if(!isset($_roll) || $update)
-            $_roll = RollModel::find($this->id);
-
-        return $_roll;
-    }
-
     public static function makeSuccessRoll(int $user, int $character, int $place, string $description, bool $considered, int $elementType, int $elementValue, int $bonus, ?int $weapon, int $count): self{
         $dices = [];
         for($i = 0; $i < $count; $i++)

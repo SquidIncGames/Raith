@@ -20,8 +20,8 @@ class RandomController extends MyController{
 
         $random_data = [
             'stats' => array_map(function($element){
-                return ['value' => $element->id, 'text' => ucfirst($element->getStat()->name), 'more' => '']; //TODO: Too many queries (preload stat)
-            }, ElementModel::all())
+                return ['value' => $element->id, 'text' => ucfirst($element->_id->name), 'more' => ''];
+            }, ElementModel::load(ElementModel::all(), 'id'))
         ];
 
         $form = new Form('action_form', 'Form/Random/Action', null, true, $random_data);
