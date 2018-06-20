@@ -12,7 +12,7 @@ use Raith\Model\World\ElementModel;
 
 class RandomController extends MyController{
     public function index(){
-        (new Html('Random/Index'))->run();
+        $this->getHtml('Random/Index')->run();
     }
 
     public function action(){

@@ -87,6 +87,10 @@ class CharacterModel extends Model{
         ]
     ];
 
+    public function getFullName(): string{
+        return "$this->surname $this->firstname".(!empty($this->nickname) ? " ($this->nickname)" : '');
+    }
+
     public static function allByOwner(int $userId): array{
         return static::all([$userId], static::getColumn('owner').' = ?');
     }

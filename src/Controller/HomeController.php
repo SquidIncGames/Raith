@@ -7,7 +7,7 @@ use Krutush\Template\Html;
 
 class HomeController extends MyController{
     public function index(){
-        (new Html('Index'))->run();
+        $this->getHtml('Index')->run();
     }
 
     public function notfound($url){

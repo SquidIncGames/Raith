@@ -21,17 +21,17 @@ class StatModificationModel extends Model{
             'not_null' => true
         ]
     ];
+    public const FOREIGNS = [
+        'lines' => [
+            'model' => StatModificationLineModel::class,
+            'for' => 'id',
+            'field' => 'modification',
+            'multiple' => true
+        ]
+    ];
 
     public function validate(){
         $this->_id->validate();
-    }
-
-    protected $_lines;
-    public function getLines(bool $update = false): array{ //TODO: OneToMany
-        if(!isset($_lines) || $update)
-            $_lines = StatModificationLineModel::all([$this->id], StatModificationLineModel::getColumn('modification').' = ?');
-
-        return $_lines;
     }
 
     public static function insertModification(int $user, int $character, int $place, \DateTime $date, bool $valid, string $description, array $modifications): self{

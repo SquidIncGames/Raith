@@ -3,8 +3,8 @@
 namespace Raith\Controller;
 
 use Raith\MyController;
-use Krutush\Template\Html;
 use Krutush\Form\Form;
+use Krutush\HttpException;
 
 use Raith\Model\Action\StatModificationModel;
 use Raith\Model\Character\CharacterModel;
@@ -17,9 +17,9 @@ use Raith\Model\Custom\SessionModel;
 class CharacterController extends MyController{
     public function index(){
         $user = UserController::checkLogged($this->app);
-        $characters = $user->getCharacters();
+        $characters = $user->_characters;
 
-        $html = (new Html('Character/Index'));
+        $html = $this->getHtml('Character/Index');
 
         if($characters != null){
             if(!empty($_POST) && isset($_POST['character_id']) && ctype_digit($_POST['character_id'])){
@@ -42,7 +42,7 @@ class CharacterController extends MyController{
         $user = UserController::checkLogged($this->app);
 
         //NOTE: Current limit at 1 character / user
-        if(!empty($user->getCharacters())){
+        if(!empty($user->_characters)){
             $router = $this->app->getRouter();
             $router->redirect($router->get('characters')->getUrl());
         }
@@ -55,7 +55,7 @@ class CharacterController extends MyController{
                 return ['value' => $alignment->id, 'text' => ucfirst($alignment->name), 'more' => ''];
             }, CharacterAlignmentModel::all()),
             'weapon_types' => array_map(function($weapon){
-                return ['id' => $weapon->id, 'value' => 'weapon-'.$weapon->id, 'text' => ucfirst($weapon->_id->name), 'more' => '']; //TODO: Too many queries (preload stat)
+                return ['id' => $weapon->id, 'value' => 'weapon-'.$weapon->id, 'text' => ucfirst($weapon->_id->name), 'more' => ''];
             }, WeaponTypeModel::load(WeaponTypeModel::all(), 'id')),
             'jobs' => array_map(function($job){
                 return ['id' => $job->id, 'value' => 'job-'.$job->id, 'text' => ucfirst($job->_id->name), 'more' => ''];
@@ -110,7 +110,7 @@ class CharacterController extends MyController{
                             $newCharacter->runInsert();
                             StatModificationModel::insertModification($user->id, $newCharacter->id, $newCharacter->place, new \DateTime(), false, 'création des maitrises', $maitrises);
                             //MAYBE: discord ?
-                            (new Html('Character/Created'))->run();
+                            $this->getHtml('Character/Created')->run();
                             return;
                             echo 'redirect';
                         } catch (\Exception $e) {
@@ -125,5 +125,23 @@ class CharacterController extends MyController{
             ->set('character_form', $form)
             ->sets($character_data)
             ->run();
+    }
+
+    public function infos(int $id){
+        $user = UserController::checkLogged($this->app);
+
+        $character = CharacterModel::find($id);
+        if($character == null)
+            throw new HttpException(404);
+
+        /*if(in_array($character, $user->_characters)){
+            $this->getHtml('Character/Details'))
+                ->set('character', $character)
+                ->run();
+        }else{*/
+            $this->getHtml('Character/Infos')
+                ->set('character', $character)
+                ->run();
+        //}
     }
 }

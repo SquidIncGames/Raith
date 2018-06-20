@@ -1,0 +1,24 @@
+<?php
+$region = $t->_('region');
+$t->_layout('Main')
+    ->set('Title', 'Region - '.$region->name)
+    ->set('Description', "Description d'une region")
+    ->_section('body') ?>
+<h2><?= $t->_e($region->name) ?></h2>
+<section>
+    <p>Nom: <?= $t->_e($region->name) ?></p>
+    <p>Météo: <?= $t->_e($region->_weather->name) ?></p>
+    <div>
+        <h3>Lieux</h3>
+        <?php if(empty($region->_places)): ?>
+        <p>Aucun lieu</p>
+        <?php else: ?>
+        <ul>
+            <?php foreach($region->_places as $place): ?>
+            <li><a href="/<?= $t->_('router')->get('world place')->getUrl(['id' => $place->id]) ?>"><?= $t->_e($place->name) ?></a></li>
+            <?php endforeach ?>
+        </ul>
+        <?php endif ?>
+    </div>
+</section>
+<?php $t->_endsection() ?>

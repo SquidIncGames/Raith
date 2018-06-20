@@ -3,6 +3,7 @@
 namespace Raith\Model\World;
 
 use Krutush\Database\Model;
+use Raith\Model\Character\CharacterModel;
 
 class PlaceModel extends Model{
     public const TABLE = 'places';
@@ -31,4 +32,18 @@ class PlaceModel extends Model{
             'foreign' => RegionModel::class
         ]
     ];
+
+    public const FOREIGNS = [
+        'characters' => [
+            'model' => CharacterModel::class,
+            'for' => 'id',
+            'field' => 'place',
+            'nullable' => true,
+            'multiple' => true
+        ]
+    ];
+
+    public function getFullName(): string{
+        return $this->_region->name.' / '.$this->name;
+    }
 }

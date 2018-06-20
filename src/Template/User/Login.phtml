@@ -7,6 +7,6 @@
     <?php $t->_load('Form/User/Login') ?>
 </section>
 <section>
-    <p>Pas de compte ? <a href="<?= $t->_('register_url') ?>"><button>S'inscrire</button></a></p>
+    <p>Pas de compte ? <a href="/<?= $t->_('router')->get('register')->getUrl() ?>"><button>S'inscrire</button></a></p>
 </section>
 <?php $t->_endsection() ?>

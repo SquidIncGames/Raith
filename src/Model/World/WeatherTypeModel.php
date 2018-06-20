@@ -32,7 +32,7 @@ class WeatherTypeModel extends Model{
     ];
 
     public function getNext(): int{
-        $changes = $this->tryGet('changes');
+        $changes = $this->_changes;
         if(!isset($changes) || empty($changes))
             return $this->id;
 

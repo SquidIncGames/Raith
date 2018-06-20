@@ -1,0 +1,28 @@
+<?php
+$user = $t->_('user');
+$t->_layout('Main')
+    ->set('Title', 'Utilisateur - '.$user->name)
+    ->set('Description', "Fiche du compte")
+    ->_section('body') ?>
+<h2><?= $t->_e($user->name) ?></h2>
+<section>
+    <?php if(!$user->_role->canConnect): ?>
+    <p class="errors">Attention: ce compte n'est pas encore validé</p>
+    <?php endif ?>
+    <p>Nom: <?= $t->_e($user->name) ?></p>
+    <p>Discord: <?= $t->_e($user->discord) ?></p>
+    <p>Role: <?= $t->_e($user->_role->name) ?></p>
+    <div>
+        <h3>Personnages</h3>
+        <?php if(empty($user->_characters)): ?>
+        <p>Aucun personnage</p>
+        <?php else: ?>
+        <ul>
+            <?php foreach($user->_characters as $character): ?>
+            <li><a href="/<?= $t->_('router')->get('character')->getUrl(['id' => $character->id]) ?>"><?= $t->_e($character->getFullName()) ?></a></li>
+            <?php endforeach ?>
+        </ul>
+        <?php endif ?>
+    </div>
+</section>
+<?php $t->_endsection() ?>

@@ -51,7 +51,6 @@ class RegionModel extends Model{
                 $region->weather = $weathers[$region->weather]->getNext();
                 $region->set('weather', $weathers[$region->weather]);
                 $region->weather_update = new \DateTime();
-                var_dump($region->_weather->name);
                 $region->runUpdate();
             }
         }

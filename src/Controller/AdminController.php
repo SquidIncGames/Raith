@@ -10,6 +10,11 @@ use Krutush\HttpException;
 use Raith\Model\User\UserModel;
 use Raith\Model\Character\CharacterModel;
 use Raith\Model\Action\ActionModel;
+use Raith\Model\Action\StatModificationModel;
+use Raith\Model\Action\StatModificationLineModel;
+use Raith\Model\Action\RollModel;
+use Raith\Model\Action\SuccessRollModel;
+use Raith\Model\World\ElementModel;
 use Raith\Model\Custom\SessionModel;
 use Raith\Model\Custom\DiscordModel;
 
@@ -28,14 +33,14 @@ class AdminController extends MyController{
 
     public function index(){
         static::checkAdmin();
-        (new Html('Admin/Index'))->run();
+        $this->getHtml('Admin/Index')->run();
     }
 
     public function validateUsers(){
         static::checkAdmin();
         
         $visitors = UserModel::allVisitors();
-        $html = (new Html('Admin/Validate/Users'));
+        $html = $this->getHtml('Admin/Validate/Users');
 
         if($visitors != null){
             if(!empty($_POST) && isset($_POST['user_id']) && ctype_digit($_POST['user_id'])){
@@ -59,7 +64,7 @@ class AdminController extends MyController{
         static::checkAdmin();
         
         $characters = CharacterModel::load(CharacterModel::allByValidity(false), 'owner');
-        $html = (new Html('Admin/Validate/Characters'));
+        $html = $this->getHtml('Admin/Validate/Characters');
 
         if($characters != null){
             if(!empty($_POST) && isset($_POST['character_id']) && ctype_digit($_POST['character_id'])){
@@ -82,22 +87,31 @@ class AdminController extends MyController{
     public function validateActions(){
         static::checkAdmin();
         
-        $actions = ActionModel::loads(ActionModel::allByValidity(false), ['message', 'roll', 'stat_modification']);
-        foreach($actions as $action){
-            var_dump($action->id);
-            var_dump($action->tryGet('message'));
-            var_dump($action->tryGet('roll'));
-            var_dump($action->tryGet('stat_modification'));
-        }
-
-        $html = (new Html('Admin/Validate/Actions'));
+        $actions = ActionModel::loads(ActionModel::allByValidity(false), [ //A bit every
+            'user',
+            'character',
+            'message',
+            'place',
+            'roll' => [
+                'dices',
+                'custom',
+                'damage',
+                'success' => [
+                    'elementType' => ['id']
+                ]
+            ],
+            'stat_modification' => [
+                'lines' => ['stat']
+            ]
+        ]);
+        
+        $html = $this->getHtml('Admin/Validate/Actions');
 
         if($actions != null){
             if(!empty($_POST) && isset($_POST['action_id']) && ctype_digit($_POST['action_id'])){
                 foreach ($actions as $key => $action) {
                     if($action->id == $_POST['action_id']){
-                        $action->valid = true;
-                        $action->runUpdate();
+                        $action->validate();
                         unset($actions[$key]);
                         break;
                     }

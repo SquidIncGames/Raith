@@ -41,10 +41,16 @@ class UserModel extends Model{
             'type' => 'int',
             'not_null' => true,
             'default' => 2, //FIXME: get default for config
-            'foreign' => [
-                'model' => UserRoleModel::class,
-                'field' => 'id'
-            ] //TODO: ToOne
+            'foreign' => UserRoleModel::class
+        ]
+    ];
+    public const FOREIGNS = [
+        'characters' => [
+            'model' => CharacterModel::class,
+            'for' => 'id',
+            'field' => 'owner',
+            'nullable' => true,
+            'multiple' => true
         ]
     ];
 
@@ -62,13 +68,5 @@ class UserModel extends Model{
 
     public static function allVisitors(){
         return static::all([2], static::getColumn('role').' = ?'); //TODO: Nop
-    }
-
-    protected $_characters;
-    public function getCharacters(bool $update = false): ?array{ //TODO: OneToMany
-        if(!isset($_characters) || $update)
-            $_characters = CharacterModel::allByOwner($this->id);
-
-        return $_characters;
     }
 }

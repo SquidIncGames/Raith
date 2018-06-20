@@ -5,8 +5,8 @@
 <section>
     <p>C'est la carte</p>
     <ul>
-        <li><a href="/world/list">Liste des lieux</a></li>
-        <li><a href="/world/weather">Météo</a></li>
+        <li><a href="/<?= $t->_('router')->get('world list')->getUrl() ?>">Liste des lieux</a></li>
+        <li><a href="/<?= $t->_('router')->get('world weather')->getUrl() ?>">Météo</a></li>
     </ul>
 </section>
 <?php $t->_endsection() ?>

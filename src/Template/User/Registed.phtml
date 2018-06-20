@@ -7,6 +7,6 @@
     <h3>Bravo pour votre inscription</h3>
     <p>Votre compte doit maintenant être activé par un administrateur</p>
     <p>Vous pourrez ensuite pour connecter</p>
-    <p><a href="<?= $t->_('login_url') ?>"><button>Se connecter</button></a></p>
+    <p><a href="<?= $t->_('router')->get('login')->getUrl() ?>"><button>Se connecter</button></a></p>
 </section>
 <?php $t->_endsection() ?>

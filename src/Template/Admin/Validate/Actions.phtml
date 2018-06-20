@@ -5,21 +5,100 @@
 <section>
     <?php if($t->_x('actions')): ?>
     <table>
-        <tr><th>Nom</th><th>Prenom</th><th>Createur</th></tr>
+        <tr><th>Personnage</th><th>Lieu</th><th>Utilisateur</th><th>Date</th></tr>
         <?php foreach ($t->_('actions') as $action): ?>
         <tr>
-            <td><?= $t->_e($action->id) ?></td>
-            <?php /*<td><?= $t->_e($action->surname) ?></td>
-            <td><?= $t->_e($action->get('owner', true)->name) ?></td> */ ?>
+            <td><?= $t->_e($action->_character->getFullName()) ?></td>
+            <td><?= $t->_e($action->_place->name) ?></td>
+            <td><?= $t->_e($action->_user->name) ?></td>
+            <td><?= $t->_e($action->date) ?></td>
             <td><form method="post">
                 <input type="hidden" name="action_id" value="<?= $t->_e($action->id) ?>">
                 <input type="submit" value="Valider">
             </form></td>
         </tr>
+        <?php if($action->_roll != null): $roll = $action->_roll; ?>
+        <tr>
+            <th>Jet</th>
+            <td colspan="4">
+                <table>
+                    <tr><th>Description</th><th>Valeurs</th></tr>
+                    <tr>
+                        <td><?= $t->_e($roll->description) ?></td>
+                        <td><?= implode(', ', $roll->getDiceValues()) ?></td>
+                    <tr>
+                    <?php if($roll->_custom != null): ?>
+                    <tr>
+                        <th>Personalisé</th>
+                        <td colspan="2">
+                            <table>
+                                <tr><th>Max</th></tr>
+                                <tr>
+                                    <td><?= $t->_e($roll->_custom->roll) ?></td>
+                                <tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <?php endif ?>
+                    <?php if($roll->_damage != null): $damage = $roll->_damage; ?>
+                    <tr>
+                        <th>Dégats</th>
+                        <td colspan="2">
+                            <table>
+                                <tr><th>Max</th><th>Fixe</th><th>Arme</th><th>Compte</th></tr>
+                                <tr>
+                                    <td><?= $t->_e($damage->roll) ?></td>
+                                    <td><?= $t->_e($damage->fixe) ?></td>
+                                    <td><?= 'WIP' ?></td>
+                                    <td><?= $damage->considered ? 'Oui' : 'Non' ?></td>
+                                <tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <?php endif ?>
+                    <?php if($roll->_success != null): $success = $roll->_success; ?>
+                    <tr>
+                        <th>Réussite</th>
+                        <td colspan="2">
+                            <table>
+                                <tr><th>Element</th><th>Valeur</th><th>Bonus</th><th>Arme</th><th>Compte</th></tr>
+                                <tr>
+                                    <td><?= $t->_e($success->_elementType->_id->name) ?></td>
+                                    <td><?= $t->_e($success->elementValue) ?></td>
+                                    <td><?= $t->_e($success->bonus) ?></td>
+                                    <td><?= $success->weapon != null ? 'WIP' : 'Non' ?></td>
+                                    <td><?= $success->considered ? 'Oui' : 'Non' ?></td>
+                                <tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <?php endif ?>
+                </table>
+            </td>
+        </tr>
+        <?php endif ?>
+        <?php if($action->_stat_modification != null): $stats = $action->_stat_modification; ?>
+        <tr>
+            <th>Modification de stats</th>
+            <td colspan="4">
+                <table>
+                    <tr><th colspan="2">Description</th></tr>
+                    <tr><td colspan="2"><?= $t->_e($stats->description) ?></td></tr>
+                    <tr><th>Stat</th><th>Valeur</th></tr>
+                    <?php foreach($stats->_lines as $line): ?>
+                    <tr>
+                        <td><?= $t->_e($line->_stat->name) ?></td>
+                        <td><?= $t->_e($line->value) ?></td>
+                    </tr>
+                    <?php endforeach ?>
+                </table>
+            </td>
+        </tr>
+        <?php endif ?>
         <?php endforeach ?>
     </table>
     <?php else: ?>
-    <p>Aucun personnage en attente</p>
+    <p>Aucune action en attente</p>
     <?php endif ?>
 </section>
 <?php $t->_endsection() ?>

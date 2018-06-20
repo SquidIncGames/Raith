@@ -1,0 +1,25 @@
+<?php
+$place = $t->_('place');
+$t->_layout('Main')
+    ->set('Title', 'Lieu - '.$place->getFullName())
+    ->set('Description', "Description sur un lieu")
+    ->_section('body') ?>
+<h2><?= $t->_e($place->getFullName()) ?></h2>
+<section>
+    <p>Region: <a href="/<?= $t->_('router')->get('world region')->getUrl(['id' => $place->region]) ?>"><?= ($place->_region->name) ?></a></p>
+    <p>Nom: <?= $t->_e($place->name) ?></p>
+    <p>Discord: <?= $t->_e($place->discord) ?></p>
+    <div>
+        <h3>Personnages</h3>
+        <?php if(empty($place->_characters)): ?>
+        <p>Aucun personnage</p>
+        <?php else: ?>
+        <ul>
+            <?php foreach($place->_characters as $character): ?>
+            <li><a href="/<?= $t->_('router')->get('character')->getUrl(['id' => $character->id]) ?>"><?= $t->_e($character->getFullName()) ?></a></li>
+            <?php endforeach ?>
+        </ul>
+        <?php endif ?>
+    </div>
+</section>
+<?php $t->_endsection() ?>

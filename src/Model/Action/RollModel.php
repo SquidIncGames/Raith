@@ -21,23 +21,38 @@ class RollModel extends Model{
             'not_null' => true
         ]
     ];
+    public const FOREIGNS = [
+        'dices' => [
+            'model' => RollDiceModel::class,
+            'for' => 'id',
+            'field' => 'roll',
+            'multiple' => true
+        ],
+        'custom' => [
+            'model' => CustomRollModel::class,
+            'for' => 'id',
+            'nullable' => true
+        ],
+        'damage' => [
+            'model' => DamageRollModel::class,
+            'for' => 'id',
+            'nullable' => true
+        ],
+        'success' => [
+            'model' => SuccessRollModel::class,
+            'for' => 'id',
+            'nullable' => true
+        ],
+    ];
 
     public function validate(){
         $this->_id->validate();
     }
 
-    protected $_dices;
-    public function getDices(bool $update = false): array{ //TODO: OneToMany
-        if(!isset($_dices) || $update)
-            $_dices = RollDiceModel::all([$this->id], RollDiceModel::getColumn('roll').' = ?');
-
-        return $_dices;
-    }
-
     public function getDiceValues(): array{
         return array_map(function($dice){
             return $dice->value;
-        }, $this->getDices());
+        }, $this->_dices);
     }
 
     public static function insertRoll(int $user, int $character, int $place, \DateTime $date, bool $valid, string $description, array $dices): self{

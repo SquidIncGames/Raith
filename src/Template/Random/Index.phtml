@@ -4,6 +4,6 @@
     ->_section('body') ?>
 <section>
     <h2>Random</h2>
-    <p><a href="/Random/Action">Action</a></p>
+    <p><a href="/<?= $t->_('router')->get('random action')->getUrl() ?>">Action</a></p>
 </section>
 <?php $t->_endsection() ?>

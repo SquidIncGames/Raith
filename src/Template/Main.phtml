@@ -19,13 +19,13 @@
     </head>
     <body>
         <header>
-            <h1><a href='/'>Raith</a></h1>
+            <h1><a href='/<?= $t->_('router')->get('index')->getUrl() ?>'>Raith</a></h1>
         </header>
         <nav>
             <ul>
-                <li class="left"><a href="/#nani">Qu'est ce que Raith ?</a></li>
+                <li class="left"><a href="/<?= $t->_('router')->get('index')->getUrl() ?>#nani">Qu'est ce que Raith ?</a></li>
                 <li class="secleft"><a href="">Contacts</a></li>
-                <li class="connect"><a href="/login">Se connecter</a></li>
+                <li class="connect"><a href="/<?= $t->_('router')->get('login')->getUrl() ?>">Se connecter</a></li>
             </ul>
         </nav>
         <div class="body">

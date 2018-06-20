@@ -42,7 +42,7 @@ class UserController extends MyController{
         if(SessionModel::isLogged()){
             $router->redirect($router->get('characters')->getUrl()); //MAYBE: or next_page if 403
         }else{
-            (new Html('User/Login'))
+            $this->getHtml('User/Login')
                 ->set('login_form', $form)
                 ->set('register_url', $router->get('register')->getUrl())
                 ->run();
@@ -50,15 +50,12 @@ class UserController extends MyController{
     }
 
     public function logout(){
-        (new Html('User/Logout'))
+        $this->getHtml('User/Logout')
             ->set('logout', SessionModel::logout() ? 'Déconnecté' : 'Pas connecté')
             ->run();
     }
 
     public function register(){
-        $router = $this->app->getRouter();
-        $login_url =  $router->get('login')->getUrl();
-
         $form = new Form('register_form', 'Form/User/Register');
         if(SessionModel::isLogged()){
             $form->error('Vous êtes déjà connecté');
@@ -80,8 +77,7 @@ class UserController extends MyController{
                         try {
                             $newUser->runInsert();
                             DiscordModel::inscription('<@!'.$newUser->discord.'> ('.$newUser->name.') s\'est inscrit sur le site !');
-                            (new Html('User/Registed'))
-                                ->set('login_url', $login_url)
+                            $this->getHtml('User/Registed')
                                 ->run();
                             return;
                         } catch (\PDOException $e){
@@ -101,14 +97,26 @@ class UserController extends MyController{
                 }
             }
         }
-        (new Html('User/Register'))
+        $this->getHtml('User/Register')
             ->set('register_form', $form)
-            ->set('login_url', $login_url)
             ->run();
     }
 
-    public function test(){
-        DiscordModel::inscription('yolo');
-        echo 'End';
+    public function infos(int $id){
+        $me = UserController::checkLogged($this->app);
+
+        $user = UserModel::find($id);
+        if($user == null)
+            throw new HttpException(404);
+
+        /*if($me == $user){
+            $this->getHtml('User/Details'))
+                ->set('user', $user)
+                ->run();
+        }else{*/
+            $this->getHtml('User/Infos')
+                ->set('user', $user)
+                ->run();
+        //}
     }
 }
