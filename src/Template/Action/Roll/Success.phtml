@@ -1,0 +1,9 @@
+<?php $t->_layout('Main')
+    ->set('Title', 'Action - Jet de reussite')
+    ->_section('body') ?>
+<h2>Jet de reussite avec <?= $t->_e($t->_('character')->getFullName()) ?></h2>
+<section>
+    <p>Lieu: <?= $t->_e($t->_('character')->_place->getFullName()) ?></p>
+    <?php $t->_load('Form/Action/Roll/Success') ?>
+</section>
+<?php $t->_endsection() ?>

@@ -8,7 +8,7 @@ class ElementModel extends Model{
     public const TABLE = 'elements';
     public const FIELDS = [
         'id' => [
-            'column' => 'idstat',
+            'column' => 'idelement',
             'type' => 'int',
             'primary' => true,
             'foreign' => [

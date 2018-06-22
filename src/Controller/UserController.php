@@ -38,13 +38,12 @@ class UserController extends MyController{
                 }
             }
         }
-        $router = $this->app->getRouter();
         if(SessionModel::isLogged()){
+            $router = $this->app->getRouter();
             $router->redirect($router->get('characters')->getUrl()); //MAYBE: or next_page if 403
         }else{
             $this->getHtml('User/Login')
                 ->set('login_form', $form)
-                ->set('register_url', $router->get('register')->getUrl())
                 ->run();
         }
     }

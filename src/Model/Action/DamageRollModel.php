@@ -50,13 +50,11 @@ class DamageRollModel extends RollModel{
     }
 
     public function getDamages(): int{
-        throw new \Exception('WIP');
-        //FIXME: Fixe * count ???
         return array_sum(array_map(function($value){
             return $value;
-        }, $this->getDiceValues()));
+        }, $this->getDiceValues()))+$this->fixe;
     }
-    
+
     public function getXp(): int{
         return $this->getDamages();
     }

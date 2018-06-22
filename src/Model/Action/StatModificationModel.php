@@ -35,6 +35,8 @@ class StatModificationModel extends Model{
     }
 
     public static function insertModification(int $user, int $character, int $place, \DateTime $date, bool $valid, string $description, array $modifications): self{
+        if(empty($modifications))
+            throw new \Exception('Empty StatModification');
         $id = ActionModel::insertAction($user, $character, $place, $date, $valid)->id;
         $modification = new StatModificationModel(['id' => $id, 'description' => $description]);
         $modification->runInsert(false);
@@ -44,14 +46,21 @@ class StatModificationModel extends Model{
         return $modification;
     }
 
-    public static function getCharacterStats(int $characterId, bool $valid = true): array{
-        /*
-            SELECT stat_modification_lines.stat, sum(stat_modification_lines.value)
-            FROM stat_modifications
-            JOIN stat_modification_lines ON idstat_modification = stat_modification_lines.modification
-            JOIN actions ON idaction = idstat_modification
-            WHERE character = ? AND valid = 1
-            GROUP BY stat_modification_lines.stat
-        */
+    public static function getCharacterStats(int $characterId){
+        $stats = [];
+        foreach(StatModificationModel::select()
+            ->fields([
+                StatModificationLineModel::getColumn('stat', true),
+                'sum('.StatModificationLineModel::getColumn('value', true).') AS value'
+            ])
+            ->join(StatModificationLineModel::TABLE.' ON '.static::getID(true).' = '.StatModificationLineModel::getColumn('modification', true))
+            ->join(ActionModel::TABLE.' ON '.ActionModel::getID(true).' = '.static::getID(true), 'INNER', true)
+            ->where(ActionModel::getColumn('character', true).' = ? AND '.ActionModel::getColumn('valid', true).' = 1')
+            ->groupby(StatModificationLineModel::getColumn('stat', true))
+            ->run([$characterId])
+            ->fetchAll() as $values){
+            $stats[$values['stat']] = $values['value'];
+        }
+        return $stats;
     }
 }

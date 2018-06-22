@@ -25,4 +25,8 @@ class MessageModel extends Model{
     public function validate(){
         $this->_id->validate();
     }
+
+    public function discordText(): string{
+        return $this->_id->discordText()." dit \n".$this->message;
+    }
 }

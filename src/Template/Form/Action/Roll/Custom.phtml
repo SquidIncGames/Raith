@@ -1,0 +1,8 @@
+<?php $f = $t->_('custom_form') ?>
+<?= $f->_start() ?>
+<?= $f->_errors() ?>
+<p><?= $f->_input('roll')->label('Type de dé(s)')->number()->min(4)->max(100)->value(6)->required()->html() ?></p>
+<p><?= $f->_input('count')->label('Nombre de lancés')->number()->min(1)->max(20)->value(1)->required()->html() ?></p>
+<p><?= $f->_textarea('description')->label('Description')->required()->html() ?></p>
+<p><?= $f->_submit('Valider') ?></p>
+<?= $f->_end() ?>

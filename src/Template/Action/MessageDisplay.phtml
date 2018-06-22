@@ -1,0 +1,20 @@
+<?php $message = $t->_('message');
+$action = $message->_id;
+$t->_layout('Main')
+    ->set('Title', 'Action - Parler')
+    ->_section('body') ?>
+<h2>Parler avec <?= $t->_e($action->_character->getFullName()) ?></h2>
+<section>
+    <?php if(!$action->valid): ?>
+    <p class="errors">Attention: ce message n'est pas encore validé</p>
+    <?php endif ?>
+    <p>Personnage: <a href="/<?= $t->_('router')->get('character')->getUrl(['id' => $action->character]) ?>"><?= $t->_e($action->_character->getFullName()) ?></a></p>
+    <p>Lieu: <a href="/<?= $t->_('router')->get('world place')->getUrl(['id' => $action->place]) ?>"><?= $t->_e($action->_place->getFullName()) ?></a></p>
+    <p>Date: <?= $t->_e($action->date) ?></p>
+    <p>Utilisateur: <a href="/<?= $t->_('router')->get('user')->getUrl(['id' => $action->user]) ?>"><?= $t->_e($action->_user->name) ?></a></p>
+    <div>
+        <h3>Message</h3>
+        <p><?= $t->_e($message->message) ?></p>
+    </div>
+</section>
+<?php $t->_endsection() ?>

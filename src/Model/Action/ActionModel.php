@@ -82,4 +82,8 @@ class ActionModel extends Model{
             $this->runUpdate();
         }
     }
+
+    public function discordText(): string{
+        return '<#'.$this->_place->discord.'> <@!'.$this->_user->discord.'> ('.$this->_user->name.'): '.$this->_character->getFullName();
+    }
 }

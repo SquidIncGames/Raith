@@ -18,7 +18,7 @@ class DiscordModel{
         curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
         $output = json_decode(curl_exec($curl), true);
         if (curl_getinfo($curl, CURLINFO_HTTP_CODE) != 204) {
-            throw new Exception($output['message']);
+            throw new \Exception($output['message']);
         }
         curl_close($curl);
         return true;
@@ -27,7 +27,7 @@ class DiscordModel{
     public static function getWebhook(string $key): string{
         $hooks = include(Path::get('CFG').'/Discord.php');
         if(!array_key_exists($key, $hooks))
-            throw new Exception('Key not exists');
+            throw new \Exception('Key not exists');
 
         return $hooks[$key];
     }

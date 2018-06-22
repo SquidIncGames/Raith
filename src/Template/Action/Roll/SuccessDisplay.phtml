@@ -1,0 +1,26 @@
+<?php $success = $t->_('success');
+$action = $success->_id->_id;
+$t->_layout('Main')
+    ->set('Title', 'Action - Jet de reussite')
+    ->_section('body') ?>
+<h2>Jet de reussite de <?= $t->_e($action->_character->getFullName()) ?></h2>
+<section>
+    <?php if(!$action->valid): ?>
+    <p class="errors">Attention: ce jet n'est pas encore validé</p>
+    <?php endif ?>
+    <p>Personnage: <a href="/<?= $t->_('router')->get('character')->getUrl(['id' => $action->character]) ?>"><?= $t->_e($action->_character->getFullName()) ?></a></p>
+    <p>Lieu: <a href="/<?= $t->_('router')->get('world place')->getUrl(['id' => $action->place]) ?>"><?= $t->_e($action->_place->getFullName()) ?></a></p>
+    <p>Date: <?= $t->_e($action->date) ?></p>
+    <p>Utilisateur: <a href="/<?= $t->_('router')->get('user')->getUrl(['id' => $action->user]) ?>"><?= $t->_e($action->_user->name) ?></a></p>
+    <p>Pris en compte: <?= $success->considered == 1 ? 'Oui' : 'Non' ?></p>
+    <p>Element: <?= $t->_e($success->_elementType->_id->name) ?>(<?= $t->_e($success->elementValue) ?>)</p>
+    <p>Bonus: <?= $t->_e($success->bonus) ?></p>
+    <p>Arme: <?= $t->_e($success->weapon ?: 'Aucune') ?></p>
+    <p>Xp: <?= $t->_e($success->getXp()) ?></p>
+    <p>Valeurs: <?= $t->_e(implode(', ', $success->getResultsText())) ?></p>
+    <div>
+        <h3>Description</h3>
+        <p><?= $t->_e($success->_id->description) ?></p>
+    </div>
+</section>
+<?php $t->_endsection() ?>

@@ -62,8 +62,8 @@ class SuccessRollModel extends RollModel{
     }
 
     public function getXp(): int{
-        return array_sum(array_map(function($dice){
-            return 100-$dice->value;
+        return array_sum(array_map(function($value){
+            return 100-$value;
         }, $this->getDiceValues()))/10;
     }
 
@@ -73,11 +73,22 @@ class SuccessRollModel extends RollModel{
 
     public function getResults(): array{
         return array_map(function($value){
-            return $value  <= 5 ? static::CRITICAL_SUCCESS : (
-                $value > 95 ? static::CRITICAL_FAILURE : (
-                    $value <= $this->getSuccessLimit() ? static::SUCCESS : static::FAILURE
-                )
-            );
+            return static::isSuccess($value, $this->getSuccessLimit());
+        }, $this->getDiceValues());
+    }
+
+    public static function isSuccess(int $value, int $limit): int{
+        return $value  <= 5 ? static::CRITICAL_SUCCESS : (
+            $value > 95 ? static::CRITICAL_FAILURE : (
+                $value <= $limit ? static::SUCCESS : static::FAILURE
+            )
+        );
+    }
+
+    public function getResultsText(): array{
+        return array_map(function($value){
+            $action = static::isSuccess($value, $this->getSuccessLimit());
+            return static::toText($action).' ('.$value.')';
         }, $this->getDiceValues());
     }
 

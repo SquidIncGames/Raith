@@ -19,8 +19,13 @@ class CustomRollModel extends RollModel{
             'not_null' => true
         ]
     ];
-    
+
     //MAYBE: Add fixe
+    public function discordText(): string{
+        return $this->_id->_id->discordText().' fait un jet personalisé ('.count($this->_dices).'d'.$this->roll.")\n".
+        implode(' ', $this->getDiceValues())."\n".
+        $this->_id->description;
+    }
 
     public static function makeCustomRoll(int $user, int $character, int $place, string $description, int $roll, int $count): self{
         $dices = [];

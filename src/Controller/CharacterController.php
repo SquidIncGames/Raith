@@ -15,6 +15,17 @@ use Raith\Model\World\JobModel;
 use Raith\Model\Custom\SessionModel;
 
 class CharacterController extends MyController{
+    public static function getCharacter($user, $app): CharacterModel{
+        if(SessionModel::haveCharacterId()){
+            $character = CharacterModel::find(SessionModel::getCharacterId());
+            if($character != null && $character->valid && $character->owner == $user->id) //TODO: Change for have authorization level
+                return $character;
+        }
+
+        $router = $app->getRouter(); //TODO: redirect link page
+        $router->redirect($router->get('characters')->getUrl());
+    }
+
     public function index(){
         $user = UserController::checkLogged($this->app);
         $characters = $user->_characters;
@@ -62,7 +73,7 @@ class CharacterController extends MyController{
             }, JobModel::load(JobModel::all(), 'id'))
         ];
 
-        $html = new Html('Character/Create');
+        $html = $this->getHtml('Character/Create');
         $form = new Form('character_form', 'Form/Character/Create', null, true, $character_data);
 
         if(!empty($_POST) && $form->valid($_POST)){
@@ -112,7 +123,6 @@ class CharacterController extends MyController{
                             //MAYBE: discord ?
                             $this->getHtml('Character/Created')->run();
                             return;
-                            echo 'redirect';
                         } catch (\Exception $e) {
                             $form->error('Erreur inconnue durant la création');
                         }

@@ -1,0 +1,9 @@
+<?php $t->_layout('Main')
+    ->set('Title', 'Action - Jet personalisé')
+    ->_section('body') ?>
+<h2>Jet personalisé avec <?= $t->_e($t->_('character')->getFullName()) ?></h2>
+<section>
+    <p>Lieu: <?= $t->_e($t->_('character')->_place->getFullName()) ?></p>
+    <?php $t->_load('Form/Action/Roll/Custom') ?>
+</section>
+<?php $t->_endsection() ?>

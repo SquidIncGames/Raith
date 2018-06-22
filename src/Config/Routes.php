@@ -25,6 +25,13 @@ $r->add('/character/:id', 'Character#infos')->name('character')
     ->with('id', '\d+');
 $r->add('/character/create', 'Character#create')->name('character create');
 
+//Action
+$r->add('/actions', 'Action#index')->name('actions');
+$r->add('/action/message', 'Action#message')->name('action message');
+$r->add('/action/roll/custom', 'Action#customRoll')->name('action roll custom');
+$r->add('/action/roll/damage', 'Action#damageRoll')->name('action roll damage');
+$r->add('/action/roll/success', 'Action#successRoll')->name('action roll success');
+
 //Admin
 $r->add('/admin', 'Admin#index');
 $r->add('/admin/validate/users', 'Admin#validateUsers')->name('admin validate users');

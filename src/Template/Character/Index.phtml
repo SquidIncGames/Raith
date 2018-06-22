@@ -11,10 +11,11 @@
         <tr>
             <td><?= $t->_e($character->surname) ?></td>
             <td><?= $t->_e($character->firstname) ?></td>
+            <td><a href="/<?= $t->_('router')->get('character')->getUrl(['id' => $character->id]) ?>"><button>Voir</button></a></td>
             <td><?php if ($character->id != $t->_('current_character')): ?><form method="post">
                 <input type="hidden" name="character_id" value="<?= $t->_e($character->id) ?>">
                 <input type="submit" value="Séléctionner">
-            </form><?php else: ?>Séléctionné<?php endif ?></td>
+            </form><?php else: ?><a href="/<?= $t->_('router')->get('actions')->getUrl(['id' => $character->id]) ?>"><button>Jouer</button></a><?php endif ?></td>
         </tr>
         <?php endforeach ?>
     </table>

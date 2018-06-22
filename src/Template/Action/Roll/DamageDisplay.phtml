@@ -1,0 +1,27 @@
+<?php $damage = $t->_('damage');
+$action = $damage->_id->_id;
+$t->_layout('Main')
+    ->set('Title', 'Action - Jet de degat')
+    ->_section('body') ?>
+<h2>Jet de degat de <?= $t->_e($action->_character->getFullName()) ?></h2>
+<section>
+    <?php if(!$action->valid): ?>
+    <p class="errors">Attention: ce jet n'est pas encore validé</p>
+    <?php endif ?>
+    <p>Personnage: <a href="/<?= $t->_('router')->get('character')->getUrl(['id' => $action->character]) ?>"><?= $t->_e($action->_character->getFullName()) ?></a></p>
+    <p>Lieu: <a href="/<?= $t->_('router')->get('world place')->getUrl(['id' => $action->place]) ?>"><?= $t->_e($action->_place->getFullName()) ?></a></p>
+    <p>Date: <?= $t->_e($action->date) ?></p>
+    <p>Utilisateur: <a href="/<?= $t->_('router')->get('user')->getUrl(['id' => $action->user]) ?>"><?= $t->_e($action->_user->name) ?></a></p>
+    <p>Pris en compte: <?= $damage->considered == 1 ? 'Oui' : 'Non' ?></p>
+    <p>Degat variable: <?= $t->_e($damage->roll) ?></p>
+    <p>Degat fixe: <?= $t->_e($damage->fixe) ?></p>
+    <p>Arme: <?= $t->_e($damage->weapon) ?></p>
+    <p>Xp: <?= $t->_e($damage->getXp()) ?></p>
+    <p>Valeurs: <?= $t->_e(implode(' ', $damage->getDiceValues())) ?></p>
+    <p>Total: <?= $t->_e($damage->getDamages()) ?></p>
+    <div>
+        <h3>Description</h3>
+        <p><?= $t->_e($damage->_id->description) ?></p>
+    </div>
+</section>
+<?php $t->_endsection() ?>

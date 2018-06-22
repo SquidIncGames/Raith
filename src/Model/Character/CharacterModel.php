@@ -5,6 +5,8 @@ namespace Raith\Model\Character;
 use Krutush\Database\Model;
 use Raith\Model\User\UserModel;
 use Raith\Model\World\PlaceModel;
+use Raith\Model\World\StatModel;
+use Raith\Model\Action\StatModificationModel;
 
 class CharacterModel extends Model{
     public const TABLE = 'characters';
