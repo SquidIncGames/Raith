@@ -30,7 +30,6 @@ class WorldController extends MyController{
 
     public function place(int $id){
         $place = PlaceModel::find($id);
-        RoadModel::load($place->_roads, 'to');
         if($place == null)
             throw new HttpException(404);
 

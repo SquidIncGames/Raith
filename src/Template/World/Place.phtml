@@ -11,13 +11,13 @@ $t->_layout('Main')
     <p>Discord: <?= $t->_e($place->discord) ?></p>
     <div>
         <h3>Routes</h3>
-        <?php if(empty($place->_roads)): ?>
+        <?php if(empty($place->getLinkedPlaces())): ?>
         <p>Aucune route</p>
         <p><i>(C'est un endroit d'où l'on ne reviens pas)<i></p>
         <?php else: ?>
         <ul>
-            <?php foreach($place->_roads as $road): ?>
-            <li>vers <a href="/<?= $t->_('router')->get('world place')->getUrl(['id' => $road->to]) ?>"><?= $t->_e($road->_to->name) ?></a></li>
+            <?php foreach($place->getLinkedPlaces() as $dest): ?>
+            <li>vers <a href="/<?= $t->_('router')->get('world place')->getUrl(['id' => $dest->id]) ?>"><?= $t->_e($dest->name) ?></a></li>
             <?php endforeach ?>
         </ul>
         <?php endif ?>

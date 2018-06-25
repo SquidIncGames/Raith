@@ -41,10 +41,17 @@ class PlaceModel extends Model{
             'nullable' => true,
             'multiple' => true
         ],
-        'roads' => [ //NOTE: Just Many To Many ...
+        'roads_from' => [
             'model' => RoadModel::class,
             'for' => 'id',
-            'field' => 'current',
+            'field' => 'place_from',
+            'nullable' => true,
+            'multiple' => true
+        ],
+        'roads_to' => [
+            'model' => RoadModel::class,
+            'for' => 'id',
+            'field' => 'place_to',
             'nullable' => true,
             'multiple' => true
         ]
@@ -52,5 +59,10 @@ class PlaceModel extends Model{
 
     public function getFullName(): string{
         return $this->_region->name.' / '.$this->name;
+    }
+
+    public function getLinkedPlaces(): array{ //NOTE: SQL doesn't like undirected graphs
+        return array_map(function($road){ return $road->_place_to; }, RoadModel::load($this->_roads_from, 'place_to'))
+             + array_map(function($road){ return $road->_place_from; }, RoadModel::load($this->_roads_to, 'place_from'));
     }
 }

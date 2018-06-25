@@ -4,16 +4,17 @@ namespace Raith\Model\World;
 
 use Krutush\Database\Model;
 
+//TODO: check constraint that current < to
 class RoadModel extends Model{
     public const TABLE = 'roads';
     public const ID = null;
     public const FIELDS = [
-        'current' => [
+        'place_from' => [
             'type' => 'int',
             'primary' => true,
             'foreign' => PlaceModel::class
         ],
-        'to' => [
+        'place_to' => [
             'type' => 'int',
             'primary' => true,
             'foreign' => PlaceModel::class

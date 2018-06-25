@@ -228,7 +228,7 @@ if(isset($options['i']) || isset($options['insert'])){
     print_r($place);
 
     //Routes
-    tryInsert(new Raith\Model\World\RoadModel(['current' => $place['place'], 'to' => $place['lac']]));
+    tryInsert(new Raith\Model\World\RoadModel(['place_from' => $place['place'], 'place_to' => $place['lac']]));
 
     //Type d'arme
     echo 'weapon_types'.PHP_EOL;
