@@ -10,6 +10,19 @@ $t->_layout('Main')
     <p>Nom: <?= $t->_e($place->name) ?></p>
     <p>Discord: <?= $t->_e($place->discord) ?></p>
     <div>
+        <h3>Routes</h3>
+        <?php if(empty($place->_roads)): ?>
+        <p>Aucune route</p>
+        <p><i>(C'est un endroit d'où l'on ne reviens pas)<i></p>
+        <?php else: ?>
+        <ul>
+            <?php foreach($place->_roads as $road): ?>
+            <li>vers <a href="/<?= $t->_('router')->get('world place')->getUrl(['id' => $road->to]) ?>"><?= $t->_e($road->_to->name) ?></a></li>
+            <?php endforeach ?>
+        </ul>
+        <?php endif ?>
+    </div>
+    <div>
         <h3>Personnages</h3>
         <?php if(empty($place->_characters)): ?>
         <p>Aucun personnage</p>

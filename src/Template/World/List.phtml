@@ -8,10 +8,10 @@
     <?php foreach ($t->_('regions') as $region): ?>
     <article>
         <h3><?= $t->_e($region->name) ?></h3>
-        <?php if(!isset($region->_places)): ?>
+        <?php if(!empty($region->_places)): ?>
         <ul>
             <?php foreach ($region->_places as $place): ?>
-            <li><?= $t->_e($place->name) ?></li>
+            <li><a href="/<?= $t->_('router')->get('world place')->getUrl(['id' => $place->id]) ?>"><?= $t->_e($place->name) ?></a></li>
             <?php endforeach ?>
         </ul>
         <?php else: ?>

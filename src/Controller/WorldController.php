@@ -7,6 +7,7 @@ use Krutush\HttpException;
 use Krutush\Template\Html;
 use Raith\Model\World\RegionModel;
 use Raith\Model\World\PlaceModel;
+use Raith\Model\World\RoadModel;
 
 class WorldController extends MyController{
     public function index(){
@@ -29,6 +30,7 @@ class WorldController extends MyController{
 
     public function place(int $id){
         $place = PlaceModel::find($id);
+        RoadModel::load($place->_roads, 'to');
         if($place == null)
             throw new HttpException(404);
 

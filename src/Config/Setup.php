@@ -16,6 +16,7 @@ $models = [ //Order for create (foreign integrity)
     Raith\Model\World\WeatherChangeModel::class,
     Raith\Model\World\RegionModel::class,
     Raith\Model\World\PlaceModel::class,
+    Raith\Model\World\RoadModel::class,
     Raith\Model\World\WeaponTypeModel::class,
     Raith\Model\World\ElementModel::class,
     Raith\Model\User\UserModel::class,
@@ -188,7 +189,7 @@ if(isset($options['i']) || isset($options['insert'])){
     $weather['storm'] = tryInsert(new Raith\Model\World\WeatherTypeModel(['name' => 'tempête']));
     print_r($weather);
 
-    //Changement de meteo NOTE:WIP
+    //Changement de meteo
     tryInsert(new Raith\Model\World\WeatherChangeModel(['current' => $weather['sunny'], 'to' => $weather['sunny'], 'probability' => 3]));
     tryInsert(new Raith\Model\World\WeatherChangeModel(['current' => $weather['sunny'], 'to' => $weather['cloudy'], 'probability' => 1]));
 
@@ -208,11 +209,11 @@ if(isset($options['i']) || isset($options['insert'])){
     $region['region'] = tryInsert(new Raith\Model\World\RegionModel([
         'name' => 'la region',
         'weather' => $weather['sunny'],
-        'weather_update' => new DateTime() 
+        'weather_update' => new DateTime()
     ]));
     print_r($region);
 
-    //Emplacements NOTE: Temporaire
+    //Emplacements
     echo 'places'.PHP_EOL;
     $place['place'] = tryInsert(new Raith\Model\World\PlaceModel([
         'name' => 'la place',
@@ -225,6 +226,9 @@ if(isset($options['i']) || isset($options['insert'])){
         'region' => $region['region']
     ]));
     print_r($place);
+
+    //Routes
+    tryInsert(new Raith\Model\World\RoadModel(['current' => $place['place'], 'to' => $place['lac']]));
 
     //Type d'arme
     echo 'weapon_types'.PHP_EOL;

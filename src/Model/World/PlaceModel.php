@@ -40,6 +40,13 @@ class PlaceModel extends Model{
             'field' => 'place',
             'nullable' => true,
             'multiple' => true
+        ],
+        'roads' => [ //NOTE: Just Many To Many ...
+            'model' => RoadModel::class,
+            'for' => 'id',
+            'field' => 'current',
+            'nullable' => true,
+            'multiple' => true
         ]
     ];
 
