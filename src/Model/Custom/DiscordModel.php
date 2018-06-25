@@ -39,4 +39,8 @@ class DiscordModel{
     public static function inscription(string $message): bool{
         return static::send(static::getWebhook('inscription'), $message);
     }
+
+    public static function meteoraith(string $message): bool{
+        return static::send(static::getWebhook('meteoraith'), $message);
+    }
 }

@@ -3,6 +3,7 @@
 namespace Raith\Model\World;
 
 use Krutush\Database\Model;
+use Raith\Model\Custom\DiscordModel;
 
 class RegionModel extends Model{
     public const TABLE = 'regions';
@@ -44,7 +45,7 @@ class RegionModel extends Model{
         $weathers = [];
         foreach(WeatherTypeModel::load(WeatherTypeModel::all(), 'changes') as $weather)
             $weathers[$weather->id] = $weather;
-        
+
         foreach($regions as $region){
             if((new \DateTime($region->weather_update))->add(new \DateInterval('PT1H')) < new \DateTime()){
                 $current = $region->weather;
@@ -52,6 +53,7 @@ class RegionModel extends Model{
                 $region->set('weather', $weathers[$region->weather]);
                 $region->weather_update = new \DateTime();
                 $region->runUpdate();
+                DiscordModel::meteoraith($region->name.': le temps est '.$region->_weather->name);
             }
         }
         return $regions;
