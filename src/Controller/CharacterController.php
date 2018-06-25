@@ -6,6 +6,7 @@ use Raith\MyController;
 use Krutush\Form\Form;
 use Krutush\HttpException;
 
+use Raith\Model\SettingModel;
 use Raith\Model\Action\StatModificationModel;
 use Raith\Model\Character\CharacterModel;
 use Raith\Model\Character\CharacterRaceModel;
@@ -73,6 +74,13 @@ class CharacterController extends MyController{
             }, JobModel::load(JobModel::all(), 'id'))
         ];
 
+        $character_settings = SettingModel::values([
+            'character_create_max_stat_points',
+            'character_create_max_job_points',
+            'character_create_max_weapon_points',
+            'character_create_place'
+        ]);
+
         $html = $this->getHtml('Character/Create');
         $form = new Form('character_form', 'Form/Character/Create', null, true, $character_data);
 
@@ -86,7 +94,7 @@ class CharacterController extends MyController{
                 if($value > 0)
                     $maitrises[$weapon['id']] = $value;
             }
-            if($weaponPoints > 30){ //MAYBE: const ?
+            if($weaponPoints > $character_settings['character_create_max_weapon_points']){
                 $form->error('Pas assez de points de maitrise d\'arme');
             }else{
                 $jobPoints = 0;
@@ -96,10 +104,10 @@ class CharacterController extends MyController{
                     if($value > 0)
                         $maitrises[$job['id']] = $value;
                 }
-                if($jobPoints > 30){
+                if($jobPoints > $character_settings['character_create_max_job_points']){
                     $form->error('Pas assez de points de maitrise de metier');
                 }else{
-                    if($weaponPoints + $jobPoints > 45){
+                    if($weaponPoints + $jobPoints > $character_settings['character_create_max_stat_points']){
                         $form->error('Pas assez de points de maitrise');
                     }else{
                         $newCharacter = new CharacterModel([
@@ -114,6 +122,7 @@ class CharacterController extends MyController{
                             'personality' => $values['personnalite'],
                             'description' => $values['descPhysique'],
                             'history' => $values['histoire'],
+                            'place' => $character_settings['character_create_place'],
                             'owner' => $user->id
                         ]);
 
@@ -134,6 +143,7 @@ class CharacterController extends MyController{
         $html
             ->set('character_form', $form)
             ->sets($character_data)
+            ->sets($character_settings)
             ->run();
     }
 

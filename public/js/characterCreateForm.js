@@ -8,17 +8,18 @@ function renderPoint(label, points) {
 
 //Mise à jour d'un compteur
 function updatePoint(champ, label) {
-	var points = 30;
+	var maxPoints = $('#max-'+label.slice(1)).text();
+	var points = maxPoints;
 	$(champ).each(function () {
 		points -= $(this).val();
 	});
 	renderPoint(label, points);
-	return 30 - points;
+	return maxPoints - points;
 }
 
 //Fonction de mise à jour des compteurs de points
 function updatePoints() {
-	var points = 45 - updatePoint(".champ-maitrises-arme", "#pts-maitrises-armes") - updatePoint(".champ-maitrises-metier", "#pts-maitrises-metiers");
+	var points = $('#max-pts-maitrises').text() - updatePoint(".champ-maitrises-arme", "#pts-maitrises-armes") - updatePoint(".champ-maitrises-metier", "#pts-maitrises-metiers");
 	renderPoint("#pts-maitrises", points);
 };
 
@@ -32,13 +33,13 @@ function showInput(selector, item){
 $(document).ready(function() {
 
 	//Crée le label d'affichage dynamique des points de maitrises
-	points = 45;
+	points = $('#max-pts-maitrises').text();
 	$("#maitrises > h3").append("<label id='pts-maitrises'>" + points + " points restants</label>");
 	//Crée le label d'affichage dynamique des points d'armes
-	points = 30;
+	points = $('#max-pts-maitrises-armes').text();
 	$("#maitrises-armes > h4").append("<label id='pts-maitrises-armes'>" + points + " points restants</label>");
 	//Crée le label d'affichage dynamique des points de métiers
-	points = 30;
+	points = $('#max-pts-maitrises-metiers').text();
 	$("#maitrises-metiers > h4").append("<label id='pts-maitrises-metiers'>" + points + " points restants</label>");
 
 	//Traitements relatifs aux sélections d'armes

@@ -11,10 +11,8 @@ class WeaponTypeModel extends Model{
             'column' => 'idweapon_type',
             'type' => 'int',
             'primary' => true,
-            'foreign' => [
-                'model' => StatModel::class,
-                'index' => false //Same as PRIMARY
-            ]
+            'foreign' => StatModel::class,
+            'index' => false //Same as PRIMARY
         ]
     ];
 

@@ -11,10 +11,8 @@ class DamageRollModel extends RollModel{
             'column' => 'iddamage_roll',
             'type' => 'int',
             'primary' => true,
-            'foreign' => [
-                'model' => RollModel::class,
-                'index' => false //Same as PRIMARY
-            ]
+            'foreign' => RollModel::class,
+            'index' => false //Same as PRIMARY
         ],
         'considered' => [
             'type' => 'bit',
@@ -38,7 +36,7 @@ class DamageRollModel extends RollModel{
     public static function makeDamageRoll(int $user, int $character, int $place, string $description, bool $considered, int $roll, int $fixe, int $weapon, int $count): self{
         $dices = [];
         for($i = 0; $i < $count; $i++)
-            $dices[] = rand(1, $roll); //MAYBE: min 1 ?
+            $dices[] = rand(1, $roll);
         return static::insertDamageRoll($user, $character, $place, new \DateTime(), false, $description, $considered, $roll, $fixe, $weapon, $dices);
     }
 

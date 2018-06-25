@@ -12,10 +12,8 @@ class SuccessRollModel extends RollModel{
             'column' => 'idsuccess_roll',
             'type' => 'int',
             'primary' => true,
-            'foreign' => [
-                'model' => RollModel::class,
-                'index' => false //Same as PRIMARY
-            ]
+            'foreign' => RollModel::class,
+            'index' => false //Same as PRIMARY
         ],
         'considered' => [
             'type' => 'bit',

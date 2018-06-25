@@ -46,7 +46,7 @@ class AdminController extends MyController{
             if(!empty($_POST) && isset($_POST['user_id']) && ctype_digit($_POST['user_id'])){
                 foreach ($visitors as $key => $visitor) {
                     if($visitor->id == $_POST['user_id']){
-                        $visitor->role = 3; //TODO: Nop
+                        $visitor->role = SettingModel::value('role_default');
                         $visitor->runUpdate();
                         DiscordModel::historique('<@!'.$visitor->discord.'> ('.$visitor->name.') a été accepté sur le site !');
                         unset($visitors[$key]);

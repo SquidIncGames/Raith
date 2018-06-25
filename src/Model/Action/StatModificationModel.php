@@ -11,10 +11,8 @@ class StatModificationModel extends Model{
             'column' => 'idstat_modification',
             'type' => 'int',
             'primary' => true,
-            'foreign' => [
-                'model' => ActionModel::class,
-                'index' => false //Same as PRIMARY
-            ]
+            'foreign' => ActionModel::class,
+            'index' => false //Same as PRIMARY
         ],
         'description' => [
             'type' => 'text',

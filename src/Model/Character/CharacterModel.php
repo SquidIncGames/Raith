@@ -51,10 +51,7 @@ class CharacterModel extends Model{
         'alignment' => [
             'type' => 'int',
             'not_null' => true,
-            'foreign' => [
-                'model' => CharacterAlignmentModel::class,
-                'field' => 'id'
-            ] //TODO: ToOne
+            'foreign' => CharacterAlignmentModel::class,
         ],
         'personality' => [
             'type' => 'text',
@@ -70,17 +67,13 @@ class CharacterModel extends Model{
         ],
         'place' => [
             'type' => 'int',
-            'default' => 1, //FIXME: get default for config
             'not_null' => true,
             'foreign' => PlaceModel::class
         ],
         'owner' => [
             'type' => 'int',
             'not_null' => true,
-            'foreign' => [
-                'model' => UserModel::class,
-                'field' => 'id'
-            ] //TODO: ToOne
+            'foreign' => UserModel::class,
         ],
         'valid' => [
             'type' => 'bit',

@@ -9,6 +9,7 @@ use Krutush\Form\Form;
 use Raith\Model\User\UserModel;
 use Raith\Model\Custom\SessionModel;
 use Raith\Model\Custom\DiscordModel;
+use Raith\Model\SettingModel;
 
 class UserController extends MyController{
     public static function checkLogged($app): UserModel{
@@ -68,10 +69,10 @@ class UserController extends MyController{
                         'name' => $values['username'],
                         'password' =>  password_hash($values['password'], PASSWORD_DEFAULT),
                         'mail' => $values['mail'],
-                        'discord'=> $values['discord']
+                        'discord'=> $values['discord'],
+                        'role' => SettingModel::value('role_visitor')
                     ]);
 
-                    
                     try { //TODO: ugly $newUser->checkUniqueFields()
                         try {
                             $newUser->runInsert();

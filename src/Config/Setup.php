@@ -6,6 +6,7 @@ require __DIR__.'/../../vendor/autoload.php';
 new Raith\MyApp();
 
 $models = [ //Order for create (foreign integrity)
+    Raith\Model\SettingModel::class,
     Raith\Model\User\UserRoleModel::class,
     Raith\Model\Character\CharacterRaceModel::class,
     Raith\Model\Character\CharacterAlignmentModel::class,
@@ -38,7 +39,7 @@ function tryRun($request){
         return $request->run() ? 'OK' : 'Error';
     }catch(\PDOException $e){
         return $e->getMessage();
-    }        
+    }
 }
 
 function tryInsert($model){
@@ -286,6 +287,40 @@ if(isset($options['i']) || isset($options['insert'])){
     ]));
     //TODO: add valid => false character
     print_r($charater);
+
+
+    //Settings
+    tryInsert(new Raith\Model\SettingModel([
+        'key' => 'role_visitor',
+        'type' => 'int',
+        'value' => $role['new'],
+    ]));
+    tryInsert(new Raith\Model\SettingModel([
+        'key' => 'role_default',
+        'type' => 'int',
+        'value' => $role['user'],
+    ]));
+    tryInsert(new Raith\Model\SettingModel([
+        'key' => 'character_create_max_stat_points',
+        'type' => 'int',
+        'value' => 45,
+    ]));
+    tryInsert(new Raith\Model\SettingModel([
+        'key' => 'character_create_max_job_points',
+        'type' => 'int',
+        'value' => 30,
+    ]));
+    tryInsert(new Raith\Model\SettingModel([
+        'key' => 'character_create_max_weapon_points',
+        'type' => 'int',
+        'value' => 30,
+    ]));
+    tryInsert(new Raith\Model\SettingModel([
+        'key' => 'character_create_place',
+        'type' => 'int',
+        'value' => $place['place'],
+    ]));
+
 
     //StatModification NOTE: WIP
     Raith\Model\Action\StatModificationModel::insertModification($user['user1'], $charater['pierre'], $place['place'], new \DateTime(), true, "création des maitrises", [

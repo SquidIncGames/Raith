@@ -61,7 +61,7 @@ class ActionModel extends Model{
         ]
     ];
 
-    //TODO: get message, roll, move, ...
+    //TODO: move, ...
     public static function insertAction(int $user, int $character, int $place, \DateTime $date, bool $valid): self{
         $action = new ActionModel(compact('user', 'character', 'place', 'date', 'valid'));
         $action->runInsert();

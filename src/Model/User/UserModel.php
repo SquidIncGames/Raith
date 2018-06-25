@@ -4,6 +4,7 @@ namespace Raith\Model\User;
 
 use Krutush\Database\Model;
 use Raith\Model\Character\CharacterModel;
+use Raith\Model\SettingModel;
 
 class UserModel extends Model{
     public const TABLE = 'users';
@@ -40,7 +41,6 @@ class UserModel extends Model{
         'role' => [
             'type' => 'int',
             'not_null' => true,
-            'default' => 2, //FIXME: get default for config
             'foreign' => UserRoleModel::class
         ]
     ];
@@ -67,6 +67,6 @@ class UserModel extends Model{
     }
 
     public static function allVisitors(){
-        return static::all([2], static::getColumn('role').' = ?'); //TODO: Nop
+        return static::all([SettingModel::value('role_visitor')], static::getColumn('role').' = ?');
     }
 }

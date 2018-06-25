@@ -8,6 +8,11 @@
 
 <h2>Création de personnage</h2>
 <section>
+    <div class="hidden">
+        <p id="max-pts-maitrises"><?= $t->_e($t->_('character_create_max_stat_points')) ?></p>
+        <p id="max-pts-maitrises-armes"><?= $t->_e($t->_('character_create_max_weapon_points')) ?></p>
+        <p id="max-pts-maitrises-metiers"><?= $t->_e($t->_('character_create_max_job_points')) ?></p>
+    </div>
     <?php $t->_load('Form/Character/Create') ?>
 </section>
 <?php $t->_endsection() ?>
