@@ -7,6 +7,7 @@ use Krutush\Template\Html;
 use Krutush\Form\Form;
 
 use Raith\Model\User\UserModel;
+use Raith\Model\User\UserCharacterRightModel;
 use Raith\Model\Custom\SessionModel;
 use Raith\Model\Custom\DiscordModel;
 use Raith\Model\SettingModel;
@@ -108,6 +109,8 @@ class UserController extends MyController{
         $user = UserModel::find($id);
         if($user == null)
             throw new HttpException(404);
+
+        UserCharacterRightModel::load($user->_rights, 'character');
 
         /*if($me == $user){
             $this->getHtml('User/Details'))

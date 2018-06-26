@@ -23,6 +23,19 @@ $t->_layout('Main')
             <?php endforeach ?>
         </ul>
         <?php endif ?>
+        <?php if(!empty($user->_rights)): ?>
+        <table>
+            <tr><th>Nom</th><th>Jouer</th><th>Modifier</th><th>Gerer</th></tr>
+            <?php foreach($user->_rights as $right): ?>
+            <tr>
+                <td><a href="/<?= $t->_('router')->get('character')->getUrl(['id' => $right->character]) ?>"><?= $t->_e($right->_character->getFullName()) ?></a></td>
+                <td><?= $right->canPlay ? 'X' : '' ?></td>
+                <td><?= $right->canEdit ? 'X' : '' ?></td>
+                <td><?= $right->canManage ? 'X' : '' ?></td>
+            </tr>
+            <?php endforeach ?>
+        </table>
+        <?php endif ?>
     </div>
 </section>
 <?php $t->_endsection() ?>

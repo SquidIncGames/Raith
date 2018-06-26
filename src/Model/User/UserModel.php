@@ -51,6 +51,13 @@ class UserModel extends Model{
             'field' => 'owner',
             'nullable' => true,
             'multiple' => true
+        ],
+        'rights' => [
+            'model' => UserCharacterRightModel::class,
+            'for' => 'id',
+            'field' => 'user',
+            'nullable' => true,
+            'multiple' => true
         ]
     ];
 
@@ -68,5 +75,16 @@ class UserModel extends Model{
 
     public static function allVisitors(){
         return static::all([SettingModel::value('role_visitor')], static::getColumn('role').' = ?');
+    }
+
+    public function getCharacters(string $rightType): array{
+        $characters = $this->_characters;
+        if($rightType != null){
+            foreach(UserCharacterRightModel::load($this->_rights, 'character') as $right){
+                if($right->$rightType)
+                    $characters[] = $right->_character;
+            }
+        }
+        return $characters;
     }
 }

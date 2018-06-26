@@ -21,6 +21,7 @@ $models = [ //Order for create (foreign integrity)
     Raith\Model\World\ElementModel::class,
     Raith\Model\User\UserModel::class,
     Raith\Model\Character\CharacterModel::class,
+    Raith\Model\User\UserCharacterRightModel::class,
     Raith\Model\World\WeaponModel::class,
     Raith\Model\Action\ActionModel::class,
     Raith\Model\Action\MessageModel::class,
@@ -292,6 +293,14 @@ if(isset($options['i']) || isset($options['insert'])){
     //TODO: add valid => false character
     print_r($charater);
 
+    //Droits
+    tryInsert(new Raith\Model\User\UserCharacterRightModel([
+        'user' => $user['user2'],
+        'character' => $charater['pierre'],
+        'canPlay' => true,
+        'canEdit' => false,
+        'canManage' => false
+    ]));
 
     //Settings
     tryInsert(new Raith\Model\SettingModel([

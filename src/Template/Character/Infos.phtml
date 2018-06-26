@@ -33,5 +33,18 @@ $t->_layout('Main')
     </article>
     <p>Lieu actuel: <a href="/<?= $t->_('router')->get('world place')->getUrl(['id' => $character->place]) ?>"><?= $t->_e($character->_place->name) ?></a></p>
     <p>Createur: <a href="/<?= $t->_('router')->get('user')->getUrl(['id' => $character->owner]) ?>"><?= $t->_e($character->_owner->name) ?></a></p>
+    <?php if(!empty($character->_rights)): ?>
+        <table>
+            <tr><th>Nom</th><th>Jouer</th><th>Modifier</th><th>Gerer</th></tr>
+            <?php foreach($character->_rights as $right): ?>
+            <tr>
+                <td><a href="/<?= $t->_('router')->get('user')->getUrl(['id' => $right->user]) ?>"><?= $t->_e($right->_user->name) ?></a></td>
+                <td><?= $right->canPlay ? 'X' : '' ?></td>
+                <td><?= $right->canEdit ? 'X' : '' ?></td>
+                <td><?= $right->canManage ? 'X' : '' ?></td>
+            </tr>
+            <?php endforeach ?>
+        </table>
+    <?php endif ?>
 </section>
 <?php $t->_endsection() ?>

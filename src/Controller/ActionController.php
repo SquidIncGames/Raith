@@ -18,7 +18,7 @@ use Raith\Model\World\WeaponModel;
 class ActionController extends MyController{
     public function index(){
         $user = UserController::checkLogged($this->app);
-        $character = CharacterController::getCharacter($user, $this->app);
+        $character = CharacterController::getCharacter($user, $this->app, 'canPlay');
         $this->getHtml('Action/Index')
             ->set('character', $character)
             ->run();
@@ -26,7 +26,7 @@ class ActionController extends MyController{
 
     public function message(){
         $user = UserController::checkLogged($this->app);
-        $character = CharacterController::getCharacter($user, $this->app);
+        $character = CharacterController::getCharacter($user, $this->app, 'canPlay');
 
         $form = new Form('message_form', 'Form/Action/Message');
         if(!empty($_POST) && $form->valid($_POST)){
@@ -54,7 +54,7 @@ class ActionController extends MyController{
 
     public function customRoll(){
         $user = UserController::checkLogged($this->app);
-        $character = CharacterController::getCharacter($user, $this->app);
+        $character = CharacterController::getCharacter($user, $this->app, 'canPlay');
 
         $form = new Form('custom_form', 'Form/Action/Roll/Custom');
         if(!empty($_POST) && $form->valid($_POST)){
@@ -83,7 +83,7 @@ class ActionController extends MyController{
 
     public function successRoll(){
         $user = UserController::checkLogged($this->app);
-        $character = CharacterController::getCharacter($user, $this->app);
+        $character = CharacterController::getCharacter($user, $this->app, 'canPlay');
 
         $stats = StatModificationModel::getCharacterStats($character->id);
 
@@ -128,7 +128,7 @@ class ActionController extends MyController{
 
     public function damageRoll(){
         $user = UserController::checkLogged($this->app);
-        $character = CharacterController::getCharacter($user, $this->app);
+        $character = CharacterController::getCharacter($user, $this->app, 'canPlay');
 
         $damage_data = [
             'weapons' => array_map(function($weapon){

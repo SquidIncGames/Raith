@@ -11,16 +11,26 @@ use Raith\Model\Action\StatModificationModel;
 use Raith\Model\Character\CharacterModel;
 use Raith\Model\Character\CharacterRaceModel;
 use Raith\Model\Character\CharacterAlignmentModel;
+use Raith\Model\User\UserCharacterRightModel;
 use Raith\Model\World\WeaponTypeModel;
 use Raith\Model\World\JobModel;
 use Raith\Model\Custom\SessionModel;
 
 class CharacterController extends MyController{
-    public static function getCharacter($user, $app): CharacterModel{
+    public static function getCharacter($user, $app, string $rightType = null): CharacterModel{
         if(SessionModel::haveCharacterId()){
             $character = CharacterModel::find(SessionModel::getCharacterId());
-            if($character != null && $character->valid && $character->owner == $user->id) //TODO: Change for have authorization level
-                return $character;
+            if($character != null && $character->valid){
+                if($character->owner == $user->id)
+                    return $character;
+
+                if($rightType != null){
+                    foreach($character->_rights as $right){
+                        if($right->user == $user->id && $right->$rightType)
+                            return $character;
+                    }
+                }
+            }
         }
 
         $router = $app->getRouter(); //TODO: redirect link page
@@ -29,7 +39,7 @@ class CharacterController extends MyController{
 
     public function index(){
         $user = UserController::checkLogged($this->app);
-        $characters = $user->_characters;
+        $characters = $user->getCharacters('canPlay');
 
         $html = $this->getHtml('Character/Index');
 
@@ -46,7 +56,7 @@ class CharacterController extends MyController{
                 ->set('current_character', SessionModel::getCharacterId())
                 ->set('characters', $characters);
         }
-        
+
         $html->run();
     }
 
@@ -153,6 +163,8 @@ class CharacterController extends MyController{
         $character = CharacterModel::find($id);
         if($character == null)
             throw new HttpException(404);
+
+        UserCharacterRightModel::load($character->_rights, 'user');
 
         /*if(in_array($character, $user->_characters)){
             $this->getHtml('Character/Details'))

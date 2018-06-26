@@ -4,6 +4,7 @@ namespace Raith\Model\Character;
 
 use Krutush\Database\Model;
 use Raith\Model\User\UserModel;
+use Raith\Model\User\UserCharacterRightModel;
 use Raith\Model\World\PlaceModel;
 use Raith\Model\World\StatModel;
 use Raith\Model\Action\StatModificationModel;
@@ -79,6 +80,15 @@ class CharacterModel extends Model{
             'type' => 'bit',
             'default' => '0',
             'not_null' => true
+        ]
+    ];
+    public const FOREIGNS = [
+        'rights' => [
+            'model' => UserCharacterRightModel::class,
+            'for' => 'id',
+            'field' => 'character',
+            'nullable' => true,
+            'multiple' => true
         ]
     ];
 
