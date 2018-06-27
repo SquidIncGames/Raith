@@ -11,7 +11,10 @@ class RollModel extends Model{
             'column' => 'idroll',
             'type' => 'int',
             'primary' => true,
-            'foreign' => ActionModel::class,
+            'foreign' => [
+                'model' => ActionModel::class,
+                'on_delete' => 'cascade'
+            ],
             'index' => false //Same as PRIMARY
         ],
         'description' => [

@@ -20,7 +20,7 @@ class ActionModel extends Model{
         'user' => [
             'type' => 'int',
             'not_null' => true,
-            'foreign' =>  UserModel::class
+            'foreign' => UserModel::class
         ],
         'character' => [
             'type' => 'int',
@@ -69,7 +69,7 @@ class ActionModel extends Model{
     }
 
     public static function allByCharacter(int $characterId, bool $valid = true): array{
-        return static::all([$characterId], static::getColumn('character').' = ?'.($valid ? ' AND '.static::getColumn('valid').' = 1' : ''));
+        return static::all([$characterId], '`'.static::getColumn('character').'` = ?'.($valid ? ' AND '.static::getColumn('valid').' = 1' : ''));
     }
 
     public static function allByValidity(bool $valid): array{

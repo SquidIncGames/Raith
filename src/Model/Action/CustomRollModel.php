@@ -9,7 +9,10 @@ class CustomRollModel extends RollModel{
             'column' => 'idcustom_roll',
             'type' => 'int',
             'primary' => true,
-            'foreign' => RollModel::class,
+            'foreign' => [
+                'model' => RollModel::class,
+                'on_delete' => 'cascade'
+            ],
             'index' => false //Same as PRIMARY
         ],
         'roll' => [

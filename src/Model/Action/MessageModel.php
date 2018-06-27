@@ -11,7 +11,10 @@ class MessageModel extends Model{
             'column' => 'idmessage',
             'type' => 'int',
             'primary' => true,
-            'foreign' => ActionModel::class,
+            'foreign' => [
+                'model' => ActionModel::class,
+                'on_delete' => 'cascade'
+            ],
             'index' => false //Same as PRIMARY
         ],
         'message' => [

@@ -17,7 +17,10 @@ class StatModificationLineModel extends Model{
         ],
         'modification' => [
             'type' => 'int',
-            'foreign' =>  StatModificationModel::class,
+            'foreign' => [
+                'model' => StatModificationModel::class,
+                'on_delete' => 'cascade'
+            ],
             'not_null' => true
         ],
         'stat' => [

@@ -25,7 +25,11 @@
             <ul>
                 <li class="left"><a href="/<?= $t->_('router')->get('index')->getUrl() ?>#nani">Qu'est ce que Raith ?</a></li>
                 <li class="secleft"><a href="">Contacts</a></li>
+                <?php if($t->_('isLogged')): ?>
+                <li class="connect"><a href="/<?= $t->_('router')->get('logout')->getUrl() ?>">Se deconnecter</a></li>
+                <?php else: ?>
                 <li class="connect"><a href="/<?= $t->_('router')->get('login')->getUrl() ?>">Se connecter</a></li>
+                <?php endif ?>
             </ul>
         </nav>
         <div class="body">

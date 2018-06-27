@@ -8,6 +8,7 @@ use Raith\Model\User\UserCharacterRightModel;
 use Raith\Model\World\PlaceModel;
 use Raith\Model\World\StatModel;
 use Raith\Model\Action\StatModificationModel;
+use Raith\Model\Action\ActionModel;
 
 class CharacterModel extends Model{
     public const TABLE = 'characters';
@@ -102,5 +103,20 @@ class CharacterModel extends Model{
 
     public static function allByValidity(bool $valid): array{
         return static::all([], static::getColumn('valid').' = '.intval($valid));
+    }
+
+    public function getTotalXp(): int{
+        $actions = ActionModel::loads(ActionModel::allByCharacter($this->id), ['roll' => ['success', 'damage']]);
+        $xp = 0;
+        foreach($actions as $action){
+            if($action->_roll != null){
+                if($action->_roll->_success != null)
+                    $xp += $action->_roll->_success->getXp();
+
+                if($action->_roll->_damage != null)
+                    $xp += $action->_roll->_damage->getXp();
+            }
+        }
+        return 42;
     }
 }

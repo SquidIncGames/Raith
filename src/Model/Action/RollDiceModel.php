@@ -15,7 +15,10 @@ class RollDiceModel extends Model{
         ],
         'roll' => [
             'type' => 'int',
-            'foreign' =>  RollModel::class,
+            'foreign' => [
+                'model' => RollModel::class,
+                'on_delete' => 'cascade'
+            ],
             'not_null' => true
         ],
         'value' => [

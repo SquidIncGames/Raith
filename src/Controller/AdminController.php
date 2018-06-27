@@ -27,7 +27,7 @@ class AdminController extends MyController{
                     return $user;
             }
         }
-        
+
         throw new HttpException(401, "Restricted Acces");
     }
 
@@ -38,17 +38,21 @@ class AdminController extends MyController{
 
     public function validateUsers(){
         static::checkAdmin();
-        
+
         $visitors = UserModel::allVisitors();
         $html = $this->getHtml('Admin/Validate/Users');
 
         if($visitors != null){
-            if(!empty($_POST) && isset($_POST['user_id']) && ctype_digit($_POST['user_id'])){
+            if(!empty($_POST) && isset($_POST['user_id']) && ctype_digit($_POST['user_id']) && isset($_POST['action']) && in_array($_POST['action'], ['validate', 'delete'])){
                 foreach ($visitors as $key => $visitor) {
                     if($visitor->id == $_POST['user_id']){
-                        $visitor->role = SettingModel::value('role_default');
-                        $visitor->runUpdate();
-                        DiscordModel::historique('<@!'.$visitor->discord.'> ('.$visitor->name.') a été accepté sur le site !');
+                        if($_POST['action'] == 'validate'){
+                            $visitor->role = SettingModel::value('role_default');
+                            $visitor->runUpdate();
+                            DiscordModel::historique('<@!'.$visitor->discord.'> ('.$visitor->name.') a été accepté sur le site !');
+                        }else{
+                            $visitor->runDelete();
+                        }
                         unset($visitors[$key]);
                         break;
                     }
@@ -56,13 +60,13 @@ class AdminController extends MyController{
             }
             if($visitors != null) $html->set('visitors', $visitors);
         }
-        
+
         $html->run();
     }
 
     public function validateCharacters(){
         static::checkAdmin();
-        
+
         $characters = CharacterModel::load(CharacterModel::allByValidity(false), 'owner');
         $html = $this->getHtml('Admin/Validate/Characters');
 
@@ -80,13 +84,13 @@ class AdminController extends MyController{
             }
             if($characters != null) $html->set('characters', $characters);
         }
-        
+
         $html->run();
     }
 
     public function validateActions(){
         static::checkAdmin();
-        
+
         $actions = ActionModel::loads(ActionModel::allByValidity(false), [ //A bit every
             'user',
             'character',
@@ -108,10 +112,14 @@ class AdminController extends MyController{
         $html = $this->getHtml('Admin/Validate/Actions');
 
         if($actions != null){
-            if(!empty($_POST) && isset($_POST['action_id']) && ctype_digit($_POST['action_id'])){
+            if(!empty($_POST) && isset($_POST['action_id']) && ctype_digit($_POST['action_id']) && isset($_POST['action']) && in_array($_POST['action'], ['validate', 'delete'])){
                 foreach ($actions as $key => $action) {
                     if($action->id == $_POST['action_id']){
-                        $action->validate();
+                        if($_POST['action'] == 'validate'){
+                            $action->validate();
+                        }else{
+                            $action->runDelete();
+                        }
                         unset($actions[$key]);
                         break;
                     }

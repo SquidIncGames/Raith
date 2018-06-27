@@ -13,7 +13,13 @@
             <td><?= $t->_e($visitor->discord) ?></td>
             <td><form method="post">
                 <input type="hidden" name="user_id" value="<?= $t->_e($visitor->id) ?>">
+                <input type="hidden" name="action" value="validate">
                 <input type="submit" value="Valider">
+            </form></td>
+            <td><form method="post">
+                <input type="hidden" name="user_id" value="<?= $t->_e($visitor->id) ?>">
+                <input type="hidden" name="action" value="delete">
+                <input type="submit" value="Supprimer">
             </form></td>
         </tr>
         <?php endforeach ?>

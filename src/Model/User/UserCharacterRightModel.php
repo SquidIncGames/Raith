@@ -12,12 +12,18 @@ class UserCharacterRightModel extends Model{
         'user' => [
             'type' => 'int',
             'primary' => true,
-            'foreign' => UserModel::class
+            'foreign' => [
+                'model' => UserModel::class,
+                'on_delete' => 'cascade'
+            ]
         ],
         'character' => [
             'type' => 'int',
             'primary' => true,
-            'foreign' => CharacterModel::class
+            'foreign' => [
+                'model' => CharacterModel::class,
+                'on_delete' => 'cascade'
+            ]
         ],
         'canPlay' => [
             'column' => 'can_play',

@@ -12,7 +12,10 @@ class SuccessRollModel extends RollModel{
             'column' => 'idsuccess_roll',
             'type' => 'int',
             'primary' => true,
-            'foreign' => RollModel::class,
+            'foreign' => [
+                'model' => RollModel::class,
+                'on_delete' => 'cascade'
+            ],
             'index' => false //Same as PRIMARY
         ],
         'considered' => [
@@ -36,7 +39,10 @@ class SuccessRollModel extends RollModel{
         ],
         'weapon' => [
             'type' => 'int',
-            'foreign' => WeaponModel::class
+            'foreign' => [
+                'model' => WeaponModel::class,
+                'on_delete' => 'set null'
+            ]
         ]
     ];
 
@@ -60,6 +66,9 @@ class SuccessRollModel extends RollModel{
     }
 
     public function getXp(): int{
+        if(!$this->considered)
+            return 0;
+
         return array_sum(array_map(function($value){
             return 100-$value;
         }, $this->getDiceValues()))/10;

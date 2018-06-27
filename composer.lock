@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/krutush/database.git",
-                "reference": "889b946c0bce4299e1161cee6d1ffa829050537a"
+                "reference": "dea2a99329bd36b48a41218b10de3ee209b589e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/krutush/database/zipball/889b946c0bce4299e1161cee6d1ffa829050537a",
-                "reference": "889b946c0bce4299e1161cee6d1ffa829050537a",
+                "url": "https://api.github.com/repos/krutush/database/zipball/dea2a99329bd36b48a41218b10de3ee209b589e9",
+                "reference": "dea2a99329bd36b48a41218b10de3ee209b589e9",
                 "shasum": ""
             },
             "require": {
@@ -39,7 +39,7 @@
                     "email": "contact@clementbois.fr"
                 }
             ],
-            "time": "2018-06-25T07:44:15+00:00"
+            "time": "2018-06-27T17:20:45+00:00"
         },
         {
             "name": "krutush/form",
@@ -47,12 +47,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/krutush/form.git",
-                "reference": "63a448fb496c6ecb25254d32adae9db7af2e57f1"
+                "reference": "58959c6d00812e2b7737abb480389a4118647092"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/krutush/form/zipball/63a448fb496c6ecb25254d32adae9db7af2e57f1",
-                "reference": "63a448fb496c6ecb25254d32adae9db7af2e57f1",
+                "url": "https://api.github.com/repos/krutush/form/zipball/58959c6d00812e2b7737abb480389a4118647092",
+                "reference": "58959c6d00812e2b7737abb480389a4118647092",
                 "shasum": ""
             },
             "require": {
@@ -74,7 +74,7 @@
                     "email": "contact@clementbois.fr"
                 }
             ],
-            "time": "2018-05-13T11:42:26+00:00"
+            "time": "2018-06-27T17:20:18+00:00"
         },
         {
             "name": "krutush/krutush",

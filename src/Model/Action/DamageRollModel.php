@@ -11,7 +11,10 @@ class DamageRollModel extends RollModel{
             'column' => 'iddamage_roll',
             'type' => 'int',
             'primary' => true,
-            'foreign' => RollModel::class,
+            'foreign' => [
+                'model' => RollModel::class,
+                'on_delete' => 'cascade'
+            ],
             'index' => false //Same as PRIMARY
         ],
         'considered' => [
@@ -54,6 +57,9 @@ class DamageRollModel extends RollModel{
     }
 
     public function getXp(): int{
+        if(!$this->considered)
+            return 0;
+
         return $this->getDamages();
     }
 }

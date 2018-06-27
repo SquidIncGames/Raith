@@ -5,11 +5,10 @@
 <section>
     <?php if($t->_x('characters')): ?>
     <table>
-        <tr><th>Nom</th><th>Prenom</th><th>Createur</th></tr>
+        <tr><th>Nom</th><th>Createur</th></tr>
         <?php foreach ($t->_('characters') as $character): ?>
         <tr>
-            <td><?= $t->_e($character->firstname) ?></td>
-            <td><?= $t->_e($character->surname) ?></td>
+            <td><a href="/<?= $t->_('router')->get('character')->getUrl(['id' => $character->id]) ?>"><?= $t->_e($character->getFullName()) ?></a></td>
             <td><?= $t->_e($character->_owner->name) ?></td>
             <td><form method="post">
                 <input type="hidden" name="character_id" value="<?= $t->_e($character->id) ?>">
