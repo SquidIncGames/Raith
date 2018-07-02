@@ -34,7 +34,7 @@ $models = [ //Order for create (foreign integrity)
     Raith\Model\Action\StatModificationLineModel::class
 ];
 
-$options = getopt("dci", ["drop", "create", "insert"]);
+$options = getopt("dci", ["drop", "create", "insert", "export"]);
 
 function tryRun($request){
     try{
@@ -52,6 +52,13 @@ function tryInsert($model){
     }catch(\PDOException $e){
         echo $e->getMessage();
     }
+}
+
+if(isset($options['export'])){
+    foreach ($models as $model) {
+        echo $model::create()->sql().";\n";
+    }
+    return;
 }
 
 if(isset($options['d']) || isset($options['drop'])){

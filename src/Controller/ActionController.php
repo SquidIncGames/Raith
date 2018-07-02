@@ -4,6 +4,7 @@ namespace Raith\Controller;
 
 use Raith\MyController;
 use Krutush\Template\Html;
+use Krutush\Template\StringFormat;
 use Krutush\Form\Form;
 use Raith\Model\Custom\DiscordModel;
 use Raith\Model\Action\ActionModel;
@@ -89,10 +90,10 @@ class ActionController extends MyController{
 
         $success_data = [
             'elements' => array_map(function($element){
-                return ['id' => $element->id, 'value' => $element->id, 'text' => ucfirst($element->_id->name), 'more' => ''];
+                return ['id' => $element->id, 'value' => $element->id, 'text' => StringFormat::ucfirst($element->_id->name), 'more' => ''];
             }, ElementModel::load(ElementModel::all(), 'id')),
             'weapons' => array_map(function($weapon){
-                return ['id' => $weapon->id, 'value' => $weapon->id, 'text' => ucfirst($weapon->_type->_id->name), 'more' => ''];
+                return ['id' => $weapon->id, 'value' => $weapon->id, 'text' => StringFormat::ucfirst($weapon->_type->_id->name), 'more' => ''];
             }, WeaponModel::loads(WeaponModel::all(), ['type' => ['id']])) //TODO: list character weapons
         ];
 
@@ -132,7 +133,7 @@ class ActionController extends MyController{
 
         $damage_data = [
             'weapons' => array_map(function($weapon){
-                return ['id' => $weapon->id, 'value' => $weapon->id, 'text' => ucfirst($weapon->_type->_id->name), 'more' => ''];
+                return ['id' => $weapon->id, 'value' => $weapon->id, 'text' => StringFormat::ucfirst($weapon->_type->_id->name), 'more' => ''];
             }, WeaponModel::loads(WeaponModel::all(), ['type' => ['id']])) //TODO: list character weapons
         ];
 

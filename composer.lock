@@ -114,12 +114,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/krutush/template.git",
-                "reference": "9a5348cf3525b5b4a9a71b82c160a1a8f784c419"
+                "reference": "2517642d5c07e7e824b14c35cf61f304a186f5c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/krutush/template/zipball/9a5348cf3525b5b4a9a71b82c160a1a8f784c419",
-                "reference": "9a5348cf3525b5b4a9a71b82c160a1a8f784c419",
+                "url": "https://api.github.com/repos/krutush/template/zipball/2517642d5c07e7e824b14c35cf61f304a186f5c4",
+                "reference": "2517642d5c07e7e824b14c35cf61f304a186f5c4",
                 "shasum": ""
             },
             "suggest": {
@@ -141,7 +141,7 @@
                     "email": "contact@clementbois.fr"
                 }
             ],
-            "time": "2018-04-25T17:47:06+00:00"
+            "time": "2018-07-02T16:47:09+00:00"
         }
     ],
     "packages-dev": [],

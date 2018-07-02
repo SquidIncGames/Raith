@@ -5,6 +5,7 @@ namespace Raith\Controller;
 use Raith\MyController;
 use Krutush\Form\Form;
 use Krutush\HttpException;
+use Krutush\Template\StringFormat;
 
 use Raith\Model\SettingModel;
 use Raith\Model\Action\StatModificationModel;
@@ -71,16 +72,16 @@ class CharacterController extends MyController{
 
         $character_data = [
             'character_races' => array_map(function($race){
-                return ['value' => $race->name, 'text' => ucfirst($race->name), 'more' => ''];
+                return ['value' => $race->name, 'text' => StringFormat::ucfirst($race->name), 'more' => ''];
             }, CharacterRaceModel::all()),
             'character_alignments' => array_map(function($alignment){
-                return ['value' => $alignment->id, 'text' => ucfirst($alignment->name), 'more' => ''];
+                return ['value' => $alignment->id, 'text' => StringFormat::ucfirst($alignment->name), 'more' => ''];
             }, CharacterAlignmentModel::all()),
             'weapon_types' => array_map(function($weapon){
-                return ['id' => $weapon->id, 'value' => 'weapon-'.$weapon->id, 'text' => ucfirst($weapon->_id->name), 'more' => ''];
+                return ['id' => $weapon->id, 'value' => 'weapon-'.$weapon->id, 'text' => StringFormat::ucfirst($weapon->_id->name), 'more' => ''];
             }, WeaponTypeModel::load(WeaponTypeModel::all(), 'id')),
             'jobs' => array_map(function($job){
-                return ['id' => $job->id, 'value' => 'job-'.$job->id, 'text' => ucfirst($job->_id->name), 'more' => ''];
+                return ['id' => $job->id, 'value' => 'job-'.$job->id, 'text' => StringFormat::ucfirst($job->_id->name), 'more' => ''];
             }, JobModel::load(JobModel::all(), 'id'))
         ];
 
