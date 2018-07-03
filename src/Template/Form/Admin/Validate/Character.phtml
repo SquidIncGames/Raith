@@ -5,7 +5,7 @@
     <h3>Elements : </h3>
     <?php foreach ($t->_('elements') as $element): ?>
     <p><?= $f->_input($element['value'])->label($element['text'].' :')
-        ->number()->min(0)->max(100)->html() ?></p>
+        ->number()->min(-50)->max(100)->html() ?></p>
     <?php endforeach ?>
 </div>
 <p><?= $f->_submit('Valider') ?></p>
