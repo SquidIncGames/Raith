@@ -6,10 +6,10 @@
 <section>
     <?php if($t->_x('regions')): ?>
     <?php foreach ($t->_('regions') as $region): ?>
-    <article style="display: inline-block; padding: 10px; background-color: <?= [1 => 'yellow', 'light-grey', 'blue', 'grey'][$region->weather] ?>; border: 5px var(--main-bg-hover-color) solid">
+    <article style="display: inline-block; margin: 10px; padding: 10px; border: 5px <?= [1 => 'yellow', 'lightgrey', 'blue', 'grey'][$region->weather] ?> solid">
         <h3><?= $t->_e($region->name) ?></h3>
-        <p><?= $t->_e($region->_weather->name) ?></p>
-    <article>
+        <p style="color: <?= [1 => 'yellow', 'lightgrey', 'blue', 'grey'][$region->weather] ?>"><?= $t->_e($region->_weather->name) ?></p>
+    </article>
     <?php endforeach ?>
     <?php else: ?>
     <p>Vous n'avez aucune région</p>

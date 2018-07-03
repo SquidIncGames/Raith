@@ -84,6 +84,6 @@ class ActionModel extends Model{
     }
 
     public function discordText(): string{
-        return '<#'.$this->_place->discord.'> <@!'.$this->_user->discord.'> ('.$this->_user->name.'): '.$this->_character->getFullName();
+        return '<#'.$this->_place->discord.'>¤<@!'.$this->_user->discord.'> ('.$this->_user->name.'): '.$this->_character->getFullName();
     }
 }

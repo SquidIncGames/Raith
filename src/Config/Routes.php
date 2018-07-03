@@ -36,6 +36,8 @@ $r->add('/action/roll/success', 'Action#successRoll')->name('action roll success
 $r->add('/admin', 'Admin#index');
 $r->add('/admin/validate/users', 'Admin#validateUsers')->name('admin validate users');
 $r->add('/admin/validate/characters', 'Admin#validateCharacters')->name('admin validate characters');
+$r->add('/admin/validate/character/:id', 'Admin#validateCharacter')->name('admin validate character')
+    ->with('id', '\d+');
 $r->add('/admin/validate/actions', 'Admin#validateActions')->name('admin validate actions');
 
 //API

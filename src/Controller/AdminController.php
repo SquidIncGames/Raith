@@ -5,6 +5,7 @@ namespace Raith\Controller;
 use Raith\MyController;
 use Krutush\Template\Html;
 use Krutush\Form\Form;
+use Krutush\Template\StringFormat;
 use Krutush\HttpException;
 
 use Raith\Model\User\UserModel;
@@ -49,7 +50,7 @@ class AdminController extends MyController{
                         if($_POST['action'] == 'validate'){
                             $visitor->role = SettingModel::value('role_default');
                             $visitor->runUpdate();
-                            DiscordModel::historique('<@!'.$visitor->discord.'> ('.$visitor->name.') a été accepté sur le site !');
+                            DiscordModel::inscription('<@!'.$visitor->discord.'> ('.$visitor->name.') a été accepté sur le site !');
                         }else{
                             $visitor->runDelete();
                         }
@@ -74,9 +75,7 @@ class AdminController extends MyController{
             if(!empty($_POST) && isset($_POST['character_id']) && ctype_digit($_POST['character_id'])){
                 foreach ($characters as $key => $character) {
                     if($character->id == $_POST['character_id']){
-                        $character->valid = true;
-                        //TODO: Set caracterisitics
-                        //$character->runUpdate();
+                        $character->runDelete();
                         unset($characters[$key]);
                         break;
                     }
@@ -86,6 +85,46 @@ class AdminController extends MyController{
         }
 
         $html->run();
+    }
+
+    public function validateCharacter(int $id){
+        static::checkAdmin();
+
+        $character = CharacterModel::find($id);
+        if($character == null || $character->valid)
+            throw new HttpException(404);
+
+        $character_data = [
+            'elements' => array_map(function($element){
+                return ['id' => $element->id, 'value' => 'element-'.$element->id, 'text' => StringFormat::ucfirst($element->_id->name), 'more' => ''];
+            }, ElementModel::load(ElementModel::all(), 'id'))
+        ];
+
+        $html = $this->getHtml('Admin/Validate/Character');
+        $form = new Form('validate_character_form', 'Form/Admin/Validate/Character', null, true, $character_data);
+
+        if(!empty($_POST) && $form->valid($_POST)){
+            $values = $form->values();
+            $elements = [];
+            foreach($character_data['elements'] as $element){
+                $elements[$element['id']] = intval($values[$element['value']]);
+            }
+            try {
+                StatModificationModel::insertModification($character->owner, $character->id, $character->place, new \DateTime(), true, 'création des elements', $elements);
+                $character->valid = true;
+                $character->runUpdate();
+                $this->validateCharacters();
+                return;
+            } catch (\Exception $e) {
+                $form->error('Erreur inconnue durant la validation');
+            }
+        }
+
+        $html
+            ->set('validate_character_form', $form)
+            ->set('character', $character)
+            ->sets($character_data)
+            ->run();
     }
 
     public function validateActions(){

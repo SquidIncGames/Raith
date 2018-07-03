@@ -33,7 +33,7 @@ class DiscordModel{
     }
 
     public static function historique(string $message): bool{
-        return static::send(static::getWebhook('historique'), $message);
+        return static::send(static::getWebhook('historique'), '$ '.str_replace(' ', '\ ', str_replace("\n", "\\\n", $message)));
     }
 
     public static function inscription(string $message): bool{

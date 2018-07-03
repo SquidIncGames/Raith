@@ -12,8 +12,9 @@
             <td><?= $t->_e($character->_owner->name) ?></td>
             <td><form method="post">
                 <input type="hidden" name="character_id" value="<?= $t->_e($character->id) ?>">
-                <input type="submit" value="Valider">
+                <input type="submit" value="Supprimer">
             </form></td>
+            <td><a href="/<?= $t->_('router')->get('admin validate character')->getUrl(['id' => $character->id]) ?>"><button>Valider</button></a></td>
         </tr>
         <?php endforeach ?>
     </table>

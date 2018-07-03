@@ -5,6 +5,7 @@ namespace Raith\Controller;
 use Raith\MyController;
 use Krutush\Template\Html;
 use Krutush\Form\Form;
+use Krutush\HttpException;
 
 use Raith\Model\User\UserModel;
 use Raith\Model\User\UserCharacterRightModel;

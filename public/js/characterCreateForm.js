@@ -43,13 +43,15 @@ $(document).ready(function() {
 	$("#maitrises-metiers > h4").append("<label id='pts-maitrises-metiers'>" + points + " points restants</label>");
 
 	//Traitements relatifs aux sélections d'armes
-	$("#select-maitrises-arme").on('change', function() { //FIXME: can't display last one
+	$("#select-maitrises-arme").on('change', function() {
 		var item = $(this).val();
+		$(this).val(null);
 		showInput("#select-maitrises-arme", item);
 	}).show();
 	//Traitements relatifs aux sélections de métiers
-	$("#select-maitrises-metier").on('change', function () { //FIXME: can't display last one
+	$("#select-maitrises-metier").on('change', function () {
 		var item = $(this).val();
+		$(this).val(null);
 		showInput("#select-maitrises-metier", item);
 	}).show();
 
@@ -71,7 +73,7 @@ $(document).ready(function() {
 		else
 			$("#select-maitrises-metier > option[value='" + this.id + "']").remove();
 	});
-	
+
 	updatePoints();
 
 	//Désactive la validation s'il y a des erreurs

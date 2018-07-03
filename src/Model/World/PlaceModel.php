@@ -18,7 +18,7 @@ class PlaceModel extends Model{
             'type' => 'varchar',
             'lenght' => 40,
             'not_null' => true,
-            'unique' => true
+            //TODO: unique name + region 'unique' => true
         ],
         'discord' => [
             'type' => 'varchar',
