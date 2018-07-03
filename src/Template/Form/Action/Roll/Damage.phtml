@@ -1,9 +1,9 @@
 <?php $f = $t->_('damage_form') ?>
 <?= $f->_start() ?>
 <?= $f->_errors() ?>
-<p><?= $f->_input('damage')->label('Degat variable')->number()->min(1)->max(100)->value(0)->required()->html() ?></p>
-<p><?= $f->_input('fixe')->label('Degat fixe')->number()->min(0)->max(100)->value(0)->required()->html() ?></p>
-<p><?= $f->_select('weapon')->label('Arme')->options($t->_('weapons'))->required()->html() ?></p>
+<p><?= $f->_input('damage')->label('Degat variable')->number()->min(0)->max(100)->value(0)->html() ?></p>
+<p><?= $f->_input('fixe')->label('Degat fixe')->number()->min(0)->max(100)->value(0)->html() ?></p>
+<p style="display: none"><?= $f->_select('weapon')->label('Arme')->options($t->_('weapons'))->value(1)->required()->html() ?></p>
 <p><?= $f->_input('count')->label('Nombre de coup')->number()->min(1)->max(20)->value(1)->required()->html() ?></p>
 <p><?= $f->_input('considered')->label('Pris en compte')->checkbox()->html() ?></p>
 <p><?= $f->_textarea('description')->label('Description')->required()->html() ?></p>

@@ -2,7 +2,7 @@
 <?= $f->_start() ?>
 <?= $f->_errors() ?>
 <p><?= $f->_select('element')->label('Element')->options($t->_('elements'))->required()->html() ?></p>
-<?php if(!empty($t->_('weapons'))): ?>
+<?php if(!empty($t->_('weapons')) && false): //TODO: yolo ?>
     <p><?= $f->_select('weapon')->label('Arme')->options($t->_('weapons'))->html() ?></p>
 <?php endif ?>
 <p><?= $f->_input('bonus')->label('Bonus')->number()->min(0)->max(100)->value(0)->required()->html() ?></p>

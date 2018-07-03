@@ -50,6 +50,13 @@ class DamageRollModel extends RollModel{
         return $damage;
     }
 
+    public function discordText(): string{ //TODO: add weapon
+        return $this->_id->_id->discordText().' fait un jet de dégat ('.count($this->_dices).'d'.$this->roll.')+'.$this->fixe."\n".
+        implode(' ', $this->getDiceValues())."\n".
+        'Total: '.$this->getDamages()."\n".
+        $this->_id->description;
+    }
+
     public function getDamages(): int{
         return array_sum(array_map(function($value){
             return $value;

@@ -65,6 +65,12 @@ class SuccessRollModel extends RollModel{
         return $success;
     }
 
+    public function discordText(): string{ //TODO: add weapon
+        return $this->_id->_id->discordText().' fait un jet de réussite ['.$this->_elementType->_id->name.'('.$this->elementValue.')+'.$this->bonus.' = '.$this->getSuccessLimit().'] ('.count($this->_dices)."d100)\n".
+        implode(', ', $this->getResultsText())."\n".
+        $this->_id->description;
+    }
+
     public function getXp(): int{
         if(!$this->considered)
             return 0;

@@ -8,6 +8,7 @@ use Krutush\Form\Form;
 use Krutush\Template\StringFormat;
 use Krutush\HttpException;
 
+use Raith\Model\SettingModel;
 use Raith\Model\User\UserModel;
 use Raith\Model\Character\CharacterModel;
 use Raith\Model\Action\ActionModel;
@@ -147,7 +148,7 @@ class AdminController extends MyController{
                 'lines' => ['stat']
             ]
         ]);
-        
+
         $html = $this->getHtml('Admin/Validate/Actions');
 
         if($actions != null){

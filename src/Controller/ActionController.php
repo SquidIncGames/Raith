@@ -110,6 +110,7 @@ class ActionController extends MyController{
                 $form->get('weapon')->get(),
                 $form->get('count')->get()
             );
+            DiscordModel::historique($success->discordText());
             $this->successRollDisplay($success);
             return;
         }
@@ -148,6 +149,7 @@ class ActionController extends MyController{
                 $form->get('weapon')->get(),
                 $form->get('count')->get()
             );
+            DiscordModel::historique($damage->discordText());
             $this->damageRollDisplay($damage);
             return;
         }
